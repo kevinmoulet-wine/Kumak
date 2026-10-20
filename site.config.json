@@ -1,0 +1,22 @@
+{
+  "url": "https://kumak.fr",
+  "name": "KUMAK",
+  "tagline": "Chaque arrêté CEE, décodé en 5 minutes.",
+  "description": "La veille réglementaire des certificats d'économies d'énergie (CEE) pour installateurs, délégataires et obligés. Chaque texte classé par impact, avec sa source.",
+  "contactEmail": "lettre@kumak.fr",
+
+  "brevoFormAction": "",
+
+  "editor": {
+    "name": "Kevin Moulet",
+    "address": "",
+    "status": "Particulier, éditeur à titre non professionnel",
+    "publicationDirector": "Kevin Moulet"
+  },
+
+  "host": {
+    "name": "GitHub, Inc. (GitHub Pages)",
+    "address": "88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis",
+    "url": "https://github.com"
+  }
+}

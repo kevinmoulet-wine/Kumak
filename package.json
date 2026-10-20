@@ -1,0 +1,14 @@
+{
+  "name": "kumak",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site kumak.fr : veille réglementaire CEE",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "preview": "node build.mjs --drafts && npx --yes serve dist"
+  },
+  "dependencies": {
+    "marked": "^18.1.1"
+  }
+}
