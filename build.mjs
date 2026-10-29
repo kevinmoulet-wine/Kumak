@@ -39,12 +39,12 @@ function parseFrontmatter(src) {
 }
 
 // ---------- éditions ----------
-const editions = readdirSync("content/editions")
+const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
   .filter((f) => f.endsWith(".md"))
   .map((f) => {
-    const { data, body } = parseFrontmatter(readFileSync(join("content/editions", f), "utf8"));
+    const { data, body } = parseFrontmatter(readFileSync(join(dir, f), "utf8"));
     const slug = f.replace(/\.md$/, "");
-    for (const k of ["numero", "date", "titre", "accroche"]) if (!data[k]) throw new Error(`${f} : champ « ${k} » manquant`);
+    for (const k of required) if (!data[k]) throw new Error(`${f} : champ « ${k} » manquant`);
     const todo = /À COMPLÉTER/i.test(body);
     if (!data.brouillon && todo) throw new Error(`${f} : il reste des « À COMPLÉTER ». Complétez-les ou remettez « brouillon: true ».`);
     let html = marked.parse(body);
@@ -52,8 +52,14 @@ const editions = readdirSync("content/editions")
     html = html.replace(/<h3>\[(ACTION|SURVEILLER|À LIRE)\]\s*(.*?)<\/h3>/g, (_, k, t) => { items.push({ k, t }); return `<h3>${badge(k)} <span>${t}</span></h3>`; });
     return { ...data, date: String(data.date), slug, html, items, todo };
   })
-  .filter((e) => DRAFTS || !e.brouillon)
+  .filter((e) => DRAFTS || !e.brouillon);
+
+const editions = loadSeries("content/editions", ["numero", "date", "titre", "accroche"])
   .sort((a, b) => b.date.localeCompare(a.date));
+
+// Rétrospective 2026 : numéros mis en ligne après coup, chacun couvrant une période passée
+const retros = loadSeries("content/retro-2026", ["numero", "date", "periode", "titre", "accroche"])
+  .sort((a, b) => a.numero - b.numero);
 
 // ---------- gabarits ----------
 const ladder = `<div class="ladder" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>`;
@@ -153,6 +159,10 @@ write("index.html", page({
   </div>
   ${sample}
 </div>
+${retros.length ? `<section class="retro-band">
+  <div><div class="eyebrow">Rétrospective 2026</div><h2>Janvier à octobre : 10 mois de P6 décodés.</h2></div>
+  <a class="btn" href="/retro-2026/">Lire la rétrospective →</a>
+</section>` : ""}
 
 <section>
   <div class="eyebrow">Ce que vous recevez</div>
@@ -239,9 +249,60 @@ write("editions/index.html", page({
   ${editions.length
     ? `<ul class="archive">${editions.map((e) => `<li><a href="/editions/${e.slug}/"><span class="num">Nº ${e.numero}<br>${dateFr(e.date)}</span><span><strong>${esc(e.titre)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</strong><span class="acc">${esc(e.accroche)}</span></span></a></li>`).join("")}</ul>`
     : `<p class="lede">La première édition paraît bientôt. Inscrivez-vous pour la recevoir.</p>`}
+  ${retros.length ? `<div class="retro-box">
+    <div class="eyebrow">Rétrospective 2026</div>
+    <h2>Les 10 premiers mois de la P6, décodés.</h2>
+    <p>KUMAK a été lancé en octobre 2026. Pour ne pas partir de zéro, nous avons repris l'actualité réglementaire CEE depuis janvier, mois par mois, avec les mêmes règles : chaque texte classé par impact et sourcé.</p>
+    <a class="btn" href="/retro-2026/">Voir la rétrospective →</a>
+  </div>` : ""}
   <div class="cta-box" id="inscription">
     <h2>Ne ratez pas la prochaine.</h2>
     ${signupForm("email-arch", "Votre adresse e-mail")}
+  </div>
+</main>`,
+}));
+
+// ---------- rétrospective 2026 ----------
+const retroMeta = (r) => `Rétro 2026 · Nº ${r.numero} · Période couverte : ${esc(r.periode)}`;
+for (const [i, r] of retros.entries()) {
+  const prev = retros[i - 1], next = retros[i + 1];
+  write(`retro-2026/${r.slug}/index.html`, page({
+    title: `Rétro 2026 · ${r.periode} · ${r.titre}`,
+    description: r.accroche,
+    path: `/retro-2026/${r.slug}/`,
+    type: "article",
+    body: `<main class="article narrow">
+  <p class="meta"><a href="/retro-2026/">Rétrospective 2026</a> · Nº ${r.numero} · <strong>Période couverte : ${esc(r.periode)}</strong>${r.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
+  <h1>${esc(r.titre)}</h1>
+  <p class="lede">${esc(r.accroche)}</p>
+  <p class="retro-note">Numéro de la rétrospective 2026, mis en ligne le ${dateFr(r.date)}. Il reprend l'actualité de la période couverte ; certaines règles ont pu évoluer depuis.</p>
+  <div class="prose">${r.html}</div>
+  <nav class="retro-nav" aria-label="Numéros de la rétrospective">
+    ${prev ? `<a href="/retro-2026/${prev.slug}/">← ${esc(prev.periode)}</a>` : "<span></span>"}
+    ${next ? `<a href="/retro-2026/${next.slug}/">${esc(next.periode)} →</a>` : `<a href="/editions/">Les éditions hebdo →</a>`}
+  </nav>
+  <p class="disclaimer">KUMAK est une veille d'information. Elle ne constitue pas un conseil juridique : vérifiez toujours le texte officiel, et consultez un avocat pour une situation particulière.</p>
+  <div class="cta-box" id="inscription">
+    <h2>La suite, chaque lundi.</h2>
+    <p>Recevez les prochains textes CEE décodés, au fil de l'eau.</p>
+    ${signupForm("email-retro", "Votre adresse e-mail")}
+  </div>
+</main>`,
+  }));
+}
+
+if (retros.length) write("retro-2026/index.html", page({
+  title: "Rétrospective 2026",
+  description: "L'actualité réglementaire CEE de janvier à octobre 2026, mois par mois, classée par impact et sourcée.",
+  path: "/retro-2026/",
+  body: `<main class="article narrow">
+  <div class="eyebrow">Rétrospective 2026</div>
+  <h1>10 mois de P6, mois par mois</h1>
+  <p class="lede">KUMAK a été lancé en octobre 2026. Cette série reprend, mois par mois, les textes CEE parus depuis le début de la sixième période. Chaque numéro indique la période qu'il couvre et sa date de mise en ligne.</p>
+  <ul class="archive">${retros.map((r) => `<li><a href="/retro-2026/${r.slug}/"><span class="num">Nº ${r.numero}<br>${esc(r.periode)}</span><span><strong>${esc(r.titre)}${r.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</strong><span class="acc">${esc(r.accroche)}</span></span></a></li>`).join("")}</ul>
+  <div class="cta-box" id="inscription">
+    <h2>La suite, chaque lundi.</h2>
+    ${signupForm("email-retroidx", "Votre adresse e-mail")}
   </div>
 </main>`,
 }));
@@ -323,7 +384,10 @@ write("feed.xml", `<?xml version="1.0" encoding="utf-8"?>
 ${editions.filter((e) => !e.brouillon).map((e) => `<item><title>${esc(`Nº ${e.numero} · ${e.titre}`)}</title><link>${cfg.url}/editions/${e.slug}/</link><guid>${cfg.url}/editions/${e.slug}/</guid><pubDate>${rfc822(e.date)}</pubDate><description>${esc(e.accroche)}</description></item>`).join("\n")}
 </channel></rss>`);
 
-const urls = ["/", "/editions/", "/mentions-legales/", "/confidentialite/", ...editions.filter((e) => !e.brouillon).map((e) => `/editions/${e.slug}/`)];
+const urls = ["/", "/editions/", "/mentions-legales/", "/confidentialite/",
+  ...editions.filter((e) => !e.brouillon).map((e) => `/editions/${e.slug}/`),
+  ...(retros.some((r) => !r.brouillon) ? ["/retro-2026/"] : []),
+  ...retros.filter((r) => !r.brouillon).map((r) => `/retro-2026/${r.slug}/`)];
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map((u) => `<url><loc>${cfg.url}${u}</loc></url>`).join("")}</urlset>`);
 
