@@ -1,9 +1,9 @@
 ---
 numero: 1
-date: 2026-10-26
+date: 2026-10-29
 titre: P6 : ce qui change vraiment en 2026
 accroche: La sixième période des CEE a démarré le 1er janvier. Dix mois plus tard, voici les règles qui pèsent vraiment sur vos dossiers, vos contrats et vos stocks de certificats.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes
@@ -23,8 +23,6 @@ brouillon: true
 **Qui est concerné.** Les délégataires et mandataires, mais aussi les installateurs et bureaux d'études qui travaillent avec eux.
 
 **À faire.** D'après la DGEC, une opération P6 ne peut être engagée qu'une fois le statut de délégataire validé par le PNCEE. Demandez cette validation à votre partenaire **avant** la date d'engagement de vos opérations.
-
-> [À COMPLÉTER PAR KEVIN : remarque terrain sur les délégataires]
 
 ### [SURVEILLER] Une date de péremption pour les certificats
 
