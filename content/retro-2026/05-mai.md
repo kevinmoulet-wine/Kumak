@@ -4,7 +4,7 @@ date: 2026-10-29
 periode: Mai 2026
 titre: PAC individuelles : le Coup de pouce exigera un agrément
 accroche: Le 29 mai, un décret et deux arrêtés réservent le Coup de pouce Chauffage des PAC individuelles aux modèles agréés « qualité et résilience industrielle », à partir du 1er septembre. FEEBAT et PROFEEL sont reconduits.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes

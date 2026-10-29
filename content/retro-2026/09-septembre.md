@@ -4,7 +4,7 @@ date: 2026-10-29
 periode: Septembre 2026
 titre: Remplacer une chaudière déjà financée par des CEE redevient possible
 accroche: L'arrêté du 4 septembre lève le verrou de la durée de vie conventionnelle pour passer d'une ancienne chaudière à une PAC ou un réseau de chaleur. L'agrément PAC entre en vigueur et une vingtaine de fiches sont menacées.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes

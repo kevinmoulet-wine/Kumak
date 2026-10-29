@@ -4,7 +4,7 @@ date: 2026-10-29
 periode: Juillet 2026
 titre: Contrôles assouplis pour 2026, décret P6 validé par le Conseil d'État
 accroche: L'arrêté du 27 juillet assouplit le seuil de non-conformité pour 2026 avant de le resserrer. Le Conseil d'État rejette les recours des distributeurs de fioul contre le décret P6, et la première liste des PAC agréées est publiée.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes

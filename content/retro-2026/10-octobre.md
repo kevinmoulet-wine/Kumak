@@ -4,7 +4,7 @@ date: 2026-10-29
 periode: Octobre 2026
 titre: Acheter des CEE : un dossier de diligence obligatoire au 1er novembre
 accroche: Un décret et un arrêté du 9 octobre obligent les acheteurs de CEE à évaluer le risque de leur vendeur et à joindre un formulaire signé à chaque contrat de cession. ACTEE+ est prolongé d'un an.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes

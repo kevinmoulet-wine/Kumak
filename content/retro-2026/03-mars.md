@@ -4,7 +4,7 @@ date: 2026-10-29
 periode: Mars 2026
 titre: Organismes d'inspection : la chasse aux liens de contrôle
 accroche: Un arrêté interdit qu'un organisme d'inspection et les autres acteurs d'un dossier soient contrôlés par la même personne. Le solaire combiné passe à de nouveaux taux de contrôle.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes

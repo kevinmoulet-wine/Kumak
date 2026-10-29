@@ -4,7 +4,7 @@ date: 2026-10-29
 periode: Août 2026
 titre: Solaire et chauffe-eau : bonifications jusqu'à ×7, quatre mois seulement
 accroche: Deux arrêtés du 17 août relèvent fortement les bonifications du solaire et du chauffe-eau thermodynamique jusqu'au 31 décembre, et recentrent la rénovation d'ampleur sur les logements classés E à G.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes

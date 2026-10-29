@@ -4,7 +4,7 @@ date: 2026-10-29
 periode: Juin 2026
 titre: Registre Emmy : 100 000 € de capital pour garder son compte
 accroche: Un décret durcit les conditions d'ouverture et de maintien d'un compte au registre national des CEE. Le Conseil d'État suspend une sanction de 5,2 M€.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes

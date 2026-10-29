@@ -4,7 +4,7 @@ date: 2026-10-29
 periode: Avril 2026
 titre: Géothermie et PAC collectives sous contrôle renforcé
 accroche: Les six fiches de PAC collectives et de géothermie créées en janvier passent sous un contrôle sur site qui atteindra 100 % en 2028. Un programme finance la location sociale de voitures électriques.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes

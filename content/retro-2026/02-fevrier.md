@@ -4,7 +4,7 @@ date: 2026-10-29
 periode: Février 2026
 titre: Fiches supprimées en dix jours : désembouage et LED
 accroche: Deux arrêtés suppriment quatre fiches dès le lendemain de leur publication et laissent dix jours pour recenser les opérations déjà engagées.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes

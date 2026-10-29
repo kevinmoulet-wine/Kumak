@@ -4,7 +4,7 @@ date: 2026-10-29
 periode: Janvier 2026
 titre: La P6 démarre : nouvelles règles, nouvelles fiches PAC
 accroche: Le 1er janvier 2026, la sixième période des CEE entre en vigueur avec un arrêté d'application, de nouvelles fiches pour les pompes à chaleur collectives et un Coup de pouce rénovation d'ampleur prolongé.
-brouillon: true
+brouillon: false
 ---
 
 ## L'essentiel en 30 secondes
