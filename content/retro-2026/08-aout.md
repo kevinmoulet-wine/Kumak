@@ -3,7 +3,7 @@ numero: 8
 date: 2026-10-29
 periode: Août 2026
 titre: Solaire et chauffe-eau : bonifications jusqu'à ×7, quatre mois seulement
-accroche: Deux arrêtés du 17 août relèvent fortement les bonifications du solaire et du chauffe-eau thermodynamique jusqu'au 31 décembre, et recentrent la rénovation d'ampleur sur les passoires E, F et G.
+accroche: Deux arrêtés du 17 août relèvent fortement les bonifications du solaire et du chauffe-eau thermodynamique jusqu'au 31 décembre, et recentrent la rénovation d'ampleur sur les logements classés E à G.
 brouillon: true
 ---
 
@@ -11,47 +11,48 @@ brouillon: true
 
 - **Bonifications solaire et CET** : ×5 ou ×7 pour les ménages modestes, ×4 pour les autres, du 1er septembre au 31 décembre 2026.
 - **Condition** : décarbonation complète du chauffage et/ou de l'eau chaude après travaux.
-- **Rénovation d'ampleur** : réservée aux logements classés E, F ou G avant travaux, sans énergie fossile conservée en maison individuelle.
+- **Rénovation d'ampleur** : recentrée sur les logements de classes E à G, avec un Coup de pouce réservé au parc social en maison individuelle.
 
 ### [ACTION] Solaire et chauffe-eau thermodynamique : nouvelles bonifications
 
-**Le texte.** Arrêté du 17 août 2026, publié au JO du 23 août 2026.
+**Le texte.** Arrêté du 17 août 2026, publié au JO nº 196 du 23 août 2026.
 
 **Période.** Opérations engagées **du 1er septembre au 31 décembre 2026**.
 
 | Fiche | Équipement | Ménages modestes | Autres ménages |
 |---|---|---|---|
-| BAR-TH-143 | Système solaire combiné (résidences principales) | ×5 | ×4 |
+| BAR-TH-143 | Système solaire combiné | ×5 | ×4 |
 | BAR-TH-101 | Chauffe-eau solaire individuel | ×5 | ×4 |
-| BAR-TH-168 | Système solaire thermique | ×5 | ×4 |
+| BAR-TH-168 | Dispositif solaire thermique | ×5 | ×4 |
 | BAR-TH-148 | Chauffe-eau thermodynamique à accumulation | **×7** | ×4 |
 | BAR-TH-162 | Système photovoltaïque et thermique à circulation d'eau | ×5 | ×4 |
 
-**Condition.** Les bonifications supposent la **décarbonation complète** des systèmes de chauffage et/ou d'eau chaude sanitaire après travaux. Garder un appareil au gaz, par exemple, fait perdre la bonification.
+**Condition.** Les bonifications supposent la **décarbonation complète** des systèmes de chauffage et/ou d'eau chaude sanitaire après travaux. Conserver un équipement au gaz fait perdre la bonification. Le périmètre exact de cette condition selon la fiche est à vérifier dans le texte.
 
-**Contrôles.** Le même arrêté modifie le cadre de contrôle de BAR-TH-143 et crée des taux et cadres de contrôle pour BAR-TH-101, 148, 162 et 168 (détail en annexe).
+**Qui est concerné.** Installateurs solaires, plombiers-chauffagistes, délégataires qui financent ces gestes.
 
-**Qui est concerné.** Installateurs solaires et plombiers-chauffagistes, délégataires qui financent ces gestes.
+### [ACTION] Rénovation d'ampleur : recentrage sur les classes E à G
 
-### [ACTION] Rénovation d'ampleur : seulement pour les logements E, F et G
-
-**Le texte.** Second arrêté du 17 août 2026, qui modifie BAR-TH-174 (maison) et BAR-TH-175 (appartement).
+**Le texte.** Second arrêté du 17 août 2026, publié au même JO nº 196 du 23 août 2026. Il modifie BAR-TH-174 (maison) et BAR-TH-175 (appartement) et le Coup de pouce associé.
 
 **Ce qui change**, pour les opérations engagées **à partir du 1er septembre 2026** :
 
-- les fiches ne s'appliquent plus qu'aux logements classés **E, F ou G** avant travaux ;
-- pas de cumul avec les fiches des postes déjà valorisés par la rénovation d'ampleur (isolation, chauffage, eau chaude, ventilation) ;
-- en maison individuelle, les travaux ne doivent ni installer ni conserver un équipement de chauffage ou d'eau chaude capable d'utiliser une énergie fossile, gaz compris, sauf raccordement à un réseau de chaleur ou de froid ;
-- le Coup de pouce en maison individuelle est réservé aux logements sociaux et intermédiaires non éligibles aux aides de l'Anah, avec une nouvelle charte (annexe IV-9) et un coefficient de 2 pour les ménages modestes et très modestes.
+- les fiches ne visent plus que les logements de **classes énergétiques E à G** ;
+- en maison individuelle (BAR-TH-174), la production de chauffage et d'eau chaude doit être **totalement décarbonée après travaux** ;
+- la règle de cumul avec les autres fiches est revue, en tenant compte de la date d'achèvement des travaux ;
+- le Coup de pouce « Rénovation d'ampleur » en maison individuelle est recentré sur le **parc social** (logements sociaux et intermédiaires), avec un coefficient 2 pour les ménages modestes. Les logements conventionnés avec l'Anah relèvent d'une procédure distincte.
 
 ## Calendrier
 
 | Date | Échéance |
 |---|---|
-| 1er septembre 2026 | Nouvelles bonifications solaire et CET ; nouvelles règles de rénovation d'ampleur ; agrément PAC |
+| 1er septembre 2026 | Bonifications solaire et CET ; nouvelles règles de rénovation d'ampleur ; agrément PAC |
 | 31 décembre 2026 | Fin des bonifications solaire et CET |
 
 ## Sources
 
+- [Arrêté du 17 août 2026 sur BAR-TH-174 et BAR-TH-175 (AIDA-Ineris, texte publié au JO)](https://aida.ineris.fr/node/46368)
 - [FFB : dispositif CEE, ce qui change au 1er septembre 2026](https://www.ffbatiment.fr/actualites-batiment/actualite/dispositif-cee-ce-qui-change-au-1er-septembre-2026)
 - [Selectra : le bonus CEE des chauffe-eau thermodynamiques passe à ×7, pour quatre mois](https://selectra.info/energie/actualites/renovation-energetique/cee-bonification-chauffe-eau-solaire-thermodynamique-septembre-2026)
+- [Argile : CET et solaire thermique, bonification ×7 au 1er septembre 2026](https://www.argile.ai/blog/chauffe-eau-thermodynamique-et-solaire-nouvelle-bonification-cee)
+- [Lexis Veille : recentrage des aides à la rénovation d'ampleur au 1er septembre 2026](https://www.lexisveille.fr/cee-recentrage-des-aides-la-renovation-dampleur-compter-du-1er-septembre-2026)
