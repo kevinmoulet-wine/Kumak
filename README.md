@@ -74,15 +74,15 @@ Chemin : Web Cloud → Noms de domaine → kumak.fr → **Zone DNS**.
 
 3. Attendre de quelques minutes à 24 h, sans supprimer ni recréer d'enregistrement pendant ce temps.
 
-### 3. Adresse lettre@kumak.fr (5 min)
+### 3. Adresse contact@kumak.fr (5 min)
 
-Chemin : Web Cloud → **E-mails** → kumak.fr → **Redirections**. Ajouter une redirection de `lettre@kumak.fr` vers ta boîte personnelle. Elle s'appuie sur les MX OVH, d'où la consigne de ne pas les toucher.
+Chemin : Web Cloud → **E-mails** → kumak.fr → **Redirections**. Ajouter une redirection de `contact@kumak.fr` vers ta boîte personnelle. Elle s'appuie sur les MX OVH, d'où la consigne de ne pas les toucher.
 
 ### 4. Brevo : inscriptions et envois (20 min)
 
 1. Créer un compte sur brevo.com, puis une liste **KUMAK – Le Relevé**.
 2. **Expéditeurs, domaines et IP dédiées → Domaines → Ajouter un domaine** : `kumak.fr`. Brevo affiche 3 ou 4 enregistrements (code Brevo, DKIM, DMARC). Les copier dans la zone DNS OVH, puis cliquer sur **Authentifier**.
-3. **Expéditeurs** : ajouter `KUMAK <lettre@kumak.fr>`.
+3. **Expéditeurs** : ajouter `KUMAK <contact@kumak.fr>`.
 4. **Contacts → Formulaires → Créer un formulaire d'inscription** :
    - liste : KUMAK – Le Relevé ;
    - **double opt-in activé**, avec un e-mail de confirmation en français ;

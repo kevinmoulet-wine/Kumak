@@ -16,7 +16,7 @@ document.querySelectorAll("form[data-signup]").forEach(function (form) {
     if (form.querySelector(".hp").value) return; // robot
 
     if (!action) {
-      box.textContent = "Les inscriptions ouvrent très bientôt. En attendant, écrivez à lettre@kumak.fr pour être prévenu.";
+      box.textContent = "Les inscriptions ouvrent très bientôt. En attendant, écrivez à contact@kumak.fr pour être prévenu.";
       return;
     }
 
@@ -26,7 +26,7 @@ document.querySelectorAll("form[data-signup]").forEach(function (form) {
       .then(function () { window.location.href = "/merci/"; })
       .catch(function () {
         btn.disabled = false;
-        box.textContent = "L'inscription n'est pas passée. Réessayez ou écrivez à lettre@kumak.fr.";
+        box.textContent = "L'inscription n'est pas passée. Réessayez ou écrivez à contact@kumak.fr.";
       });
   });
 });
