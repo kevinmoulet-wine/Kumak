@@ -391,6 +391,24 @@ const urls = ["/", "/editions/", "/mentions-legales/", "/confidentialite/",
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map((u) => `<url><loc>${cfg.url}${u}</loc></url>`).join("")}</urlset>`);
 
+// ---------- mode maintenance : site hors ligne ----------
+if (cfg.maintenance) {
+  rmSync(OUT, { recursive: true, force: true });
+  mkdirSync(OUT, { recursive: true });
+  for (const f of ["style.css", "favicon.svg", "CNAME", "fonts"]) cpSync(join("static", f), join(OUT, f), { recursive: true });
+  const off = `<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KUMAK</title><meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"></head>
+<body>${ladder}<div class="wrap"><header class="nav"><span class="logo">KUMAK <small>VEILLE CEE</small></span></header>
+<main class="article narrow"><h1>Bientôt de retour.</h1><p class="lede">Le site est momentanément indisponible.</p></main></div></body></html>`;
+  writeFileSync(join(OUT, "index.html"), off);
+  writeFileSync(join(OUT, "404.html"), off);
+  writeFileSync(join(OUT, "robots.txt"), "User-agent: *\nDisallow: /\n");
+  console.log("MODE MAINTENANCE : seule la page « Bientôt de retour » est publiée.");
+  process.exit(0);
+}
+
 // ---------- fichiers statiques ----------
 cpSync("static", OUT, { recursive: true });
 
