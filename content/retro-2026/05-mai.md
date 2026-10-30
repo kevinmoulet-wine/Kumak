@@ -75,19 +75,62 @@ L'arrêté du 11 mai 2026 (JO nº 112 du 13 mai 2026) fixe, à partir du **1er j
 
 ### Agrément PAC (BAR-TH-171 et BAR-TH-172)
 
-| Bloc | Impact |
+**1. Champs à ajouter sur l'opération**
+
+| Champ | Type | Valeurs |
+|---|---|---|
+| Date d'engagement | Date | Date de signature du devis |
+| Référence du modèle de PAC | Texte | Référence exacte du fabricant |
+| Numéro d'agrément | Texte | Tel qu'il figure dans la liste de l'ADEME |
+| Modèle agréé à la date d'engagement | Oui / Non, calculé | Calculé à partir de la liste des modèles agréés |
+| Résidence principale | Oui / Non | |
+| Équipement remplacé | Liste | Chaudière charbon, chaudière fioul, chaudière gaz, autre |
+
+**2. Règle de bonification**
+
+Pour une opération BAR-TH-171 ou BAR-TH-172 **engagée à partir du 1er septembre 2026** :
+
+```
+SI    résidence principale = Oui
+ET    équipement remplacé = chaudière charbon, fioul ou gaz
+ET    modèle agréé à la date d'engagement = Oui
+ALORS coefficient de bonification = 5
+SINON pas de bonification
+```
+
+Pour une opération engagée **avant le 1er septembre 2026**, l'agrément n'est pas exigé : la règle précédente continue de s'appliquer.
+
+**3. Table de référence à importer**
+
+| Colonne | Contenu |
 |---|---|
-| Données | Référence du modèle de PAC, numéro d'agrément, date d'engagement (signature du devis) |
-| Règles | Coefficient 5 seulement si le modèle est agréé **à la date d'engagement**, pour une résidence principale, en remplacement d'une chaudière charbon, fioul ou gaz |
-| Référentiels | Liste des modèles agréés publiée par l'ADEME, modifiée par arrêté |
-| Documents | La preuve de réalisation doit mentionner le numéro d'agrément |
-| Délais | Contrôle à appliquer aux opérations engagées à partir du 1er septembre 2026 |
+| Référence du modèle | Référence fabricant |
+| Numéro d'agrément | |
+| Type d'agrément | Définitif ou transitoire |
+| Date de début | Date d'entrée en vigueur de l'arrêté qui ajoute le modèle |
+| Date de fin | Pour un agrément transitoire seulement |
+
+La liste est modifiée par arrêté (2 juillet, 6 octobre 2026…) : prévoyez une mise à jour à chaque nouvel arrêté, sans effacer l'historique. Un modèle ajouté le 15 septembre ne doit pas être considéré comme agréé pour un devis du 10 septembre.
+
+**4. Document**
+
+La preuve de réalisation doit afficher le numéro d'agrément du modèle installé.
+
+**5. Cas de test**
+
+| Date du devis | Remplace | Résidence principale | Modèle | Résultat attendu |
+|---|---|---|---|---|
+| 28/08/2026 | Chaudière gaz | Oui | Non agréé | Agrément non exigé, règle précédente |
+| 02/09/2026 | Chaudière fioul | Oui | Agréé depuis le 06/07 | Coefficient 5 |
+| 02/09/2026 | Chaudière gaz | Oui | Non agréé | Pas de bonification |
+| 02/09/2026 | Chaudière gaz | Non | Agréé | Pas de bonification |
+| 10/09/2026 | Chaudière gaz | Oui | Ajouté à la liste le 15/09 | Pas de bonification |
 
 **Selon votre outil**
 
-- **Développé en interne** : transmettez ce tableau à votre équipe comme expression de besoin.
-- **Outil généraliste paramétrable** : ajoutez le champ « numéro d'agrément », une règle qui bloque la bonification si le modèle n'est pas dans la liste à la date d'engagement, et un import régulier de la liste.
-- **Progiciel CEE du marché** : demandez à l'éditeur à quelle date la règle est prise en charge, comment la liste ADEME est mise à jour et si le numéro d'agrément apparaît sur la preuve de réalisation.
+- **Développé en interne** : les sections 1 à 5 forment l'expression de besoin ; les cas de test servent de recette.
+- **Outil généraliste paramétrable** : créez les champs, la table de référence et une règle de validation qui bloque la bonification quand la condition n'est pas remplie.
+- **Progiciel CEE du marché** : donnez les cas de test à l'éditeur et demandez-lui de confirmer le résultat obtenu pour chacun.
 
 ## Calendrier
 
