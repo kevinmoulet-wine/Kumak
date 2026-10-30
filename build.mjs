@@ -168,19 +168,10 @@ const sample = latest
 write("index.html", page({
   path: "/",
   body: `<main>
-<div class="hero" id="inscription">
-  <div>
-    <div class="eyebrow">6ᵉ période CEE · 2026–2030</div>
-    <h1>Chaque arrêté CEE, <em>décodé en 5 minutes.</em></h1>
-    <p class="lede">Nouvelles fiches, bonifications, règles de contrôle : KUMAK lit le Journal officiel à votre place et vous dit ce que ça change pour vos dossiers, vos primes et vos marges.</p>
-    ${signupForm("email-hero")}
-    <div class="facts">
-      <div class="fact"><b>1 050</b><span>TWhc d'obligation par an</span></div>
-      <div class="fact"><b>280</b><span>TWhc pour la précarité</span></div>
-      <div class="fact"><b>5 min</b><span>de lecture le lundi</span></div>
-    </div>
-  </div>
-  ${sample}
+<div class="intro">
+  <div class="eyebrow">6ᵉ période CEE · 2026–2030</div>
+  <h1>Chaque arrêté CEE, <em>décodé en 5 minutes.</em></h1>
+  <p class="lede">Nouvelles fiches, bonifications, règles de contrôle : KUMAK lit le Journal officiel à votre place et vous dit ce que ça change pour vos dossiers, vos primes et vos marges.</p>
 </div>
 <section class="doors" aria-label="Vous êtes…">
   <a class="door" href="/verificateur/">
@@ -196,6 +187,19 @@ write("index.html", page({
     <span class="door-cta">Lire la veille →</span>
   </a>
 </section>
+<div class="hero" id="inscription">
+  <div>
+    <div class="eyebrow">Gratuit · chaque lundi</div>
+    <h2>Recevez la veille dans votre boîte mail.</h2>
+    ${signupForm("email-hero")}
+    <div class="facts">
+      <div class="fact"><b>1 050</b><span>TWhc d'obligation par an</span></div>
+      <div class="fact"><b>280</b><span>TWhc pour la précarité</span></div>
+      <div class="fact"><b>5 min</b><span>de lecture le lundi</span></div>
+    </div>
+  </div>
+  ${sample}
+</div>
 
 <section>
   <div class="eyebrow">Ce que vous recevez</div>
