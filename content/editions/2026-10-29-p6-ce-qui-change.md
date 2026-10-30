@@ -72,10 +72,6 @@ Au sein d'un même groupe, une seule société peut bénéficier de la franchise
 - **Coefficients d'obligation** : ils sont révisés pour chaque énergie. La part précarité s'obtient en appliquant un coefficient de 0,364 à l'obligation classique, ce qui donne un volume équivalent à la moyenne annuelle de la P5.
 - **Registre** : la DGEC annonce une refonte, avec la déclaration de toutes les opérations dès leur engagement et non plus seulement à leur achèvement. À suivre.
 
-## Cours du CEE
-
-Cette rubrique est mensuelle. Elle commence dans une prochaine édition, avec le dernier prix public connu et sa source.
-
 ## Sources
 
 - [Décret n° 2025-1048 du 30 octobre 2025, JORF du 4 novembre 2025, texte n° 21 (Légifrance)](https://www.legifrance.gouv.fr/jorf/jo/2025/11/04/0259)

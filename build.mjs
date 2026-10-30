@@ -51,7 +51,7 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
     if (!data.brouillon && todo) throw new Error(`${f} : il reste des « À COMPLÉTER ». Complétez-les ou remettez « brouillon: true ».`);
     let html = marked.parse(body);
     const items = [];
-    html = html.replace(/<h3>\[(ACTION|SURVEILLER|À LIRE)\]\s*(.*?)<\/h3>/g, (_, k, t) => { items.push({ k, t }); return `<h3>${badge(k)} <span>${t}</span></h3>`; });
+    html = html.replace(/<h3>\[(ACTION|SURVEILLER|À LIRE)\]\s*(.*?)<\/h3>/g, (_, k, t) => { items.push({ k, t }); const id = `t${items.length}`; return `<h3 id="${id}">${badge(k)} <span>${t}</span></h3>`; });
     // Rubrique « Concrètement, pour vous » : une carte par profil
     // Markdown attendu : - **Vous êtes…** puis sous-liste « Ce qui change : … », « Exemple : … », « À faire : … »
     html = html.replace(/<h2>Concrètement, pour vous<\/h2>\s*([\s\S]*?)(?=<h2|<h3>(?:<span class="imp)|$)/, (_, lis) => {
@@ -80,6 +80,8 @@ const retros = loadSeries("content/retro-2026", ["numero", "date", "periode", "t
   .sort((a, b) => a.numero - b.numero);
 
 // ---------- gabarits ----------
+const toc = (items) => items.length < 2 ? "" : `<nav class="toc" aria-label="Dans ce numéro"><div class="eyebrow">Dans ce numéro</div><ol>${items.map((it, i) => `<li><a href="#t${i + 1}">${badge(it.k)}<span>${it.t}</span></a></li>`).join("")}</ol></nav>`;
+
 const ladder = `<div class="ladder" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>`;
 
 function signupForm(id, label = "Recevoir l'édition gratuite du lundi") {
@@ -218,7 +220,7 @@ ${retros.length ? `<section class="retro-band">
     <div class="plan next">
       <div class="pname">Pro · bientôt</div>
       <div class="price" style="font-size:34px">À venir</div>
-      <ul><li>Fiches décodées et archive complète</li><li>Calendrier des échéances</li><li>Check-lists de contrôle</li><li>Questions-réponses des abonnés</li></ul>
+      <ul><li>Impact sur vos outils, détaillé pour chaque texte</li><li>Cas de test prêts à l'emploi</li><li>Calendrier des échéances</li><li>Questions-réponses des abonnés</li></ul>
       <p class="sub">Les inscrits gratuits seront consultés sur le prix et bénéficieront d'un tarif de lancement.</p>
     </div>
   </div>
@@ -246,7 +248,7 @@ for (const e of editions) {
   <p class="meta"><a href="/editions/">Éditions</a> · Nº ${e.numero} · ${dateFr(e.date)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
   <h1>${esc(e.titre)}</h1>
   <p class="lede">${esc(e.accroche)}</p>
-  <div class="prose">${e.html}</div>
+  ${toc(e.items)}<div class="prose">${e.html}</div>
   <p class="disclaimer">KUMAK est une veille d'information. Elle ne constitue pas un conseil juridique : vérifiez toujours le texte officiel, et consultez un avocat pour une situation particulière.</p>
   <div class="cta-box" id="inscription">
     <h2>Recevez la prochaine édition.</h2>
@@ -294,7 +296,7 @@ for (const [i, r] of retros.entries()) {
   <h1>${esc(r.titre)}</h1>
   <p class="lede">${esc(r.accroche)}</p>
   <p class="retro-note">Numéro de la rétrospective 2026, mis en ligne le ${dateFr(r.date)}. Il reprend l'actualité de la période couverte ; certaines règles ont pu évoluer depuis.</p>
-  <div class="prose">${r.html}</div>
+  ${toc(r.items)}<div class="prose">${r.html}</div>
   <nav class="retro-nav" aria-label="Numéros de la rétrospective">
     ${prev ? `<a href="/retro-2026/${prev.slug}/">← ${esc(prev.periode)}</a>` : "<span></span>"}
     ${next ? `<a href="/retro-2026/${next.slug}/">${esc(next.periode)} →</a>` : `<a href="/editions/">Les éditions hebdo →</a>`}
