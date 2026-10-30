@@ -255,3 +255,4 @@ footer nav{display:flex;gap:16px;flex-wrap:wrap}
 .doors{padding-block:8px 48px}
 .hero h2{margin-top:6px}
 @media (max-width:520px){.intro{padding-block:16px 20px}.door{padding:18px}.doors{gap:12px;padding-bottom:36px}}
+.door-q{color:var(--muted);font-size:17px;line-height:1.4}

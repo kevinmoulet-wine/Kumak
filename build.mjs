@@ -175,15 +175,15 @@ write("index.html", page({
 </div>
 <section class="doors" aria-label="Vous êtes…">
   <a class="door" href="/verificateur/">
-    <span class="eyebrow">Vous posez des équipements</span>
-    <strong>Ce chantier a-t-il droit à la bonification ?</strong>
-    <span class="door-who">Installateurs, artisans RGE</span>
+    <span class="eyebrow">Installateurs, artisans RGE</span>
+    <strong>Vous posez des équipements</strong>
+    <span class="door-q">Ce chantier a-t-il droit à la bonification ?</span>
     <span class="door-cta">Vérifier un chantier →</span>
   </a>
   <a class="door" href="/veille/">
-    <span class="eyebrow">Vous financez ou gérez des CEE</span>
-    <strong>Les textes CEE décodés, par impact.</strong>
-    <span class="door-who">Obligés, délégataires, mandataires</span>
+    <span class="eyebrow">Obligés, délégataires, mandataires</span>
+    <strong>Vous financez ou gérez des CEE</strong>
+    <span class="door-q">Les textes CEE décodés, classés par impact.</span>
     <span class="door-cta">Lire la veille →</span>
   </a>
 </section>
