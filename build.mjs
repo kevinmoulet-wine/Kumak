@@ -231,10 +231,12 @@ ${retros.length ? `<section class="retro-band">
 <section>
   <div class="eyebrow">Questions fréquentes</div>
   <h2>Avant de vous inscrire.</h2>
+  <div class="faq">
   <details><summary>Qui rédige KUMAK ?</summary><p>Un consultant qui conçoit depuis plusieurs années des systèmes de gestion des CEE pour des fournisseurs d'énergie. Chaque analyse cite le texte source sur Légifrance.</p></details>
   <details><summary>Est-ce un conseil juridique ?</summary><p>Non. KUMAK est une veille d'information. Pour un litige ou un contrôle en cours, adressez-vous à un avocat spécialisé.</p></details>
   <details><summary>Que faites-vous de mon adresse e-mail ?</summary><p>Elle sert uniquement à vous envoyer KUMAK. Elle n'est ni vendue ni partagée. Vous pouvez vous désinscrire en un clic depuis chaque e-mail. Le détail figure sur la page <a href="/confidentialite/">Confidentialité</a>.</p></details>
   <details><summary>Je ne reçois pas l'e-mail de confirmation.</summary><p>Vérifiez vos indésirables, puis écrivez à <a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a>.</p></details>
+  </div>
 </section>
 </main>`,
 }));
