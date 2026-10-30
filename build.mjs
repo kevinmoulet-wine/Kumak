@@ -6,6 +6,8 @@ import { join } from "node:path";
 import { marked } from "marked";
 
 const DRAFTS = process.argv.includes("--drafts");
+import { createHash } from "node:crypto";
+const ASSET_V = createHash("md5").update(readFileSync("static/style.css")).update(readFileSync("static/signup.js")).digest("hex").slice(0, 8);
 const cfg = JSON.parse(readFileSync("site.config.json", "utf8"));
 const OUT = "dist";
 rmSync(OUT, { recursive: true, force: true });
@@ -117,7 +119,7 @@ function page({ title, description = cfg.description, path = "/", body, type = "
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/rss+xml" title="${cfg.name}" href="/feed.xml">
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/style.css?v=${ASSET_V}">
 </head>
 <body>
 ${ladder}
@@ -142,7 +144,7 @@ ${body}
   </nav>
 </footer>
 </div>
-<script src="/signup.js" defer></script>
+<script src="/signup.js?v=${ASSET_V}" defer></script>
 </body>
 </html>`;
 }
@@ -419,7 +421,7 @@ if (cfg.maintenance) {
   const off = `<!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KUMAK</title><meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"></head>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css?v=${ASSET_V}"></head>
 <body>${ladder}<div class="wrap"><header class="nav"><span class="logo">KUMAK <small>VEILLE CEE</small></span></header>
 <main class="article narrow"><h1>Bientôt de retour.</h1><p class="lede">Le site est momentanément indisponible.</p></main></div></body></html>`;
   writeFileSync(join(OUT, "index.html"), off);
