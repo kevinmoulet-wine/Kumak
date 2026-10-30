@@ -50,6 +50,16 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
     let html = marked.parse(body);
     const items = [];
     html = html.replace(/<h3>\[(ACTION|SURVEILLER|À LIRE)\]\s*(.*?)<\/h3>/g, (_, k, t) => { items.push({ k, t }); return `<h3>${badge(k)} <span>${t}</span></h3>`; });
+    // Rubrique « Concrètement, pour vous » : une carte par profil
+    html = html.replace(/<h2>Concrètement, pour vous<\/h2>\s*<ul>([\s\S]*?)<\/ul>/, (_, lis) => {
+      const cards = [...lis.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, li]) => {
+        const m = li.match(/^\s*<strong>(.*?)<\/strong>\s*(?:\(([^)]*)\))?\s*:\s*([\s\S]*)$/);
+        if (!m) return `<div class="profile"><p>${li}</p></div>`;
+        const [, who, detail, text] = m;
+        return `<div class="profile"><h3>${who}</h3>${detail ? `<p class="who-detail">${detail}</p>` : ""}<p>${text.trim().replace(/^./, (c) => c.toUpperCase())}</p></div>`;
+      }).join("");
+      return `<section class="profiles" aria-label="Concrètement, pour vous"><h2>Concrètement, pour vous</h2><div class="profile-grid">${cards}</div></section>`;
+    });
     return { ...data, date: String(data.date), slug, html, items, todo };
   })
   .filter((e) => DRAFTS || !e.brouillon);

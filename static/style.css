@@ -134,6 +134,14 @@ details p{margin:10px 0 0;color:var(--muted);max-width:65ch}
 .archive span.acc{color:var(--muted);font-size:15px}
 .draft-flag{font-family:var(--mono);font-size:11px;color:var(--warn);border:1px solid currentColor;padding:1px 6px;border-radius:3px;margin-left:8px}
 
+.prose .profiles{margin:40px 0;padding:0;border:0}
+.prose .profiles h2{margin-top:0}
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.profile{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:6px;padding:16px 18px}
+.prose .profile h3{margin:0 0 6px;font-size:16px;display:block}
+.profile .who-detail{margin:0 0 8px;font-size:13px;color:var(--muted)}
+.profile p{margin:0;font-size:15px;line-height:1.55}
+
 .retro-band{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-block:32px}
 .retro-band h2{margin:8px 0 0;font-size:clamp(24px,3.4vw,32px)}
 .retro-box{margin-top:40px;padding:24px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;background:var(--surface)}

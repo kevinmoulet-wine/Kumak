@@ -12,6 +12,14 @@ brouillon: false
 - **Les CEE délivrés depuis le 1er janvier 2026 expirent au bout de 12 ans** : ils sont annulés automatiquement du compte de leur détenteur.
 - **Délégataires : la barre monte.** Il faut un volume minimal plus élevé et un système qualité certifié. Avant d'engager une opération P6 avec un partenaire, vérifiez que son statut est validé par le PNCEE.
 
+## Concrètement, pour vous
+
+- **Vous êtes un obligé** (fournisseur d'énergie, distributeur de carburant) : votre obligation annuelle se calcule avec les nouveaux coefficients de la P6, dont une part précarité. Les certificats que vous achetez ou obtenez depuis janvier ont désormais une date de péremption de 12 ans : suivez leur date de délivrance dans votre gestion de stock. Si vous déléguez une partie de votre obligation, le volume minimal passe à 2 TWhc.
+- **Vous êtes délégataire ou mandataire** : pour garder ou obtenir le statut, il faut au moins 300 GWh cumac, un système de management de la qualité certifié et une capacité technique et financière suffisante. Tant que le PNCEE n'a pas validé votre statut P6, vos partenaires ne peuvent pas engager d'opérations P6 avec vous.
+- **Vous êtes installateur ou artisan RGE** : avant de proposer une prime CEE à un client, vérifiez que l'organisme qui la finance a bien son statut P6 validé. Sinon, la prime promise risque de ne jamais être versée, et c'est vers vous que le client se retournera.
+- **Vous distribuez du fioul ou des carburants** : la franchise tombe à 500 m³ (2 000 t pour le GPL carburant). Une entreprise de taille moyenne peut donc devenir obligée, avec des CEE à acheter ou à produire. Dans un groupe, une seule société bénéficie de la franchise.
+- **Vous êtes un particulier** : rien ne change directement pour vous, les primes CEE continuent. Une règle reste essentielle : la proposition de prime doit vous être faite **avant** la signature du devis. Une prime proposée après coup n'est pas valable.
+
 ## Le texte de référence
 
 **Décret n° 2025-1048 du 30 octobre 2025** relatif à la sixième période du dispositif des certificats d'économies d'énergie, publié au JO du 4 novembre 2025 (texte n° 21). Il couvre la période du **1er janvier 2026 au 31 décembre 2030**.
