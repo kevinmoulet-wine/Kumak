@@ -14,11 +14,26 @@ brouillon: false
 
 ## Concrètement, pour vous
 
-- **Vous êtes un obligé** (fournisseur d'énergie, distributeur de carburant) : votre obligation annuelle se calcule avec les nouveaux coefficients de la P6, dont une part précarité. Les certificats que vous achetez ou obtenez depuis janvier ont désormais une date de péremption de 12 ans : suivez leur date de délivrance dans votre gestion de stock. Si vous déléguez une partie de votre obligation, le volume minimal passe à 2 TWhc.
-- **Vous êtes délégataire ou mandataire** : pour garder ou obtenir le statut, il faut au moins 300 GWh cumac, un système de management de la qualité certifié et une capacité technique et financière suffisante. Tant que le PNCEE n'a pas validé votre statut P6, vos partenaires ne peuvent pas engager d'opérations P6 avec vous.
-- **Vous êtes installateur ou artisan RGE** : avant de proposer une prime CEE à un client, vérifiez que l'organisme qui la finance a bien son statut P6 validé. Sinon, la prime promise risque de ne jamais être versée, et c'est vers vous que le client se retournera.
-- **Vous distribuez du fioul ou des carburants** : la franchise tombe à 500 m³ (2 000 t pour le GPL carburant). Une entreprise de taille moyenne peut donc devenir obligée, avec des CEE à acheter ou à produire. Dans un groupe, une seule société bénéficie de la franchise.
-- **Vous êtes un particulier** : rien ne change directement pour vous, les primes CEE continuent. Une règle reste essentielle : la proposition de prime doit vous être faite **avant** la signature du devis. Une prime proposée après coup n'est pas valable.
+- **Vous êtes installateur ou artisan RGE**
+  - Ce qui change : le financeur de la prime doit avoir son statut validé pour la P6.
+  - Exemple : vous remplacez une chaudière gaz par une PAC air/eau (fiche BAR-TH-171). Si le financeur n'est pas validé, la prime promise au client peut ne jamais être versée.
+  - À faire : avant le devis, demandez au financeur la preuve que son statut P6 est validé par le PNCEE.
+- **Vous êtes un particulier**
+  - Ce qui change : rien pour vous, les primes CEE continuent.
+  - Exemple : vous changez une chaudière fioul pour une pompe à chaleur. L'entreprise doit vous proposer la prime CEE **avant** que vous signiez le devis.
+  - À faire : ne signez pas un devis si la prime n'a pas été proposée avant.
+- **Vous êtes délégataire ou mandataire**
+  - Ce qui change : il faut au moins 300 GWh cumac, un système qualité certifié et une capacité technique et financière suffisante.
+  - Exemple : un délégataire qui gère 200 GWh cumac ne remplit plus la condition de volume.
+  - À faire : faites valider votre statut P6 par le PNCEE avant d'engager des opérations.
+- **Vous distribuez du fioul ou des carburants**
+  - Ce qui change : le seuil pour devenir obligé passe de 1 000 m³ à 500 m³ pour le fioul domestique.
+  - Exemple : vous vendez 800 m³ de fioul par an. Vous n'étiez pas obligé en P5 ; vous l'êtes en P6.
+  - À faire : prévoyez d'acheter ou de produire des CEE pour couvrir votre obligation.
+- **Vous êtes un obligé**
+  - Ce qui change : les CEE délivrés depuis le 1er janvier 2026 sont annulés au bout de 12 ans.
+  - Exemple : un CEE délivré le 15 mars 2026 sera annulé automatiquement le 15 mars 2038.
+  - À faire : suivez la date de délivrance de chaque lot dans votre gestion de stock.
 
 ## Le texte de référence
 

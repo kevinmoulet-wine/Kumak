@@ -140,7 +140,9 @@ details p{margin:10px 0 0;color:var(--muted);max-width:65ch}
 .profile{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:6px;padding:16px 18px}
 .prose .profile h3{margin:0 0 6px;font-size:16px;display:block}
 .profile .who-detail{margin:0 0 8px;font-size:13px;color:var(--muted)}
-.profile p{margin:0;font-size:15px;line-height:1.55}
+.profile p{margin:0 0 10px;font-size:15px;line-height:1.5}
+.profile p:last-child{margin-bottom:0}
+.profile .lbl{display:block;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:2px}
 
 .retro-band{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-block:32px}
 .retro-band h2{margin:8px 0 0;font-size:clamp(24px,3.4vw,32px)}
