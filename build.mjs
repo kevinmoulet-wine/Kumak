@@ -127,9 +127,8 @@ ${ladder}
 <header class="nav">
   <a class="logo" href="/">KUMAK <small>VEILLE CEE</small></a>
   <nav aria-label="Navigation principale">
+    <a href="/veille/">Veille</a>
     <a href="/verificateur/">Vérificateur</a>
-    <a href="/editions/">Éditions</a>
-    <a href="/#offres">Offres</a>
     <a class="btn-sm" href="/#inscription">S'inscrire</a>
   </nav>
 </header>
@@ -137,7 +136,8 @@ ${body}
 <footer>
   <span>${cfg.name} · kumak.fr · veille des certificats d'économies d'énergie. Information, pas de conseil juridique.</span>
   <nav aria-label="Pied de page">
-    <a href="/editions/">Éditions</a>
+    <a href="/veille/">Veille</a>
+    <a href="/verificateur/">Vérificateur</a>
     <a href="/feed.xml">RSS</a>
     <a href="/mentions-legales/">Mentions légales</a>
     <a href="/confidentialite/">Confidentialité</a>
@@ -182,14 +182,20 @@ write("index.html", page({
   </div>
   ${sample}
 </div>
-<section class="retro-band tool-band">
-  <div><div class="eyebrow">Outil gratuit pour les poseurs</div><h2>Ce chantier a-t-il droit à la bonification ?</h2></div>
-  <a class="btn" href="/verificateur/">Vérifier un chantier →</a>
+<section class="doors" aria-label="Vous êtes…">
+  <a class="door" href="/verificateur/">
+    <span class="eyebrow">Vous posez des équipements</span>
+    <strong>Ce chantier a-t-il droit à la bonification ?</strong>
+    <span class="door-who">Installateurs, artisans RGE</span>
+    <span class="door-cta">Vérifier un chantier →</span>
+  </a>
+  <a class="door" href="/veille/">
+    <span class="eyebrow">Vous financez ou gérez des CEE</span>
+    <strong>Les textes CEE décodés, par impact.</strong>
+    <span class="door-who">Obligés, délégataires, mandataires</span>
+    <span class="door-cta">Lire la veille →</span>
+  </a>
 </section>
-${retros.length ? `<section class="retro-band">
-  <div><div class="eyebrow">Rétrospective 2026</div><h2>Janvier à octobre : 10 mois de P6 décodés.</h2></div>
-  <a class="btn" href="/retro-2026/">Lire la rétrospective →</a>
-</section>` : ""}
 
 <section>
   <div class="eyebrow">Ce que vous recevez</div>
@@ -254,7 +260,7 @@ for (const e of editions) {
     path: `/editions/${e.slug}/`,
     type: "article",
     body: `<main class="article narrow">
-  <p class="meta"><a href="/editions/">Éditions</a> · Nº ${e.numero} · ${dateFr(e.date)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
+  <p class="meta"><a href="/veille/">Veille</a> · Nº ${e.numero} · ${dateFr(e.date)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
   <h1>${esc(e.titre)}</h1>
   <p class="lede">${esc(e.accroche)}</p>
   ${toc(e.items)}<div class="prose">${e.html}</div>
@@ -268,27 +274,27 @@ for (const e of editions) {
   }));
 }
 
-write("editions/index.html", page({
-  title: "Éditions",
-  description: "Toutes les éditions de KUMAK, la veille réglementaire CEE.",
-  path: "/editions/",
-  body: `<main class="article narrow">
-  <div class="eyebrow">Archives</div>
-  <h1>Les éditions</h1>
+const veilleBody = `<main class="article narrow">
+  <div class="eyebrow">Veille</div>
+  <h1>La veille CEE</h1>
+  <p class="lede">Les textes CEE décodés : ce qui change, pour qui, et ce qu'il faut faire.</p>
+  <h2 class="list-title">Éditions hebdo</h2>
   ${editions.length
     ? `<ul class="archive">${editions.map((e) => `<li><a href="/editions/${e.slug}/"><span class="num">Nº ${e.numero}<br>${dateFr(e.date)}</span><span><strong>${esc(e.titre)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</strong><span class="acc">${esc(e.accroche)}</span></span></a></li>`).join("")}</ul>`
-    : `<p class="lede">La première édition paraît bientôt. Inscrivez-vous pour la recevoir.</p>`}
-  ${retros.length ? `<div class="retro-box">
-    <div class="eyebrow">Rétrospective 2026</div>
-    <h2>Les 10 premiers mois de la P6, décodés.</h2>
-    <p>KUMAK a été lancé en octobre 2026. Pour ne pas partir de zéro, nous avons repris l'actualité réglementaire CEE depuis janvier, mois par mois, avec les mêmes règles : chaque texte classé par impact et sourcé.</p>
-    <a class="btn" href="/retro-2026/">Voir la rétrospective →</a>
-  </div>` : ""}
+    : `<p>La première édition paraît bientôt. Inscrivez-vous pour la recevoir.</p>`}
+  ${retros.length ? `<h2 class="list-title">Rétrospective 2026</h2>
+  <p class="list-intro">KUMAK a été lancé en octobre 2026. Cette série reprend, mois par mois, les textes parus depuis le début de la sixième période.</p>
+  <ul class="archive">${retros.map((r) => `<li><a href="/retro-2026/${r.slug}/"><span class="num">${esc(r.periode)}</span><span><strong>${esc(r.titre)}${r.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</strong><span class="acc">${esc(r.accroche)}</span></span></a></li>`).join("")}</ul>` : ""}
   <div class="cta-box" id="inscription">
     <h2>Ne ratez pas la prochaine.</h2>
     ${signupForm("email-arch", "Votre adresse e-mail")}
   </div>
-</main>`,
+</main>`;
+for (const path of ["veille", "editions"]) write(`${path}/index.html`, page({
+  title: "Veille",
+  description: "Toutes les éditions de KUMAK, la veille réglementaire CEE, et la Rétrospective 2026.",
+  path: "/veille/",
+  body: veilleBody,
 }));
 
 // ---------- rétrospective 2026 ----------
@@ -301,14 +307,14 @@ for (const [i, r] of retros.entries()) {
     path: `/retro-2026/${r.slug}/`,
     type: "article",
     body: `<main class="article narrow">
-  <p class="meta"><a href="/retro-2026/">Rétrospective 2026</a> · Nº ${r.numero} · <strong>Période couverte : ${esc(r.periode)}</strong>${r.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
+  <p class="meta"><a href="/veille/">Veille</a> · <a href="/retro-2026/">Rétrospective 2026</a> · Nº ${r.numero} · <strong>Période couverte : ${esc(r.periode)}</strong>${r.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
   <h1>${esc(r.titre)}</h1>
   <p class="lede">${esc(r.accroche)}</p>
   <p class="retro-note">Numéro de la rétrospective 2026, mis en ligne le ${dateFr(r.date)}. Il reprend l'actualité de la période couverte ; certaines règles ont pu évoluer depuis.</p>
   ${toc(r.items)}<div class="prose">${r.html}</div>
   <nav class="retro-nav" aria-label="Numéros de la rétrospective">
     ${prev ? `<a href="/retro-2026/${prev.slug}/">← ${esc(prev.periode)}</a>` : "<span></span>"}
-    ${next ? `<a href="/retro-2026/${next.slug}/">${esc(next.periode)} →</a>` : `<a href="/editions/">Les éditions hebdo →</a>`}
+    ${next ? `<a href="/retro-2026/${next.slug}/">${esc(next.periode)} →</a>` : `<a href="/veille/">Toute la veille →</a>`}
   </nav>
   <p class="disclaimer">KUMAK est une veille d'information. Elle ne constitue pas un conseil juridique : vérifiez toujours le texte officiel, et consultez un avocat pour une situation particulière.</p>
   <div class="cta-box" id="inscription">
@@ -457,7 +463,7 @@ write("feed.xml", `<?xml version="1.0" encoding="utf-8"?>
 ${editions.filter((e) => !e.brouillon).map((e) => `<item><title>${esc(`Nº ${e.numero} · ${e.titre}`)}</title><link>${cfg.url}/editions/${e.slug}/</link><guid>${cfg.url}/editions/${e.slug}/</guid><pubDate>${rfc822(e.date)}</pubDate><description>${esc(e.accroche)}</description></item>`).join("\n")}
 </channel></rss>`);
 
-const urls = ["/", "/verificateur/", "/editions/", "/mentions-legales/", "/confidentialite/",
+const urls = ["/", "/veille/", "/verificateur/", "/mentions-legales/", "/confidentialite/",
   ...editions.filter((e) => !e.brouillon).map((e) => `/editions/${e.slug}/`),
   ...(retros.some((r) => !r.brouillon) ? ["/retro-2026/"] : []),
   ...retros.filter((r) => !r.brouillon).map((r) => `/retro-2026/${r.slug}/`)];
