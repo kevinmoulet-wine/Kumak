@@ -63,6 +63,9 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
       }).join("");
       return `<section class="profiles" aria-label="Concrètement, pour vous"><h2>Concrètement, pour vous</h2><div class="profile-grid">${cards}</div></section>`;
     });
+    // Section « Impact sur vos outils » : repliée par défaut, réservée aux obligés et délégataires
+    html = html.replace(/<h2>Impact sur vos outils<\/h2>([\s\S]*?)(?=<h2|$)/, (_, inner) =>
+      `<details class="it-impact"><summary><span class="eyebrow">Obligés et délégataires</span><strong>Impact sur vos outils</strong><span class="it-hint">Données, règles, documents : ce qu'il faut adapter</span></summary><div class="it-body">${inner}</div></details>`);
     return { ...data, date: String(data.date), slug, html, items, todo };
   })
   .filter((e) => DRAFTS || !e.brouillon);

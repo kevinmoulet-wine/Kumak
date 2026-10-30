@@ -71,6 +71,24 @@ L'arrêté du 11 mai 2026 (JO nº 112 du 13 mai 2026) fixe, à partir du **1er j
 - Un arrêté du 29 mai 2026 (JO nº 127 du 2 juin 2026) crée le programme d'accompagnement **PRO-INFO-59 « PEPITE »**, éligible jusqu'au 30 juin 2030.
 - Un autre arrêté du 29 mai 2026, publié au même JO, supprime les fiches **AGRI-TH-117** (système de déshumidification thermodynamique fixe pour serres chauffées) et **AGRI-TH-119** (système de déshumidification avec air extérieur) à partir du 3 juin. Les opérations engagées restent valorisables si elles sont recensées sous dix jours.
 
+## Impact sur vos outils
+
+### Agrément PAC (BAR-TH-171 et BAR-TH-172)
+
+| Bloc | Impact |
+|---|---|
+| Données | Référence du modèle de PAC, numéro d'agrément, date d'engagement (signature du devis) |
+| Règles | Coefficient 5 seulement si le modèle est agréé **à la date d'engagement**, pour une résidence principale, en remplacement d'une chaudière charbon, fioul ou gaz |
+| Référentiels | Liste des modèles agréés publiée par l'ADEME, modifiée par arrêté |
+| Documents | La preuve de réalisation doit mentionner le numéro d'agrément |
+| Délais | Contrôle à appliquer aux opérations engagées à partir du 1er septembre 2026 |
+
+**Selon votre outil**
+
+- **Développé en interne** : transmettez ce tableau à votre équipe comme expression de besoin.
+- **Outil généraliste paramétrable** : ajoutez le champ « numéro d'agrément », une règle qui bloque la bonification si le modèle n'est pas dans la liste à la date d'engagement, et un import régulier de la liste.
+- **Progiciel CEE du marché** : demandez à l'éditeur à quelle date la règle est prise en charge, comment la liste ADEME est mise à jour et si le numéro d'agrément apparaît sur la preuve de réalisation.
+
 ## Calendrier
 
 | Date | Échéance |

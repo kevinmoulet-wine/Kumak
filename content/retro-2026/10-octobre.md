@@ -58,6 +58,24 @@ Un arrêté du 6 octobre 2026 modifie l'arrêté du 2 juillet 2026 qui fixe la l
 
 Un arrêté publié au JO du **28 octobre 2026** modifie la fiche AGRI-TH-108. Nous le détaillerons dans une prochaine édition hebdo.
 
+## Impact sur vos outils
+
+### Diligence sur les vendeurs de CEE (CEE délivrés et cédés à partir du 1er novembre 2026)
+
+| Bloc | Impact |
+|---|---|
+| Données | Pour chaque vendeur : dirigeants, bénéficiaires effectifs, assurance professionnelle, attestations fiscales et sociales, procédures collectives, sanctions liées aux CEE, liens de contrôle, volumes achetés sur les 12 derniers mois |
+| Règles | Pas d'ordre de transfert sans formulaire « dûment renseigné, daté et signé » joint au contrat. Vendeurs Anah, collectivités et leurs établissements publics : pas d'évaluation du risque |
+| Référentiels | Modèle de formulaire fixé par l'arrêté du 9 octobre 2026 |
+| Documents | Procédure écrite de choix du vendeur, formulaire signé, pièces justificatives |
+| Délais | À appliquer aux contrats de cession conclus à partir du 1er novembre 2026 |
+
+**Selon votre outil**
+
+- **Développé en interne** : transmettez ce tableau à votre équipe comme expression de besoin.
+- **Outil généraliste paramétrable** : créez une fiche vendeur avec ces pièces et leurs dates de validité, et bloquez l'ordre de transfert tant que le formulaire signé n'est pas joint au contrat.
+- **Progiciel CEE du marché** : demandez à l'éditeur si un module de diligence vendeurs est prévu au 1er novembre, et s'il produit le formulaire au format de l'arrêté.
+
 ## Calendrier
 
 | Date | Échéance |

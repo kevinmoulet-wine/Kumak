@@ -82,6 +82,32 @@ L'arrêté du 21 décembre 2025 impose, pour les opérations engagées à partir
 
 Le 29 juillet 2026 (nº 500483), le Conseil d'État rejette le recours de TotalEnergies Électricité et Gaz France contre une sanction de juillet 2024 : annulation de certificats et suspension de ses demandes sur la fiche BAR-TH-164, après un contrôle où aucune des 32 opérations de l'échantillon n'était conforme. Pour le juge, les valeurs de calcul qui s'écartent des valeurs par défaut doivent être justifiées par le demandeur.
 
+## Impact sur vos outils
+
+### Seuils de non-conformité (dossiers déposés à partir du 30 juillet 2026)
+
+| Bloc | Impact |
+|---|---|
+| Données | Date de dépôt du dossier, fiche, résultat du contrôle de chaque opération : satisfaisante, non satisfaisante, non vérifiable, corrigée |
+| Règles | Taux d'opérations non satisfaisantes par lot et par fiche : 14 % maximum en 2026, 12 % en 2027, 10 % en 2028. Au-delà, ne garder dans le dossier que les opérations satisfaisantes et celles corrigées |
+| Référentiels | Taux minimaux de contrôles satisfaisants de l'annexe II de l'arrêté du 28 septembre 2021, modifiée |
+| Documents | Preuves des mesures correctives pour les opérations corrigées |
+| Délais | Le seuil dépend de l'année de **dépôt**, pas de l'année d'engagement |
+
+### Nouvelles données obligatoires (opérations engagées à partir du 1er juillet 2026)
+
+| Bloc | Impact |
+|---|---|
+| Données | SIRET, coût de l'opération, aides publiques reçues |
+| Règles | Champs obligatoires pour toute opération engagée à partir du 1er juillet 2026 |
+| Documents | Tableaux récapitulatifs et attestations sur l'honneur mis à jour |
+
+**Selon votre outil**
+
+- **Développé en interne** : transmettez ce tableau à votre équipe comme expression de besoin.
+- **Outil généraliste paramétrable** : ajoutez un tableau de bord du taux de non-conformité par lot et par fiche avant dépôt, et rendez obligatoires les trois nouveaux champs à partir de la date d'engagement concernée.
+- **Progiciel CEE du marché** : demandez à l'éditeur si le calcul du taux par lot, avec le seuil de l'année de dépôt, et les nouveaux champs sont disponibles, et depuis quelle version.
+
 ## Calendrier
 
 | Date | Échéance |
