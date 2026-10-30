@@ -14,6 +14,21 @@ brouillon: false
 - Pour chaque suppression, il faut **recenser les opérations engagées sous dix jours** pour qu'elles restent valorisables.
 - **1er février** : les éligibles qui agissent sur leur propre patrimoine n'ont plus à signer les chartes Coup de pouce.
 
+## Concrètement, pour vous
+
+- **Vous installez de l'éclairage LED**
+  - Ce qui change : les fiches BAR-EQ-110, BAT-EQ-127 et IND-BA-116 sont supprimées le 25 février.
+  - Exemple : un chantier de luminaires LED dans des bureaux (BAT-EQ-127) engagé en janvier n'est valorisable que s'il a été recensé avant le 6 mars.
+  - À faire : ne proposez plus de prime CEE sur ces gestes.
+- **Vous faites du désembouage**
+  - Ce qui change : la fiche BAR-SE-109 (réseau de chauffage collectif) est supprimée le 9 février.
+  - Exemple : le désembouage du réseau d'une copropriété signé en février ne donne plus droit à des CEE, sauf s'il était engagé et recensé avant le 18 février.
+  - À faire : retirez la prime CEE de vos offres de désembouage collectif.
+- **Vous êtes bailleur social ou collectivité**
+  - Ce qui change : depuis le 1er février, vous obtenez les Coups de pouce sans signer de charte quand vous agissez sur votre propre patrimoine.
+  - Exemple : un bailleur social qui remplace les chaudières de ses propres immeubles n'a plus de charte Coup de pouce à signer.
+  - À faire : envoyez quand même les informations de la charte à la fréquence prévue.
+
 ### [ACTION] Suppression de BAR-SE-109 : recensement avant le 18 février
 
 **Le texte.** Arrêté du 5 février 2026, publié au JO nº 33 du 8 février 2026.

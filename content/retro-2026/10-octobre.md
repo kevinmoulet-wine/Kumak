@@ -13,6 +13,21 @@ brouillon: false
 - **ACTEE+** : le programme de rénovation des bâtiments publics est prolongé jusqu'au 31 décembre 2027.
 - **PAC agréées** : la liste est mise à jour par un arrêté du 6 octobre.
 
+## Concrètement, pour vous
+
+- **Vous achetez des CEE**
+  - Ce qui change : pour les CEE délivrés et cédés à partir du 1er novembre, un formulaire signé doit accompagner chaque contrat.
+  - Exemple : vous achetez un lot délivré le 5 novembre : le formulaire doit être joint au contrat au plus tard à l'ordre de transfert.
+  - À faire : mettez en place la procédure et le modèle de formulaire avant le 1er novembre.
+- **Vous vendez des CEE**
+  - Ce qui change : vos acheteurs doivent vérifier votre solidité et vos pratiques.
+  - Exemple : attendez-vous à fournir votre attestation d'assurance, vos attestations fiscales et sociales et votre démarche qualité.
+  - À faire : préparez un dossier type à envoyer à chaque acheteur.
+- **Vous êtes une collectivité**
+  - Ce qui change : le programme ACTEE+ est prolongé jusqu'au 31 décembre 2027 ; vos acheteurs n'ont pas à évaluer votre risque.
+  - Exemple : une commune qui vend ses CEE n'a pas à fournir le dossier de diligence demandé aux vendeurs privés.
+  - À faire : profitez du délai d'ACTEE+ pour vos projets de rénovation de bâtiments publics.
+
 ### [ACTION] Cessions de CEE : la diligence sur le vendeur devient obligatoire
 
 **Les textes.** Décret nº 2026-945 du 9 octobre 2026 et arrêté du 9 octobre 2026, publiés au JO du 11 octobre 2026 (textes nº 6 et 7).

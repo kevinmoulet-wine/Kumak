@@ -13,6 +13,25 @@ brouillon: false
 - **Pompes à chaleur collectives** : six nouvelles fiches remplacent BAR-TH-166 et BAT-TH-113, supprimées au 1er janvier.
 - **Rénovation d'ampleur** : les Coups de pouce sont prolongés pour les opérations engagées à partir du 17 janvier.
 
+## Concrètement, pour vous
+
+- **Vous êtes installateur de PAC collectives**
+  - Ce qui change : six nouvelles fiches remplacent BAR-TH-166 et BAT-TH-113 depuis le 1er janvier.
+  - Exemple : une PAC air/eau collective dans une copropriété se déclare désormais avec BAR-TH-179, et non plus BAR-TH-166.
+  - À faire : vérifiez que vos devis et attestations citent la nouvelle fiche.
+- **Vous êtes un particulier**
+  - Ce qui change : le Coup de pouce rénovation d'ampleur est prolongé ; le coefficient majoré des ménages modestes ne vaut que pour une résidence principale.
+  - Exemple : vous rénovez entièrement une maison de vacances : pas de coefficient majoré.
+  - À faire : gardez votre avis d'imposition sous la main, il est demandé comme justificatif.
+- **Vous êtes bailleur ou gestionnaire de bâtiment**
+  - Ce qui change : un contrat avec le demandeur de CEE peut durer 5 ans au lieu de 4 ; l'ancienne chaudière n'a plus toujours besoin d'être déposée.
+  - Exemple : une chaudière en terrasse qu'il faudrait descendre à la grue peut être simplement mise hors service (Coup de pouce Chauffage, collectif).
+  - À faire : indiquez dans le dossier la raison pour laquelle l'équipement n'est pas déposé.
+- **Vous distribuez du fioul ou des carburants**
+  - Ce qui change : le Conseil d'État refuse de suspendre le seuil de 500 m³.
+  - Exemple : avec 800 m³ de fioul vendus par an, vous restez obligé pour la P6.
+  - À faire : préparez dès maintenant l'achat ou la production de CEE.
+
 ### [ACTION] L'arrêté d'application de la P6 fixe un calendrier en trois temps
 
 **Le texte.** Arrêté du 21 décembre 2025 relatif à la mise en œuvre de la sixième période, publié au JO nº 301 du 24 décembre 2025.

@@ -52,7 +52,7 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
     html = html.replace(/<h3>\[(ACTION|SURVEILLER|À LIRE)\]\s*(.*?)<\/h3>/g, (_, k, t) => { items.push({ k, t }); return `<h3>${badge(k)} <span>${t}</span></h3>`; });
     // Rubrique « Concrètement, pour vous » : une carte par profil
     // Markdown attendu : - **Vous êtes…** puis sous-liste « Ce qui change : … », « Exemple : … », « À faire : … »
-    html = html.replace(/<h2>Concrètement, pour vous<\/h2>\s*<ul>([\s\S]*?)<\/ul>\s*(?=<h2|$)/, (_, lis) => {
+    html = html.replace(/<h2>Concrètement, pour vous<\/h2>\s*([\s\S]*?)(?=<h2|<h3>(?:<span class="imp)|$)/, (_, lis) => {
       const cards = lis.split(/<li>(?=\s*<strong>)/).slice(1).map((li) => {
         const who = (li.match(/<strong>(.*?)<\/strong>/) || [, ""])[1];
         const rows = [...li.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, r]) => {

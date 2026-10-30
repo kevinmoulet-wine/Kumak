@@ -13,6 +13,21 @@ brouillon: false
 - **Géothermie et PAC collectives** : contrôle sur site à 50 % dès le 1er mai, 75 % en 2027 et 100 % en 2028.
 - **Mobilité** : le programme PRO-INNO-86 finance la location sociale de voitures électriques jusqu'en 2031.
 
+## Concrètement, pour vous
+
+- **Vous installez de la géothermie ou des PAC collectives**
+  - Ce qui change : à partir du 1er mai, au moins la moitié des opérations sont contrôlées sur site, puis toutes en 2028.
+  - Exemple : sur 10 opérations de géothermie (BAR-TH-178) en 2026, au moins 5 seront contrôlées sur place ; en 2028, les 10.
+  - À faire : prévoyez ces visites dans vos plannings et vos prix.
+- **Vous êtes installateur, tous gestes confondus**
+  - Ce qui change : depuis le 1er avril, de nouvelles exigences d'installation, de mise en service et d'entretien s'appliquent.
+  - Exemple : pour une chaudière ou une PAC, le dossier doit maintenant prouver une installation et une mise en service conformes.
+  - À faire : mettez à jour vos procès-verbaux et attestations.
+- **Vous êtes délégataire**
+  - Ce qui change : la part d'opérations contrôlées sur site sur ces six fiches augmente chaque année.
+  - Exemple : en 2028, chaque opération de PAC collective devra recevoir une visite de contrôle.
+  - À faire : intégrez ce coût dans vos prix d'achat des CEE.
+
 ### [ACTION] Géothermie et PAC collectives : contrôles à 50 %, puis 100 %
 
 **Le texte.** Arrêté du 27 avril 2026, publié au JO nº 101 du 29 avril 2026. Il modifie l'arrêté du 22 décembre 2014 (fiches) et l'arrêté du 28 septembre 2021 (contrôles).

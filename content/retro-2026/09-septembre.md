@@ -13,6 +13,21 @@ brouillon: false
 - **1er septembre** : agrément PAC, bonifications solaire et CET, et nouvelles règles de rénovation d'ampleur s'appliquent.
 - **Consultation** : une vingtaine de fiches, liées aux énergies fossiles ou inactives, pourraient être supprimées.
 
+## Concrètement, pour vous
+
+- **Vous êtes chauffagiste**
+  - Ce qui change : une chaudière déjà financée par des CEE avant 2021 peut être remplacée par une PAC, avec de nouveaux CEE, depuis le 7 septembre.
+  - Exemple : une chaudière gaz posée en 2018 avec des CEE (fiche BAR-TH-106) peut être remplacée par une PAC avec une nouvelle prime.
+  - À faire : retrouvez la date et la fiche de l'opération d'origine pour le dossier.
+- **Vous êtes un particulier**
+  - Ce qui change : avoir déjà reçu une prime pour votre chaudière ne bloque plus une nouvelle prime pour passer à une PAC.
+  - Exemple : votre chaudière fioul changée en 2019 avec une prime CEE peut être remplacée par une PAC aidée.
+  - À faire : retrouvez la facture et la prime de l'époque.
+- **Vous gérez un garage ou une exploitation agricole**
+  - Ce qui change : les fiches TRA-SE-104 (station de gonflage des pneus) et AGRI-EQ-110 (séchage solaire) sont supprimées le 24 septembre.
+  - Exemple : une station de gonflage commandée en octobre ne donne plus droit à des CEE.
+  - À faire : faites recenser avant le 3 octobre les opérations déjà engagées.
+
 ### [ACTION] Remplacer un équipement à combustible déjà financé
 
 **Le texte.** Arrêté du 4 septembre 2026 relatif à la possibilité de remplacer des équipements fonctionnant avec un combustible déjà valorisés, publié au JO du 6 septembre 2026. Il s'applique aux opérations engagées **à partir du 7 septembre 2026**.

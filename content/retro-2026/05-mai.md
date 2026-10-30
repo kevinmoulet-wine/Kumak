@@ -13,6 +13,25 @@ brouillon: false
 - **FEEBAT 3 et PROFEEL 3** : la formation des professionnels et la sécurisation des travaux sont reconduites.
 - **Registre** : les frais de tenue de compte sont fixés à partir du 1er juin.
 
+## Concrètement, pour vous
+
+- **Vous installez des pompes à chaleur**
+  - Ce qui change : à partir du 1er septembre, la bonification des fiches BAR-TH-171 et BAR-TH-172 exige un modèle agréé.
+  - Exemple : devis signé le 2 septembre pour une PAC air/eau qui remplace une chaudière gaz dans une résidence principale : le coefficient 5 n'est accordé que si le modèle est agréé ce jour-là.
+  - À faire : vérifiez la liste avant chaque devis et notez le numéro d'agrément sur la preuve de réalisation.
+- **Vous êtes un particulier**
+  - Ce qui change : la prime maximale pour une PAC ne sera versée que pour un modèle agréé.
+  - Exemple : vous remplacez votre chaudière fioul par une PAC : sans agrément du modèle, pas de bonification.
+  - À faire : demandez à l'installateur le numéro d'agrément du modèle proposé.
+- **Vous fabriquez ou distribuez des PAC**
+  - Ce qui change : l'agrément suppose une certification et un assemblage du circuit frigorifique dans l'Espace économique européen.
+  - Exemple : un modèle entièrement assemblé hors d'Europe ne peut obtenir qu'un agrément transitoire, avec un plan d'investissement.
+  - À faire : déposez vos dossiers auprès de l'ADEME avant le 31 mai.
+- **Vous avez un compte au registre Emmy**
+  - Ce qui change : des frais s'appliquent à partir du 1er juin.
+  - Exemple : l'acheteur d'un lot de 100 GWh cumac paie 410 € de frais de transfert (4,10 € par million de kWh cumac).
+  - À faire : prévoyez ces frais dans vos prix de cession.
+
 ### [ACTION] PAC individuelles : un agrément pour garder la bonification
 
 **Les textes**, tous datés du 29 mai 2026 :

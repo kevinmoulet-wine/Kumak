@@ -13,6 +13,25 @@ brouillon: false
 - **Condition** : décarbonation complète du chauffage et/ou de l'eau chaude après travaux.
 - **Rénovation d'ampleur** : recentrée sur les logements de classes E à G, avec un Coup de pouce réservé au parc social en maison individuelle.
 
+## Concrètement, pour vous
+
+- **Vous installez du solaire ou des chauffe-eau thermodynamiques**
+  - Ce qui change : du 1er septembre au 31 décembre, les CEE sont multipliés par 4 à 7.
+  - Exemple : un chauffe-eau thermodynamique (BAR-TH-148) chez un ménage modeste rapporte 7 fois les CEE de base ; chez un autre ménage, 4 fois.
+  - À faire : faites signer les devis avant le 31 décembre.
+- **Vous êtes un particulier**
+  - Ce qui change : la bonification suppose de ne garder aucun équipement fossile pour l'eau chaude ou le chauffage concerné.
+  - Exemple : vous installez un chauffe-eau solaire mais gardez une chaudière gaz en appoint : pas de bonification.
+  - À faire : demandez à l'installateur si votre projet remplit la condition de décarbonation.
+- **Vous rénovez une maison en profondeur**
+  - Ce qui change : la rénovation d'ampleur (BAR-TH-174) ne vise plus que les logements classés E, F ou G.
+  - Exemple : une maison classée D n'est plus éligible à cette fiche à partir du 1er septembre.
+  - À faire : vérifiez la classe du DPE avant de monter le projet.
+- **Vous êtes bailleur social**
+  - Ce qui change : le Coup de pouce rénovation d'ampleur en maison individuelle est recentré sur le parc social.
+  - Exemple : la rénovation d'une maison du parc social bénéficie d'un coefficient 2 pour un ménage modeste.
+  - À faire : vérifiez les conditions de la charte Coup de pouce associée.
+
 ### [ACTION] Solaire et chauffe-eau thermodynamique : nouvelles bonifications
 
 **Le texte.** Arrêté du 17 août 2026, publié au JO nº 196 du 23 août 2026.
