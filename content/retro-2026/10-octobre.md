@@ -62,19 +62,58 @@ Un arrêté publié au JO du **28 octobre 2026** modifie la fiche AGRI-TH-108. N
 
 ### Diligence sur les vendeurs de CEE (CEE délivrés et cédés à partir du 1er novembre 2026)
 
-| Bloc | Impact |
+**1. Fiche vendeur à créer**
+
+| Champ | Type | Valeurs |
+|---|---|---|
+| Type de vendeur | Liste | Anah, collectivité, groupement de collectivités, établissement public de ces entités, autre |
+| Dirigeants et bénéficiaires effectifs | Liste de personnes | |
+| Assurance professionnelle | Fichier + date | Attestation et date de validité |
+| Situation fiscale et sociale | Fichiers + dates | Attestations et date d'obtention |
+| Procédure collective en cours | Oui / Non + date de vérification | |
+| Condamnation ou sanction liée aux CEE | Oui / Non + détail | |
+| Démarche qualité | Fichier | |
+| Liens de contrôle | Oui / Non + détail | Avec le premier détenteur, les mandataires, les organismes de contrôle, les professionnels |
+| Volume acheté à ce vendeur sur 12 mois | kWh cumac, calculé | Somme des cessions des 12 derniers mois |
+| Moyens consacrés aux CEE par le vendeur | Texte | À comparer au volume acheté |
+
+**2. Pièces sur le contrat de cession**
+
+| Champ | Type |
 |---|---|
-| Données | Pour chaque vendeur : dirigeants, bénéficiaires effectifs, assurance professionnelle, attestations fiscales et sociales, procédures collectives, sanctions liées aux CEE, liens de contrôle, volumes achetés sur les 12 derniers mois |
-| Règles | Pas d'ordre de transfert sans formulaire « dûment renseigné, daté et signé » joint au contrat. Vendeurs Anah, collectivités et leurs établissements publics : pas d'évaluation du risque |
-| Référentiels | Modèle de formulaire fixé par l'arrêté du 9 octobre 2026 |
-| Documents | Procédure écrite de choix du vendeur, formulaire signé, pièces justificatives |
-| Délais | À appliquer aux contrats de cession conclus à partir du 1er novembre 2026 |
+| Procédure de choix du vendeur | Fichier |
+| Formulaire de diligence | Fichier, au modèle de l'arrêté du 9 octobre 2026 |
+| Date de signature du formulaire | Date |
+
+**3. Règle**
+
+```
+SI    date de délivrance des CEE ≥ 01/11/2026
+ET    date du contrat de cession ≥ 01/11/2026
+ALORS ordre de transfert bloqué tant que le formulaire
+      signé n'est pas joint au contrat
+
+SI    type de vendeur = Anah, collectivité, groupement
+      ou établissement public
+ALORS évaluation du risque de défaillance non requise
+```
+
+Pour un vendeur public, vérifiez dans le texte si le formulaire reste à joindre.
+
+**4. Cas de test**
+
+| CEE délivrés le | Contrat du | Vendeur | Formulaire | Résultat attendu |
+|---|---|---|---|---|
+| 25/10/2026 | 05/11/2026 | Société privée | Absent | Non soumis (CEE délivrés avant le 1er novembre) |
+| 05/11/2026 | 06/11/2026 | Société privée | Absent | Ordre de transfert bloqué |
+| 05/11/2026 | 06/11/2026 | Société privée | Signé le 06/11 | Ordre de transfert autorisé |
+| 10/11/2026 | 12/11/2026 | Commune | — | Évaluation du risque non requise |
 
 **Selon votre outil**
 
-- **Développé en interne** : transmettez ce tableau à votre équipe comme expression de besoin.
-- **Outil généraliste paramétrable** : créez une fiche vendeur avec ces pièces et leurs dates de validité, et bloquez l'ordre de transfert tant que le formulaire signé n'est pas joint au contrat.
-- **Progiciel CEE du marché** : demandez à l'éditeur si un module de diligence vendeurs est prévu au 1er novembre, et s'il produit le formulaire au format de l'arrêté.
+- **Développé en interne** : ces tableaux et cas de test forment l'expression de besoin et la recette.
+- **Outil généraliste paramétrable** : un objet « vendeur » avec ses pièces et dates de validité, et une règle qui bloque l'ordre de transfert sans formulaire signé.
+- **Progiciel CEE du marché** : demandez à l'éditeur si ce module est disponible au 1er novembre et faites-lui dérouler les cas de test.
 
 ## Calendrier
 

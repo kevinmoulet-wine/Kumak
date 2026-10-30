@@ -86,27 +86,63 @@ Le 29 juillet 2026 (nº 500483), le Conseil d'État rejette le recours de TotalE
 
 ### Seuils de non-conformité (dossiers déposés à partir du 30 juillet 2026)
 
-| Bloc | Impact |
-|---|---|
-| Données | Date de dépôt du dossier, fiche, résultat du contrôle de chaque opération : satisfaisante, non satisfaisante, non vérifiable, corrigée |
-| Règles | Taux d'opérations non satisfaisantes par lot et par fiche : 14 % maximum en 2026, 12 % en 2027, 10 % en 2028. Au-delà, ne garder dans le dossier que les opérations satisfaisantes et celles corrigées |
-| Référentiels | Taux minimaux de contrôles satisfaisants de l'annexe II de l'arrêté du 28 septembre 2021, modifiée |
-| Documents | Preuves des mesures correctives pour les opérations corrigées |
-| Délais | Le seuil dépend de l'année de **dépôt**, pas de l'année d'engagement |
+**1. Champs à ajouter**
 
-### Nouvelles données obligatoires (opérations engagées à partir du 1er juillet 2026)
+| Champ | Niveau | Type | Valeurs |
+|---|---|---|---|
+| Date de dépôt | Dossier | Date | Date de dépôt au PNCEE |
+| Identifiant du lot | Lot | Texte | |
+| Fiche | Opération | Liste | Code de la fiche (BAR-TH-171…) |
+| Résultat du contrôle sur site | Opération | Liste | Satisfaisant, non satisfaisant, non vérifiable, non contrôlé |
+| Mesure corrective réalisée | Opération | Oui / Non | Avec la preuve associée |
+| Taux de non-conformité | Lot et fiche | %, calculé | Voir la règle |
 
-| Bloc | Impact |
-|---|---|
-| Données | SIRET, coût de l'opération, aides publiques reçues |
-| Règles | Champs obligatoires pour toute opération engagée à partir du 1er juillet 2026 |
-| Documents | Tableaux récapitulatifs et attestations sur l'honneur mis à jour |
+**2. Calcul et règle**
+
+```
+Taux = opérations contrôlées non satisfaisantes
+       ÷ opérations contrôlées
+       (dans le même lot, pour la même fiche)
+
+Seuil selon l'année de DÉPÔT :
+  2026 → 14 %    2027 → 12 %    2028 et après → 10 %
+
+SI    taux > seuil
+ALORS ne déposer que les opérations satisfaisantes
+      et les non satisfaisantes corrigées
+```
+
+Pour un dossier déposé **avant le 30 juillet 2026**, l'ancienne règle s'applique : seuil de 10 % pour les dépôts de 2026. L'arrêté fixe aussi des taux minimaux de contrôles satisfaisants (annexe II) : leurs valeurs sont à reprendre dans le texte publié.
+
+**3. Cas de test**
+
+| Date de dépôt | Contrôlées | Non satisfaisantes | Taux | Résultat attendu |
+|---|---|---|---|---|
+| 20/07/2026 | 50 | 6 | 12 % | Au-dessus de 10 % (ancienne règle) : dépôt restreint |
+| 15/09/2026 | 50 | 6 | 12 % | Sous 14 % : dépôt normal |
+| 15/09/2026 | 50 | 8 | 16 % | Au-dessus de 14 % : dépôt restreint |
+| 10/03/2027 | 50 | 6 | 12 % | Égal au seuil de 12 % : dépôt normal |
+| 10/03/2028 | 50 | 6 | 12 % | Au-dessus de 10 % : dépôt restreint |
+
+### Nouveaux champs obligatoires (opérations engagées à partir du 1er juillet 2026)
+
+| Champ | Type | Règle |
+|---|---|---|
+| SIRET | Texte, 14 chiffres | Demandé dans les tableaux récapitulatifs et attestations (annexes 6, 6-1 et 6-2 de l'arrêté du 4 septembre 2014) |
+| Coût de l'opération | Montant en euros | Obligatoire |
+| Aides publiques reçues | Montant en euros | Obligatoire |
+
+```
+SI    date d'engagement ≥ 01/07/2026
+ALORS SIRET, coût et aides publiques obligatoires
+      (blocage de l'export du dossier si un champ est vide)
+```
 
 **Selon votre outil**
 
-- **Développé en interne** : transmettez ce tableau à votre équipe comme expression de besoin.
-- **Outil généraliste paramétrable** : ajoutez un tableau de bord du taux de non-conformité par lot et par fiche avant dépôt, et rendez obligatoires les trois nouveaux champs à partir de la date d'engagement concernée.
-- **Progiciel CEE du marché** : demandez à l'éditeur si le calcul du taux par lot, avec le seuil de l'année de dépôt, et les nouveaux champs sont disponibles, et depuis quelle version.
+- **Développé en interne** : ces tableaux et cas de test forment l'expression de besoin et la recette.
+- **Outil généraliste paramétrable** : un champ calculé par lot et par fiche, un seuil paramétré par année de dépôt, et des champs obligatoires conditionnés par la date d'engagement.
+- **Progiciel CEE du marché** : donnez les cas de test à l'éditeur et vérifiez que le seuil dépend bien de l'année de **dépôt**.
 
 ## Calendrier
 

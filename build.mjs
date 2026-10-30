@@ -15,7 +15,7 @@ const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").r
 const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 const dateFr = (iso) => { const [y, m, d] = iso.split("-").map(Number); return `${d === 1 ? "1er" : d} ${MOIS[m - 1]} ${y}`; };
 // Typographie française : espace insécable avant « : ; ? ! » et à l'intérieur des guillemets
-const typo = (html) => html.replace(/« /g, "«\u00a0").replace(/ »/g, "\u00a0»").replace(/ ([:;?!])(?=[\s<])/g, "\u00a0$1");
+const typo = (html) => html.replace(/« /g, "«\u00a0").replace(/ »/g, "\u00a0»").replace(/ ([:;?!])(?=[\s<])/g, "\u00a0$1").replace(/(\d) (%|€|TWhc|GWh|kWh|m³)/g, "$1\u00a0$2");
 const write = (path, html) => { const full = join(OUT, path); mkdirSync(full.replace(/\/[^/]+$/, ""), { recursive: true }); writeFileSync(full, path.endsWith(".html") ? typo(html) : html); };
 
 const IMPACT = {
@@ -186,9 +186,9 @@ ${retros.length ? `<section class="retro-band">
   <div class="eyebrow">Ce que vous recevez</div>
   <h2>La réglementation, traduite en décisions.</h2>
   <div class="grid3">
-    <div class="feat"><span class="tag">Chaque lundi</span><h3>L'édition hebdo</h3><p>Les textes de la semaine, classés par impact : action requise, à surveiller, à lire. Chacun avec sa source sur Légifrance.</p></div>
-    <div class="feat"><span class="tag">Fiche par fiche</span><h3>Les fiches décodées</h3><p>Conditions d'éligibilité, pièces justificatives, pièges au contrôle. Une base qui s'enrichit au fil des éditions.</p></div>
-    <div class="feat"><span class="tag">Vu du terrain</span><h3>Les remarques terrain</h3><p>Ce qu'un texte change concrètement dans les dossiers et les systèmes d'information des acteurs CEE.</p></div>
+    <div class="feat"><span class="tag">Chaque lundi</span><h3>L'édition hebdo</h3><p>Les textes CEE de la semaine, classés par impact : action requise, à surveiller, à lire. Chacun avec ses sources officielles.</p></div>
+    <div class="feat"><span class="tag">Par profil</span><h3>Concrètement, pour vous</h3><p>Installateur, délégataire, obligé : ce qui change pour vous, un exemple avec la fiche concernée et ce qu'il faut faire.</p></div>
+    <div class="feat"><span class="tag">Obligés et délégataires</span><h3>L'impact sur vos outils</h3><p>Les champs, règles et contrôles à adapter dans votre outil de gestion CEE, avec des cas de test prêts à l'emploi.</p></div>
   </div>
 </section>
 
