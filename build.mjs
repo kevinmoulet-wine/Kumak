@@ -14,7 +14,9 @@ rmSync(OUT, { recursive: true, force: true });
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 const dateFr = (iso) => { const [y, m, d] = iso.split("-").map(Number); return `${d === 1 ? "1er" : d} ${MOIS[m - 1]} ${y}`; };
-const write = (path, html) => { const full = join(OUT, path); mkdirSync(full.replace(/\/[^/]+$/, ""), { recursive: true }); writeFileSync(full, html); };
+// Typographie française : espace insécable avant « : ; ? ! » et à l'intérieur des guillemets
+const typo = (html) => html.replace(/« /g, "«\u00a0").replace(/ »/g, "\u00a0»").replace(/ ([:;?!])(?=[\s<])/g, "\u00a0$1");
+const write = (path, html) => { const full = join(OUT, path); mkdirSync(full.replace(/\/[^/]+$/, ""), { recursive: true }); writeFileSync(full, path.endsWith(".html") ? typo(html) : html); };
 
 const IMPACT = {
   "ACTION": { cls: "crit", label: "Action" },
