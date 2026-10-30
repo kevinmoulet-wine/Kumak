@@ -7,7 +7,7 @@ import { marked } from "marked";
 
 const DRAFTS = process.argv.includes("--drafts");
 import { createHash } from "node:crypto";
-const ASSET_V = createHash("md5").update(readFileSync("static/style.css")).update(readFileSync("static/signup.js")).digest("hex").slice(0, 8);
+const ASSET_V = createHash("md5").update(readFileSync("static/style.css")).update(readFileSync("static/signup.js")).update(readFileSync("static/verif.js")).digest("hex").slice(0, 8);
 const cfg = JSON.parse(readFileSync("site.config.json", "utf8"));
 const OUT = "dist";
 rmSync(OUT, { recursive: true, force: true });
@@ -127,6 +127,7 @@ ${ladder}
 <header class="nav">
   <a class="logo" href="/">KUMAK <small>VEILLE CEE</small></a>
   <nav aria-label="Navigation principale">
+    <a href="/verificateur/">Vérificateur</a>
     <a href="/editions/">Éditions</a>
     <a href="/#offres">Offres</a>
     <a class="btn-sm" href="/#inscription">S'inscrire</a>
@@ -181,6 +182,10 @@ write("index.html", page({
   </div>
   ${sample}
 </div>
+<section class="retro-band tool-band">
+  <div><div class="eyebrow">Outil gratuit pour les poseurs</div><h2>Ce chantier a-t-il droit à la bonification ?</h2></div>
+  <a class="btn" href="/verificateur/">Vérifier un chantier →</a>
+</section>
 ${retros.length ? `<section class="retro-band">
   <div><div class="eyebrow">Rétrospective 2026</div><h2>Janvier à octobre : 10 mois de P6 décodés.</h2></div>
   <a class="btn" href="/retro-2026/">Lire la rétrospective →</a>
@@ -395,6 +400,50 @@ Rien reçu dans quelques minutes ? Regardez dans vos indésirables, ou écrivez 
 [Lire les éditions déjà parues →](/editions/)
 `);
 
+// ---------- vérificateur de bonification ----------
+const radio = (name, opts) => `<div class="choices">${opts.map(([v, l]) => `<label><input type="radio" name="${name}" value="${v}"><span>${l}</span></label>`).join("")}</div>`;
+write("verificateur/index.html", page({
+  title: "Vérificateur de bonification CEE",
+  description: "Votre chantier a-t-il droit à la bonification CEE ? PAC, chauffe-eau thermodynamique, solaire : réponse immédiate avec le motif et la source.",
+  path: "/verificateur/",
+  body: `<main class="article narrow">
+  <div class="eyebrow">Outil gratuit · Bêta</div>
+  <h1>Mon chantier a-t-il droit à la bonification ?</h1>
+  <p class="lede">Répondez à quelques questions : vous savez tout de suite si le devis ouvre droit à la bonification CEE, et pourquoi.</p>
+  <form id="verif" class="verif" novalidate>
+    <fieldset><legend>1. Quel équipement installez-vous ?</legend>
+      <select name="fiche" required>
+        <option value="">Choisir…</option>
+        <option value="BAR-TH-171">Pompe à chaleur air/eau (BAR-TH-171)</option>
+        <option value="BAR-TH-172">Pompe à chaleur eau/eau ou eau glycolée/eau (BAR-TH-172)</option>
+        <option value="BAR-TH-148">Chauffe-eau thermodynamique (BAR-TH-148)</option>
+        <option value="BAR-TH-101">Chauffe-eau solaire individuel (BAR-TH-101)</option>
+        <option value="BAR-TH-143">Système solaire combiné (BAR-TH-143)</option>
+      </select>
+    </fieldset>
+    <fieldset><legend>2. Date de signature du devis</legend><input type="date" name="date" min="2026-01-01" max="2027-12-31" required></fieldset>
+    <fieldset><legend>3. Le logement est-il une résidence principale ?</legend>${radio("rp", [["oui", "Oui"], ["non", "Non"]])}</fieldset>
+    <div id="q-pac" hidden>
+      <fieldset><legend>4. Quel équipement est remplacé ?</legend>${radio("equip", [["fossile", "Chaudière gaz, fioul ou charbon"], ["autre", "Autre équipement"]])}</fieldset>
+      <fieldset><legend>5. Le modèle de PAC est-il agréé ?</legend><p class="hint">Vérifiez sur la <a href="https://bonus-pac.ademe.fr" target="_blank" rel="noopener">liste ADEME</a>, à la date du devis.</p>${radio("agree", [["oui", "Oui"], ["non", "Non"], ["nsp", "Je ne sais pas"]])}</fieldset>
+      <fieldset><legend>6. L'ancienne chaudière avait-elle déjà été financée par une prime CEE ?</legend>${radio("fin", [["non", "Non"], ["avant2021", "Oui, avant 2021"], ["depuis2021", "Oui, en 2021 ou après"], ["nsp", "Je ne sais pas"]])}</fieldset>
+    </div>
+    <div id="q-sol" hidden>
+      <fieldset><legend>4. Un équipement au gaz, au fioul ou au charbon est-il conservé après les travaux ?</legend><p class="hint">Même en appoint, pour le chauffage ou l'eau chaude concernés.</p>${radio("fossile", [["non", "Non"], ["oui", "Oui"]])}</fieldset>
+      <fieldset><legend>5. Le ménage est-il modeste ou très modeste ?</legend>${radio("modeste", [["oui", "Oui"], ["non", "Non"], ["nsp", "Je ne sais pas"]])}</fieldset>
+    </div>
+  </form>
+  <div id="verdict" class="verdict" role="status" aria-live="polite" hidden></div>
+  <p class="disclaimer">Outil d'information, en version bêta, fondé sur les textes vérifiés dans la <a href="/retro-2026/">Rétrospective 2026</a>. Il ne remplace ni le texte officiel ni la vérification de votre partenaire CEE, et ne calcule pas le montant de la prime. Autres conditions de la fiche (RGE, performances, pièces) non vérifiées ici.</p>
+  <div class="cta-box" id="inscription">
+    <h2>Les règles changent souvent.</h2>
+    <p>Recevez chaque lundi les nouveautés CEE qui touchent vos chantiers.</p>
+    ${signupForm("email-verif", "Votre adresse e-mail")}
+  </div>
+</main>
+<script src="/verif.js?v=${ASSET_V}" defer></script>`,
+}));
+
 write("404.html", page({
   title: "Page introuvable", path: "/404.html",
   body: `<main class="article narrow"><h1>Page introuvable</h1><p class="lede">Cette page n'existe pas ou a été déplacée.</p><p><a class="btn" href="/">Retour à l'accueil</a></p></main>`,
@@ -408,7 +457,7 @@ write("feed.xml", `<?xml version="1.0" encoding="utf-8"?>
 ${editions.filter((e) => !e.brouillon).map((e) => `<item><title>${esc(`Nº ${e.numero} · ${e.titre}`)}</title><link>${cfg.url}/editions/${e.slug}/</link><guid>${cfg.url}/editions/${e.slug}/</guid><pubDate>${rfc822(e.date)}</pubDate><description>${esc(e.accroche)}</description></item>`).join("\n")}
 </channel></rss>`);
 
-const urls = ["/", "/editions/", "/mentions-legales/", "/confidentialite/",
+const urls = ["/", "/verificateur/", "/editions/", "/mentions-legales/", "/confidentialite/",
   ...editions.filter((e) => !e.brouillon).map((e) => `/editions/${e.slug}/`),
   ...(retros.some((r) => !r.brouillon) ? ["/retro-2026/"] : []),
   ...retros.filter((r) => !r.brouillon).map((r) => `/retro-2026/${r.slug}/`)];

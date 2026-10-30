@@ -211,3 +211,28 @@ footer nav{display:flex;gap:16px;flex-wrap:wrap}
 /* FAQ en deux colonnes sur grand écran */
 .faq{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
 @media (max-width:860px){.faq{grid-template-columns:1fr}}
+
+/* Vérificateur */
+.verif{display:grid;gap:12px;margin:24px 0}
+.verif fieldset{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:14px 18px;margin:0}
+.verif legend{font-weight:600;padding:0 6px;margin-left:-6px}
+.verif select,.verif input[type=date]{font:inherit;width:100%;max-width:420px;padding:10px 12px;border:1.5px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);margin-top:6px}
+.verif .hint{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.choices label{cursor:pointer}
+.choices input{position:absolute;opacity:0}
+.choices span{display:inline-block;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;font-size:15px;background:var(--bg)}
+.choices input:checked+span{border-color:var(--accent);background:var(--soft);color:var(--accent);font-weight:600}
+.choices input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.verdict{margin:8px 0 24px;padding:20px 22px;border-radius:6px;border:1px solid var(--line);border-left:6px solid var(--muted);background:var(--surface)}
+.verdict.v-oui{border-left-color:var(--ok)}.verdict.v-non{border-left-color:var(--crit)}.verdict.v-verifier{border-left-color:var(--warn)}
+.v-head{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.v-head strong{font-family:var(--display);font-stretch:75%;font-weight:800;font-size:28px;line-height:1.1}
+.v-icon{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;background:var(--muted)}
+.v-oui .v-icon{background:var(--ok)}.v-non .v-icon{background:var(--crit)}.v-verifier .v-icon{background:var(--warn)}
+.verdict p{margin:6px 0}
+.v-alerts{margin:10px 0;padding-left:20px}
+.v-alerts li{margin-bottom:6px}
+.v-amount,.v-src{font-size:14px;color:var(--muted)}
+.tool-band{border-top:0}
+@media (max-width:520px){.nav nav a[href="/editions/"]{display:none}}
