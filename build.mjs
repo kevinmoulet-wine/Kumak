@@ -115,6 +115,10 @@ function page({ title, description = cfg.description, path = "/", body, type = "
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${url}">
 <meta property="og:locale" content="fr_FR">
+<meta property="og:image" content="${cfg.url}/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B6E4F">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/rss+xml" title="${cfg.name}" href="/feed.xml">
