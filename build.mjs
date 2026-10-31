@@ -359,11 +359,9 @@ const legal = (path, title, md) => write(`${path}/index.html`, page({
 legal("mentions-legales", "Mentions légales", `
 ## Éditeur
 
-${cfg.editor.name}  
-${cfg.editor.status}  
-${cfg.editor.address ? cfg.editor.address + "  \n" : ""}Contact : [${cfg.contactEmail}](mailto:${cfg.contactEmail})
-
-Directeur de la publication : ${cfg.editor.publicationDirector}
+${cfg.editor.anonymous
+  ? `KUMAK est édité à titre non professionnel. Conformément à l'article 1-1, II, de la loi nº 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, l'éditeur a communiqué ses éléments d'identification à l'hébergeur indiqué ci-dessous.  \nContact : [${cfg.contactEmail}](mailto:${cfg.contactEmail})`
+  : `${cfg.editor.name}  \n${cfg.editor.status}  \n${cfg.editor.address ? cfg.editor.address + "  \n" : ""}Contact : [${cfg.contactEmail}](mailto:${cfg.contactEmail})\n\nDirecteur de la publication : ${cfg.editor.publicationDirector}`}
 
 ## Hébergement
 

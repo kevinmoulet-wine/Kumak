@@ -28,7 +28,7 @@ Site de KUMAK, la veille réglementaire CEE. C'est un site statique, généré �
    - `### [ACTION] Titre`
    - `### [SURVEILLER] Titre`
    - `### [À LIRE] Titre`
-3. Compléter les encarts `[À COMPLÉTER PAR KEVIN …]`, puis passer `brouillon: false`. Tant qu'il reste un « À COMPLÉTER », la publication est bloquée.
+3. Compléter les encarts `[À COMPLÉTER …]`, puis passer `brouillon: false`. Tant qu'il reste un « À COMPLÉTER », la publication est bloquée.
 4. Faire un commit et un push. Le site est à jour environ 1 minute plus tard.
 5. Dans Brevo, envoyer la campagne du lundi à 8 h, avec un lien vers l'édition sur kumak.fr.
 
@@ -40,7 +40,7 @@ Pour un aperçu local, brouillons compris : `npm install`, puis `npm run preview
 
 ### 1. GitHub (10 min)
 
-1. Créer un dépôt **public** nommé `kumak`, à part de kevinmoulet-wine. GitHub Pages est gratuit pour les dépôts publics.
+1. Créer un dépôt **public** nommé `kumak`. GitHub Pages est gratuit pour les dépôts publics.
 2. Y pousser ce dossier :
    ```bash
    cd kumak
