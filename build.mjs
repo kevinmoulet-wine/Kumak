@@ -285,10 +285,6 @@ const veilleBody = `<main class="article narrow">
   <div class="eyebrow">Veille</div>
   <h1>Toute la veille CEE</h1>
   <p class="lede">Les textes CEE décodés : ce qui change, pour qui, et ce qu'il faut faire.</p>
-  <div class="veille-tools">
-  <a class="fiche-search" href="/fiches/"><span><strong>Chercher par équipement</strong> Pompe à chaleur, chauffe-eau, isolation…</span><span aria-hidden="true">→</span></a>
-  <a class="fiche-search" href="/calendrier/"><span><strong>Calendrier des échéances</strong> À ajouter à votre agenda</span><span aria-hidden="true">→</span></a>
-  </div>
   <h2 class="list-title">Éditions hebdo</h2>
   ${editions.length
     ? `<ul class="archive">${editions.map((e) => `<li><a href="/editions/${e.slug}/"><span class="num">Nº ${e.numero}<br>${dateFr(e.date)}</span><span><strong>${esc(e.titre)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</strong><span class="acc">${esc(e.accroche)}</span></span></a></li>`).join("")}</ul>`
