@@ -228,30 +228,12 @@ write("index.html", page({
   </ul>
 </section>
 
-<section id="offres">
-  <div class="eyebrow">Offres</div>
-  <h2>Gratuit pour commencer.</h2>
-  <div class="plans">
-    <div class="plan">
-      <div class="pname">Le Relevé</div>
-      <div class="price">0 €</div>
-      <ul><li>L'édition du lundi, en entier</li><li>Les textes classés par impact</li><li>Les sources officielles</li></ul>
-      <a class="btn" href="#inscription" style="align-self:flex-start">S'inscrire</a>
-    </div>
-    <div class="plan next">
-      <div class="pname">Pro · bientôt</div>
-      <div class="price" style="font-size:34px">À venir</div>
-      <ul><li>Impact sur vos outils, détaillé pour chaque texte</li><li>Cas de test prêts à l'emploi</li><li>Calendrier des échéances</li><li>Questions-réponses des abonnés</li></ul>
-      <p class="sub">Les inscrits gratuits seront consultés sur le prix et bénéficieront d'un tarif de lancement.</p>
-    </div>
-  </div>
-</section>
-
 <section>
   <div class="eyebrow">Questions fréquentes</div>
   <h2>Avant de vous inscrire.</h2>
   <div class="faq">
-  <details><summary>Qui rédige KUMAK ?</summary><p>Un consultant qui conçoit depuis plusieurs années des systèmes de gestion des CEE pour des fournisseurs d'énergie. Chaque analyse cite le texte source sur Légifrance.</p></details>
+  <details><summary>C'est gratuit ?</summary><p>Oui. L'édition du lundi et toute la veille sont gratuites, sans engagement. Vous pouvez vous désinscrire en un clic.</p></details>
+  <details><summary>Qui rédige KUMAK ?</summary><p>Un professionnel du secteur des CEE. Chaque analyse cite ses sources officielles (Journal officiel, Légifrance, ministère), que vous pouvez vérifier.</p></details>
   <details><summary>Est-ce un conseil juridique ?</summary><p>Non. KUMAK est une veille d'information. Pour un litige ou un contrôle en cours, adressez-vous à un avocat spécialisé.</p></details>
   <details><summary>Que faites-vous de mon adresse e-mail ?</summary><p>Elle sert uniquement à vous envoyer KUMAK. Elle n'est ni vendue ni partagée. Vous pouvez vous désinscrire en un clic depuis chaque e-mail. Le détail figure sur la page <a href="/confidentialite/">Confidentialité</a>.</p></details>
   <details><summary>Je ne reçois pas l'e-mail de confirmation.</summary><p>Vérifiez vos indésirables, puis écrivez à <a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a>.</p></details>
@@ -389,7 +371,7 @@ Le site n'utilise **aucun cookie, aucun outil de mesure d'audience et aucun serv
 
 ## Pourquoi
 
-Pour vous envoyer la newsletter KUMAK et, plus tard, vous informer de l'offre payante. La base légale est votre **consentement**, confirmé par un e-mail de validation (double opt-in).
+Pour vous envoyer la newsletter KUMAK. La base légale est votre **consentement**, confirmé par un e-mail de validation (double opt-in).
 
 ## Qui y a accès
 

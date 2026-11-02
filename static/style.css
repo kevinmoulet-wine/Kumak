@@ -177,7 +177,6 @@ footer nav{display:flex;gap:16px;flex-wrap:wrap}
   .archive a{grid-template-columns:1fr;gap:4px}
 }
 @media (max-width:520px){
-  .nav nav a[href="/#offres"]{display:none}
   .nav nav{gap:14px}
   .who li{flex-direction:column;gap:2px}
   .who li span{text-align:left}
