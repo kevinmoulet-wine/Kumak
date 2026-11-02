@@ -255,3 +255,27 @@ footer nav{display:flex;gap:16px;flex-wrap:wrap}
 .hero h2{margin-top:6px}
 @media (max-width:520px){.intro{padding-block:16px 20px}.door{padding:18px}.doors{gap:12px;padding-bottom:36px}}
 .door-q{color:var(--muted);font-size:17px;line-height:1.4}
+
+/* Index des fiches */
+.fiche-link{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:2px;white-space:nowrap}
+.fiche-link:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.fiche-search{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:8px 0 28px;padding:14px 18px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);text-decoration:none}
+.fiche-search:hover{border-color:var(--accent)}
+.fiche-search strong{display:block;font-size:17px}
+.fiche-search span span,.fiche-search>span:first-child{color:var(--muted);font-size:14px}
+.fiche-search strong{color:var(--ink)}
+.fiche-search>span:last-child{color:var(--accent);font-weight:700;font-size:20px}
+.fiche-index{list-style:none;padding:0;margin:0 0 24px;display:grid;gap:8px}
+.fiche-index a{display:grid;grid-template-columns:130px 1fr auto;gap:12px;align-items:baseline;padding:10px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);text-decoration:none}
+.fiche-index a:hover{border-color:var(--accent)}
+.fiche-index strong{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--accent)}
+.fiche-index em{font-style:normal;font-size:13px;color:var(--muted);white-space:nowrap}
+.fiche-refs{list-style:none;padding:0;margin:0 0 24px;display:grid;gap:14px}
+.fiche-refs>li{padding:16px 18px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.fiche-refs .meta{margin:0 0 4px;font-size:13px}
+.fr-title{font-weight:600;font-size:17px;color:var(--ink);text-decoration:none}
+.fr-title:hover{color:var(--accent)}
+.fiche-refs ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:15px}
+.fiche-refs ul li{margin:4px 0}
+.fiche-verif{margin:0 0 24px}
+@media (max-width:520px){.fiche-index a{grid-template-columns:1fr auto}.fiche-index span{grid-column:1/-1;grid-row:2;font-size:14px}}

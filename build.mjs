@@ -42,6 +42,13 @@ function parseFrontmatter(src) {
   return { data, body: m[2] };
 }
 
+// ---------- fiches CEE ----------
+const FICHE_RE = /\b(BAR|BAT|IND|RES|TRA|AGRI)-[A-Z]{2,3}-\d{3}\b(?!-)/g;
+const ficheSlug = (c) => c.toLowerCase();
+// Liens automatiques vers /fiches/<code>/, hors balises et hors liens existants
+const linkFiches = (html) => html.split(/(<a\b[\s\S]*?<\/a>|<[^>]+>)/).map((seg) =>
+  seg.startsWith("<") ? seg : seg.replace(FICHE_RE, (c) => `<a class="fiche-link" href="/fiches/${ficheSlug(c)}/">${c}</a>`)).join("");
+
 // ---------- éditions ----------
 const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
   .filter((f) => f.endsWith(".md"))
@@ -70,7 +77,8 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
     // Section « Impact sur vos outils » : repliée par défaut, réservée aux obligés et délégataires
     html = html.replace(/<h2>Impact sur vos outils<\/h2>([\s\S]*?)(?=<h2|$)/, (_, inner) =>
       `<details class="it-impact"><summary><span class="eyebrow">Obligés et délégataires</span><strong>Impact sur vos outils</strong><span class="it-hint">Données, règles, documents : ce qu'il faut adapter</span></summary><div class="it-body">${inner}</div></details>`);
-    return { ...data, date: String(data.date), slug, html, items, todo };
+    html = linkFiches(html);
+    return { ...data, date: String(data.date), slug, html, body, items, todo };
   })
   .filter((e) => DRAFTS || !e.brouillon);
 
@@ -142,6 +150,7 @@ ${body}
   <nav aria-label="Pied de page">
     <a href="/veille/">Veille</a>
     <a href="/verificateur/">Vérificateur</a>
+    <a href="/fiches/">Index des fiches</a>
     <a href="/feed.xml">RSS</a>
     <a href="/mentions-legales/">Mentions légales</a>
     <a href="/confidentialite/">Confidentialité</a>
@@ -268,6 +277,7 @@ const veilleBody = `<main class="article narrow">
   <div class="eyebrow">Veille</div>
   <h1>La veille CEE</h1>
   <p class="lede">Les textes CEE décodés : ce qui change, pour qui, et ce qu'il faut faire.</p>
+  <a class="fiche-search" href="/fiches/"><span><strong>Chercher par fiche</strong> BAR-TH-171, BAR-TH-174, BAT-TH-163…</span><span aria-hidden="true">→</span></a>
   <h2 class="list-title">Éditions hebdo</h2>
   ${editions.length
     ? `<ul class="archive">${editions.map((e) => `<li><a href="/editions/${e.slug}/"><span class="num">Nº ${e.numero}<br>${dateFr(e.date)}</span><span><strong>${esc(e.titre)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</strong><span class="acc">${esc(e.accroche)}</span></span></a></li>`).join("")}</ul>`
@@ -329,6 +339,101 @@ if (retros.length) write("retro-2026/index.html", page({
     <h2>La suite, chaque lundi.</h2>
     ${signupForm("email-retroidx", "Votre adresse e-mail")}
   </div>
+</main>`,
+}));
+
+// ---------- index des fiches ----------
+// Intitulés repris des numéros publiés (et vérifiés) ; vide si l'intitulé officiel n'a pas été vérifié.
+const FICHE_NOMS = {
+  "BAR-TH-101": "Chauffe-eau solaire individuel", "BAR-TH-143": "Système solaire combiné",
+  "BAR-TH-148": "Chauffe-eau thermodynamique à accumulation", "BAR-TH-162": "Système photovoltaïque et thermique à circulation d'eau",
+  "BAR-TH-166": "Pompe à chaleur collective (supprimée)", "BAR-TH-168": "Dispositif solaire thermique",
+  "BAR-TH-171": "Pompe à chaleur air/eau", "BAR-TH-172": "Pompe à chaleur eau/eau ou eau glycolée/eau",
+  "BAR-TH-174": "Rénovation d'ampleur d'une maison individuelle", "BAR-TH-175": "Rénovation d'ampleur d'un appartement",
+  "BAR-TH-177": "Rénovation globale d'un bâtiment résidentiel collectif",
+  "BAR-TH-178": "Système géothermique (résidentiel collectif)", "BAR-TH-179": "Pompe à chaleur collective air/eau",
+  "BAR-TH-180": "Pompe à chaleur collective eau/eau ou eau glycolée/eau",
+  "BAR-SE-109": "Désembouage d'un réseau de chauffage collectif", "BAR-EQ-110": "Luminaire LED pour parties communes",
+  "BAT-EQ-127": "Luminaires LED (tertiaire)", "BAT-TH-113": "Pompe à chaleur (tertiaire, supprimée)",
+  "BAT-TH-162": "Système géothermique (tertiaire)", "BAT-TH-163": "Pompe à chaleur air/eau (tertiaire)",
+  "BAT-TH-164": "Pompe à chaleur eau/eau ou eau glycolée/eau (tertiaire)", "IND-BA-116": "Luminaires à modules LED (industrie)",
+  "TRA-SE-104": "Station de gonflage des pneumatiques", "AGRI-EQ-108": "Stockage d'eau pour une serre bioclimatique",
+  "AGRI-EQ-110": "Séchage solaire par insufflation", "AGRI-EQ-112": "Double paroi gonflable sur serres",
+  "AGRI-TH-108": "Pompe à chaleur air/eau ou eau/eau (agriculture)", "AGRI-TH-117": "Déshumidification thermodynamique pour serres",
+  "AGRI-TH-119": "Déshumidification avec air extérieur",
+};
+const SECTEURS = { BAR: "Résidentiel", BAT: "Tertiaire", IND: "Industrie", RES: "Réseaux", TRA: "Transport", AGRI: "Agriculture" };
+const VERIF_FICHES = ["BAR-TH-171", "BAR-TH-172", "BAR-TH-148", "BAR-TH-101", "BAR-TH-143"];
+const cleanMd = (l) => l.replace(/^\s*[-*]\s+/, "").replace(/^\|\s*|\s*\|\s*$/g, "").replace(/\s*\|\s*/g, " · ")
+  .replace(/\*\*/g, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/^#+\s*/, "").replace(/\[(ACTION|SURVEILLER|À LIRE)\]\s*/, "").trim();
+
+const fiches = {};
+const sources = [
+  ...editions.filter((e) => !e.brouillon).map((e) => ({ url: `/editions/${e.slug}/`, label: `Édition nº ${e.numero} · ${dateFr(e.date)}`, titre: e.titre, tri: e.date + "-z", body: e.body })),
+  ...retros.filter((r) => !r.brouillon).map((r) => ({ url: `/retro-2026/${r.slug}/`, label: `Rétrospective · ${r.periode}`, titre: r.titre, tri: `2026-${String(r.numero).padStart(2, "0")}`, body: r.body })),
+];
+for (const src of sources) {
+  let h2 = "", impact = null, inCode = false;
+  const found = {};
+  for (const line of src.body.split("\n")) {
+    if (line.startsWith("```")) { inCode = !inCode; continue; }
+    const h = line.match(/^(#{2,3})\s+(.*)$/);
+    if (h) { if (h[1] === "##") h2 = h[2]; const m = h[2].match(/^\[(ACTION|SURVEILLER|À LIRE)\]/); impact = h[1] === "###" ? (m ? m[1] : null) : null; }
+    if (inCode || /^(Sources|Impact sur vos outils)$/i.test(h2) || /^\|[\s|:-]+\|$/.test(line)) continue;
+    const codes = [...new Set(line.match(FICHE_RE) || [])];
+    if (!codes.length) continue;
+    const txt = cleanMd(line);
+    if (txt.length < 12) continue;
+    for (const c of codes) {
+      const f = (found[c] ||= { impact: null, snippets: [] });
+      if (impact && !f.impact) f.impact = impact;
+      if (!f.snippets.includes(txt) && f.snippets.length < 3) f.snippets.push(txt);
+    }
+  }
+  for (const [c, f] of Object.entries(found)) (fiches[c] ||= []).push({ ...src, ...f });
+}
+const codes = Object.keys(fiches).sort();
+const ficheTitle = (c) => FICHE_NOMS[c] ? `${c} · ${FICHE_NOMS[c]}` : c;
+const CATALOGUE = "https://www.ecologie.gouv.fr/politiques-publiques/operations-standardisees-deconomies-denergie";
+
+for (const c of codes) {
+  const refs = fiches[c].sort((a, b) => b.tri.localeCompare(a.tri));
+  write(`fiches/${ficheSlug(c)}/index.html`, page({
+    title: ficheTitle(c),
+    description: `Fiche CEE ${c}${FICHE_NOMS[c] ? ` (${FICHE_NOMS[c]})` : ""} : tous les changements réglementaires de 2026 décodés par KUMAK.`,
+    path: `/fiches/${ficheSlug(c)}/`,
+    body: `<main class="article narrow">
+  <p class="meta"><a href="/veille/">Veille</a> · <a href="/fiches/">Index des fiches</a> · ${SECTEURS[c.split("-")[0]]}</p>
+  <h1>${c}</h1>
+  ${FICHE_NOMS[c] ? `<p class="lede">${esc(FICHE_NOMS[c])}</p>` : ""}
+  ${VERIF_FICHES.includes(c) ? `<p class="fiche-verif"><a class="btn" href="/verificateur/">Vérifier un chantier ${c} →</a></p>` : ""}
+  <h2 class="list-title">Ce que KUMAK en a dit (${refs.length})</h2>
+  <ul class="fiche-refs">${refs.map((r) => `<li>
+    <p class="meta">${r.impact ? badge(r.impact) + " " : ""}${esc(r.label)}</p>
+    <a class="fr-title" href="${r.url}">${esc(r.titre)}</a>
+    <ul>${r.snippets.map((t) => `<li>${linkFiches(marked.parseInline(esc(t)))}</li>`).join("")}</ul>
+  </li>`).join("")}</ul>
+  <p class="disclaimer">Cette page rassemble les passages de KUMAK qui citent la fiche ${c}. Ce n'est pas l'historique officiel complet : le texte de la fiche en vigueur figure dans le <a href="${CATALOGUE}" target="_blank" rel="noopener">catalogue des opérations standardisées du ministère</a>.</p>
+  <div class="cta-box" id="inscription">
+    <h2>Soyez prévenu au prochain changement.</h2>
+    ${signupForm("email-fiche", "Votre adresse e-mail")}
+  </div>
+</main>`,
+  }));
+}
+
+write("fiches/index.html", page({
+  title: "Index des fiches CEE",
+  description: "Toutes les fiches d'opérations standardisées CEE citées par KUMAK, avec les changements de 2026 pour chacune.",
+  path: "/fiches/",
+  body: `<main class="article narrow">
+  <p class="meta"><a href="/veille/">Veille</a> · Index des fiches</p>
+  <h1>Index des fiches CEE</h1>
+  <p class="lede">Retrouvez, fiche par fiche, tout ce qui a changé en 2026 et les numéros de KUMAK qui en parlent.</p>
+  ${Object.entries(SECTEURS).filter(([k]) => codes.some((c) => c.startsWith(k + "-"))).map(([k, nom]) => `
+  <h2 class="list-title">${nom}</h2>
+  <ul class="fiche-index">${codes.filter((c) => c.startsWith(k + "-")).map((c) => `<li><a href="/fiches/${ficheSlug(c)}/"><strong>${c}</strong>${FICHE_NOMS[c] ? `<span>${esc(FICHE_NOMS[c])}</span>` : ""}<em>${fiches[c].length} numéro${fiches[c].length > 1 ? "s" : ""}</em></a></li>`).join("")}</ul>`).join("")}
+  <p class="disclaimer">Seules les fiches citées dans KUMAK figurent ici. Le catalogue complet est publié par le <a href="${CATALOGUE}" target="_blank" rel="noopener">ministère de la Transition écologique</a>.</p>
 </main>`,
 }));
 
@@ -451,7 +556,7 @@ write("feed.xml", `<?xml version="1.0" encoding="utf-8"?>
 ${editions.filter((e) => !e.brouillon).map((e) => `<item><title>${esc(`Nº ${e.numero} · ${e.titre}`)}</title><link>${cfg.url}/editions/${e.slug}/</link><guid>${cfg.url}/editions/${e.slug}/</guid><pubDate>${rfc822(e.date)}</pubDate><description>${esc(e.accroche)}</description></item>`).join("\n")}
 </channel></rss>`);
 
-const urls = ["/", "/veille/", "/verificateur/", "/mentions-legales/", "/confidentialite/",
+const urls = ["/", "/veille/", "/verificateur/", "/fiches/", ...codes.map((c) => `/fiches/${ficheSlug(c)}/`), "/mentions-legales/", "/confidentialite/",
   ...editions.filter((e) => !e.brouillon).map((e) => `/editions/${e.slug}/`),
   ...(retros.some((r) => !r.brouillon) ? ["/retro-2026/"] : []),
   ...retros.filter((r) => !r.brouillon).map((r) => `/retro-2026/${r.slug}/`)];
