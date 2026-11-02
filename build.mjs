@@ -567,6 +567,7 @@ write("verificateur/index.html", page({
   <div class="eyebrow">Outil gratuit · Bêta</div>
   <h1>Mon chantier a-t-il droit à la bonification ?</h1>
   <p class="lede">Répondez à quelques questions : vous savez tout de suite si le devis ouvre droit à la bonification CEE, et pourquoi.</p>
+  <a class="fiche-search" href="#revenus" data-rev><span><strong>Seulement vérifier si un ménage est modeste</strong> Avec les revenus et le nombre de personnes</span><span aria-hidden="true">→</span></a>
   <form id="verif" class="verif" novalidate>
     <fieldset><legend>1. Quel équipement installez-vous ?</legend>
       <select name="fiche" required>
@@ -588,8 +589,12 @@ write("verificateur/index.html", page({
     <div id="q-sol" hidden>
       <fieldset><legend>4. Un équipement au gaz, au fioul ou au charbon est-il conservé après les travaux ?</legend><p class="hint">Même en appoint, pour le chauffage ou l'eau chaude concernés.</p>${radio("fossile", [["non", "Non"], ["oui", "Oui"]])}</fieldset>
       <fieldset><legend>5. Le ménage est-il modeste ?</legend><p class="hint">Revenus sous les plafonds « ménages modestes » des CEE.</p>${radio("modeste", [["oui", "Oui"], ["non", "Non"], ["nsp", "Je ne sais pas"]])}
+
+      </fieldset>
+    </div>
+    <div id="q-rev" hidden>
         <details class="calc" id="revenus">
-          <summary>Je ne sais pas : calculer avec les revenus du ménage</summary>
+          <summary>Le ménage est-il modeste ? Calculer avec ses revenus</summary>
           <div class="calc-grid">
             <label>Personnes dans le ménage<input type="number" name="rev-pers" min="1" max="15" step="1" inputmode="numeric" placeholder="ex. 3"></label>
             <label>Revenu fiscal de référence total<input type="number" name="rev-rfr" min="0" step="1" inputmode="numeric" placeholder="ex. 35000"><span class="hint">Somme des RFR de tous les avis d'imposition du foyer (revenus N-2 ; N-1 possible s'il est disponible)</span></label>
@@ -598,7 +603,6 @@ write("verificateur/index.html", page({
           <div id="calc-out" class="calc-out" role="status" aria-live="polite" hidden></div>
           <p class="hint">Plafonds 2026 de l'<a href="https://aida.ineris.fr/reglementation/arrete-221225-portant-actualisation-plafonds-revenus-lannee-2026-cadre-dispositif" target="_blank" rel="noopener">arrêté du 22 décembre 2025</a> (JO du 26 décembre 2025), pour les opérations engagées en 2026. Aucune donnée n'est envoyée : le calcul se fait dans votre navigateur.</p>
         </details>
-      </fieldset>
     </div>
   </form>
   <div id="verdict" class="verdict" role="status" aria-live="polite" hidden></div>

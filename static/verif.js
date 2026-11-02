@@ -38,7 +38,7 @@
     if (rfr < a) { cat = "oui"; txt = "<strong>Ménage modeste</strong>, et même en situation de précarité énergétique (plafond " + euros(a) + ")."; }
     else if (rfr < b) { cat = "oui"; txt = "<strong>Ménage modeste</strong> : revenu inférieur au plafond de " + euros(b) + "."; }
     else { cat = "non"; txt = "<strong>Pas modeste</strong> : revenu égal ou supérieur au plafond de " + euros(b) + "."; }
-    box.innerHTML = "<p>" + txt + "</p><p class=\"hint\">Plafond « ménage modeste » pour " + n + " personne" + (n > 1 ? "s" : "") + (zone === "idf" ? " en Île-de-France" : " hors Île-de-France") + " : " + euros(b) + ". La réponse à la question 5 a été mise à jour.</p>";
+    box.innerHTML = "<p>" + txt + "</p><p class=\"hint\">Plafond « ménage modeste » pour " + n + " personne" + (n > 1 ? "s" : "") + (zone === "idf" ? " en Île-de-France" : " hors Île-de-France") + " : " + euros(b) + ". " + (FICHES[val("fiche")] && FICHES[val("fiche")].type === "sol" ? "La réponse à la question 5 a été mise à jour." : "") + "</p>";
     box.className = "calc-out c-" + cat;
     box.hidden = false;
     var r = form.querySelector('[name="modeste"][value="' + cat + '"]');
@@ -48,11 +48,19 @@
   function val(n) { var el = form.querySelector('[name="' + n + '"]:checked') || form.elements[n]; return el ? el.value : ""; }
   function show(id, on) { var el = document.getElementById(id); if (el) el.hidden = !on; }
 
+  var standalone = false;
   function refresh() {
     var f = FICHES[val("fiche")];
     show("q-pac", f && f.type === "pac");
     show("q-sol", f && f.type === "sol");
+    show("q-rev", standalone || (f && f.type === "sol"));
   }
+  function openRev() {
+    standalone = true; refresh();
+    var d = document.getElementById("revenus");
+    if (d) { d.open = true; d.scrollIntoView({ behavior: "smooth", block: "start" }); var i = d.querySelector('[name="rev-pers"]'); if (i) i.focus({ preventScroll: true }); }
+  }
+  window.addEventListener("hashchange", function () { if (location.hash === "#revenus") openRev(); });
 
   function verdict() {
     var code = val("fiche"), f = FICHES[code], d = val("date");
@@ -116,4 +124,7 @@
   form.addEventListener("input", render);
   form.addEventListener("submit", function (e) { e.preventDefault(); render(); });
   refresh();
+  if (location.hash === "#revenus") openRev();
+  var lnk = document.querySelector("[data-rev]");
+  if (lnk) lnk.addEventListener("click", function (e) { e.preventDefault(); if (location.hash !== "#revenus") history.replaceState(null, "", "#revenus"); openRev(); });
 })();

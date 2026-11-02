@@ -311,3 +311,4 @@ footer nav{display:flex;gap:16px;flex-wrap:wrap}
 .ech-past .ech li{border-left-color:var(--line)}
 .ech-past .ech time{color:var(--muted)}
 @media (max-width:520px){.ech li{grid-template-columns:1fr;gap:4px}}
+#q-rev{margin-top:4px}
