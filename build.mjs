@@ -76,7 +76,7 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
     });
     // Section « Impact sur vos outils » : repliée par défaut, réservée aux obligés et délégataires
     html = html.replace(/<h2>Impact sur vos outils<\/h2>([\s\S]*?)(?=<h2|$)/, (_, inner) =>
-      `<details class="it-impact"><summary><span class="eyebrow">Obligés et délégataires</span><strong>Impact sur vos outils</strong><span class="it-hint">Données, règles, documents : ce qu'il faut adapter</span></summary><div class="it-body">${inner}</div></details>`);
+      `<details class="it-impact" id="outils-si"><summary><span class="eyebrow">Obligés et délégataires</span><strong>Impact sur vos outils</strong><span class="it-hint">Données, règles, documents : ce qu'il faut adapter</span></summary><div class="it-body">${inner}</div></details>`);
     html = linkFiches(html);
     return { ...data, date: String(data.date), slug, html, body, items, todo };
   })
@@ -106,6 +106,10 @@ function signupForm(id, label = "Recevoir l'édition gratuite du lundi") {
 </form>`;
 }
 
+const navLink = (href, label, path, also = []) => {
+  const on = path === href || also.some((a) => path.startsWith(a));
+  return `<a href="${href}"${on ? ' aria-current="page"' : ""}>${label}</a>`;
+};
 function page({ title, description = cfg.description, path = "/", body, type = "website" }) {
   const fullTitle = title ? `${title} · ${cfg.name}` : `${cfg.name} · ${cfg.tagline}`;
   const url = cfg.url + path;
@@ -138,17 +142,20 @@ ${ladder}
 <div class="wrap">
 <header class="nav">
   <a class="logo" href="/">KUMAK <small>VEILLE CEE</small></a>
-  <nav aria-label="Navigation principale">
-    <a href="/veille/">Veille</a>
-    <a href="/verificateur/">Vérificateur</a>
-    <a class="btn-sm" href="/#inscription">S'inscrire</a>
+  <nav class="main-links" aria-label="Navigation principale">
+    ${navLink("/installateurs/", "Installateurs", path, ["/verificateur/", "/fiches/"])}
+    ${navLink("/obliges-delegataires/", 'Obligés<span class="nl"> et délégataires</span>', path, ["/calendrier/"])}
+    ${navLink("/veille/", '<span class="nl">Toute la </span><span class="nc">v</span><span class="nu">V</span>eille', path, ["/editions/", "/retro-2026/"])}
   </nav>
+  <a class="btn-sm nav-cta" href="/#inscription">S'inscrire</a>
 </header>
 ${body}
 <footer>
   <span>${cfg.name} · kumak.fr · veille des certificats d'économies d'énergie. Information, pas de conseil juridique.</span>
   <nav aria-label="Pied de page">
-    <a href="/veille/">Veille</a>
+    <a href="/installateurs/">Installateurs</a>
+    <a href="/obliges-delegataires/">Obligés et délégataires</a>
+    <a href="/veille/">Toute la veille</a>
     <a href="/verificateur/">Vérificateur</a>
     <a href="/fiches/">Par équipement</a>
     <a href="/calendrier/">Calendrier</a>
@@ -188,17 +195,17 @@ write("index.html", page({
   <p class="lede">Nouvelles fiches, bonifications, règles de contrôle : KUMAK lit le Journal officiel à votre place et vous dit ce que ça change pour vos dossiers, vos primes et vos marges.</p>
 </div>
 <section class="doors" aria-label="Vous êtes…">
-  <a class="door" href="/verificateur/">
+  <a class="door" href="/installateurs/">
     <span class="eyebrow">Installateurs, artisans RGE</span>
     <strong>Vous posez des équipements</strong>
-    <span class="door-q">Ce chantier a-t-il droit à la bonification ?</span>
-    <span class="door-cta">Vérifier un chantier →</span>
+    <span class="door-q">Bonification, ménage modeste, ce qui change pour votre équipement.</span>
+    <span class="door-cta">Mon espace installateur →</span>
   </a>
-  <a class="door" href="/veille/">
+  <a class="door" href="/obliges-delegataires/">
     <span class="eyebrow">Obligés, délégataires, mandataires</span>
     <strong>Vous financez ou gérez des CEE</strong>
-    <span class="door-q">Les textes CEE décodés, classés par impact.</span>
-    <span class="door-cta">Lire la veille →</span>
+    <span class="door-q">Les textes décodés, les échéances, l'impact sur vos outils.</span>
+    <span class="door-cta">Mon espace obligé et délégataire →</span>
   </a>
 </section>
 <div class="hero" id="inscription">
@@ -276,7 +283,7 @@ for (const e of editions) {
 
 const veilleBody = `<main class="article narrow">
   <div class="eyebrow">Veille</div>
-  <h1>La veille CEE</h1>
+  <h1>Toute la veille CEE</h1>
   <p class="lede">Les textes CEE décodés : ce qui change, pour qui, et ce qu'il faut faire.</p>
   <div class="veille-tools">
   <a class="fiche-search" href="/fiches/"><span><strong>Chercher par équipement</strong> Pompe à chaleur, chauffe-eau, isolation…</span><span aria-hidden="true">→</span></a>
@@ -563,6 +570,85 @@ write("calendrier.ics", ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//KUMAK//Cal
     `SUMMARY:${icsEsc("CEE · " + e.label)}`, `DESCRIPTION:${icsEsc("Source : " + e.refs.map((r) => r.label + " " + cfg.url + r.url).join(" ; "))}`, `URL:${cfg.url}${e.refs[0].url}`, "TRANSP:TRANSPARENT", "END:VEVENT"]),
   "END:VCALENDAR"].map(icsFold).join("\r\n") + "\r\n");
 
+// ---------- espaces par profil ----------
+// Vignettes « Concrètement, pour vous » extraites des numéros, triées par profil
+const PROFIL_INSTALL = /install|chauffagiste|désembouage|rénovez|fabriquez ou distribuez|montez des dossiers|artisan/i;
+const PROFIL_OBLIGE = /achetez|vendez|emmy|distribuez du fioul|délégataire|mandataire|obligé|demandeur|montez des dossiers/i;
+const vignettes = [];
+for (const src of sources) {
+  const m = src.body.match(/## Concrètement, pour vous\n([\s\S]*?)(?=\n##|$)/);
+  if (!m) continue;
+  let cur = null;
+  for (const line of m[1].split("\n")) {
+    const w = line.match(/^- \*\*(.+?)\*\*/);
+    if (w) { cur = { who: w[1], rows: [], src }; vignettes.push(cur); continue; }
+    const r = line.match(/^\s+- ([^:]{2,20}?)\s*:\s*(.*)$/);
+    if (cur && r) cur.rows.push([r[1], r[2]]);
+  }
+}
+vignettes.sort((a, b) => b.src.tri.localeCompare(a.src.tri));
+const vignetteCard = (v) => `<div class="profile"><h3>${esc(v.who)}</h3>${v.rows.map(([l, t]) => `<p><span class="lbl">${esc(l)}</span>${linkFiches(marked.parseInline(esc(t.replace(/^./, (c) => c.toUpperCase()))))}</p>`).join("")}<p class="v-src"><a href="${v.src.url}">${esc(v.src.label)} →</a></p></div>`;
+const vInstall = vignettes.filter((v) => PROFIL_INSTALL.test(v.who)).slice(0, 6);
+const vOblige = vignettes.filter((v) => PROFIL_OBLIGE.test(v.who)).slice(0, 6);
+
+// Numéros avec une rubrique « Impact sur vos outils »
+const impacts = sources.filter((src) => /## Impact sur vos outils/.test(src.body)).map((src) => ({ ...src,
+  sujets: [...src.body.split("## Impact sur vos outils")[1].split(/\n## /)[0].matchAll(/^### (.+)$/gm)].map((x) => cleanMd(x[1])) }))
+  .sort((a, b) => b.tri.localeCompare(a.tri));
+
+const tool = (href, titre, txt, cta) => `<a class="tool" href="${href}"><strong>${titre}</strong><span>${txt}</span><em>${cta} →</em></a>`;
+
+write("installateurs/index.html", page({
+  title: "Espace installateurs",
+  description: "Bonification CEE, ménage modeste, ce qui a changé pour votre équipement : les outils KUMAK pour les installateurs et artisans RGE.",
+  path: "/installateurs/",
+  body: `<main class="article narrow">
+  <div class="eyebrow">Installateurs, artisans RGE</div>
+  <h1>Vous posez des équipements</h1>
+  <p class="lede">Trois outils pour répondre vite à vos clients, et ce qui a changé récemment pour vos chantiers.</p>
+  <div class="tools">
+    ${tool("/verificateur/", "Ma prime est-elle bonifiée ?", "PAC, chauffe-eau thermodynamique, solaire : la réponse avec le motif et la source.", "Vérifier un chantier")}
+    ${tool("/verificateur/#revenus", "Mon client est-il modeste ?", "Avec le nombre de personnes et le revenu fiscal : la catégorie et le plafond 2026.", "Calculer")}
+    ${tool("/fiches/", "Ce qui a changé pour mon équipement", "Pompe à chaleur, chaudière, chauffe-eau, isolation, LED…", "Chercher")}
+  </div>
+  ${vInstall.length ? `<h2 class="list-title">Ce qui a changé pour vous récemment</h2>
+  <div class="profile-grid space-grid">${vInstall.map(vignetteCard).join("")}</div>` : ""}
+  <p class="space-other">Vous financez aussi des opérations ? <a href="/obliges-delegataires/">Espace obligés et délégataires →</a></p>
+  <div class="cta-box" id="inscription">
+    <h2>Les règles changent souvent.</h2>
+    <p>Chaque lundi, ce qui change pour vos chantiers, en 5 minutes.</p>
+    ${signupForm("email-install", "Votre adresse e-mail")}
+  </div>
+</main>`,
+}));
+
+write("obliges-delegataires/index.html", page({
+  title: "Espace obligés et délégataires",
+  description: "La veille CEE pour les obligés, délégataires et mandataires : dernière édition, échéances, impact sur vos outils de gestion.",
+  path: "/obliges-delegataires/",
+  body: `<main class="article narrow">
+  <div class="eyebrow">Obligés, délégataires, mandataires</div>
+  <h1>Vous financez ou gérez des CEE</h1>
+  <p class="lede">Les textes décodés, les prochaines échéances et ce qu'il faut adapter dans vos outils.</p>
+  ${latest ? `<a class="space-latest" href="/editions/${latest.slug}/"><span class="eyebrow">Dernière édition · Nº ${latest.numero} · ${dateFr(latest.date)}</span><strong>${esc(latest.titre)}</strong><span>${esc(latest.accroche)}</span><em>Lire →</em></a>` : ""}
+  <h2 class="list-title">Prochaines échéances</h2>
+  ${futur.length ? `<ul class="ech">${futur.slice(0, 3).map(echItem).join("")}</ul>` : "<p>Aucune échéance à venir pour l'instant.</p>"}
+  <p class="space-more"><a href="/calendrier/">Tout le calendrier et l'abonnement agenda →</a></p>
+  ${impacts.length ? `<h2 class="list-title" id="outils">Impact sur vos outils</h2>
+  <p class="list-intro">Les champs, règles et cas de test à reprendre dans votre outil de gestion CEE, que vous l'ayez développé en interne, paramétré dans un outil généraliste ou acheté à un éditeur.</p>
+  <ul class="impact-list">${impacts.map((i) => `<li><a href="${i.url}#outils-si"><span class="meta">${esc(i.label)}</span><strong>${esc(i.sujets[0] || i.titre)}</strong>${i.sujets.length > 1 ? `<span>${i.sujets.slice(1).map(esc).join(" · ")}</span>` : ""}</a></li>`).join("")}</ul>` : ""}
+  ${vOblige.length ? `<h2 class="list-title">Ce qui a changé pour vous récemment</h2>
+  <div class="profile-grid space-grid">${vOblige.map(vignetteCard).join("")}</div>` : ""}
+  <p class="space-more"><a href="/fiches/">Chercher par fiche ou par équipement →</a> · <a href="/veille/">Toute la veille →</a></p>
+  <p class="space-other">Vous travaillez avec des installateurs ? <a href="/installateurs/">Espace installateurs →</a></p>
+  <div class="cta-box" id="inscription">
+    <h2>Chaque lundi, en 5 minutes.</h2>
+    <p>Les textes de la semaine classés par impact, avec leurs sources.</p>
+    ${signupForm("email-oblige", "Votre adresse e-mail")}
+  </div>
+</main>`,
+}));
+
 // ---------- pages simples ----------
 const legal = (path, title, md) => write(`${path}/index.html`, page({
   title, path: `/${path}/`,
@@ -697,7 +783,7 @@ write("feed.xml", `<?xml version="1.0" encoding="utf-8"?>
 ${editions.filter((e) => !e.brouillon).map((e) => `<item><title>${esc(`Nº ${e.numero} · ${e.titre}`)}</title><link>${cfg.url}/editions/${e.slug}/</link><guid>${cfg.url}/editions/${e.slug}/</guid><pubDate>${rfc822(e.date)}</pubDate><description>${esc(e.accroche)}</description></item>`).join("\n")}
 </channel></rss>`);
 
-const urls = ["/", "/veille/", "/verificateur/", "/fiches/", "/calendrier/", ...codes.map((c) => `/fiches/${ficheSlug(c)}/`), "/mentions-legales/", "/confidentialite/",
+const urls = ["/", "/veille/", "/verificateur/", "/installateurs/", "/obliges-delegataires/", "/fiches/", "/calendrier/", ...codes.map((c) => `/fiches/${ficheSlug(c)}/`), "/mentions-legales/", "/confidentialite/",
   ...editions.filter((e) => !e.brouillon).map((e) => `/editions/${e.slug}/`),
   ...(retros.some((r) => !r.brouillon) ? ["/retro-2026/"] : []),
   ...retros.filter((r) => !r.brouillon).map((r) => `/retro-2026/${r.slug}/`)];
