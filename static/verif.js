@@ -17,6 +17,34 @@
     rempl: [["Arrêté du 4 septembre 2026 (remplacement d'équipements déjà financés)", "/retro-2026/09-septembre/"]]
   };
 
+  // Plafonds de revenus CEE 2026 (arrêté du 22 décembre 2025, JO du 26/12/2025), opérations engagées à compter du 01/01/2026.
+  // A = précarité énergétique (II bis de l'art. 3-1 de l'arrêté du 29/12/2014) ; B = ménages modestes (II ter).
+  // Revenus « inférieurs » aux plafonds : comparaison stricte.
+  var PLAFONDS = {
+    idf:   { A: [24031, 35270, 42357, 49455, 56580], Aplus: 7116, B: [29253, 42933, 51564, 60208, 68877], Bplus: 8663 },
+    autre: { A: [17363, 25393, 30540, 35676, 40835], Aplus: 5151, B: [22259, 32553, 39148, 45735, 52348], Bplus: 6598 }
+  };
+  function plafond(zone, cat, n) {
+    var z = PLAFONDS[zone], t = z[cat];
+    return n <= 5 ? t[n - 1] : t[4] + (n - 5) * z[cat + "plus"];
+  }
+  function euros(x) { return x.toLocaleString("fr-FR") + "\u00a0€"; }
+  function calc() {
+    var box = document.getElementById("calc-out");
+    if (!box) return;
+    var n = parseInt(val("rev-pers"), 10), rfr = parseFloat(val("rev-rfr")), zone = val("rev-zone");
+    if (!(n >= 1) || !(rfr >= 0) || !zone || val("rev-rfr") === "") { box.hidden = true; return; }
+    var a = plafond(zone, "A", n), b = plafond(zone, "B", n), cat, txt;
+    if (rfr < a) { cat = "oui"; txt = "<strong>Ménage modeste</strong>, et même en situation de précarité énergétique (plafond " + euros(a) + ")."; }
+    else if (rfr < b) { cat = "oui"; txt = "<strong>Ménage modeste</strong> : revenu inférieur au plafond de " + euros(b) + "."; }
+    else { cat = "non"; txt = "<strong>Pas modeste</strong> : revenu égal ou supérieur au plafond de " + euros(b) + "."; }
+    box.innerHTML = "<p>" + txt + "</p><p class=\"hint\">Plafond « ménage modeste » pour " + n + " personne" + (n > 1 ? "s" : "") + (zone === "idf" ? " en Île-de-France" : " hors Île-de-France") + " : " + euros(b) + ". La réponse à la question 5 a été mise à jour.</p>";
+    box.className = "calc-out c-" + cat;
+    box.hidden = false;
+    var r = form.querySelector('[name="modeste"][value="' + cat + '"]');
+    if (r) r.checked = true;
+  }
+
   function val(n) { var el = form.querySelector('[name="' + n + '"]:checked') || form.elements[n]; return el ? el.value : ""; }
   function show(id, on) { var el = document.getElementById(id); if (el) el.hidden = !on; }
 
@@ -60,15 +88,16 @@
       else if (f.rp && rp === "non") { r.status = "non"; r.titre = "Pas de bonification"; r.motifs.push("Pour le système solaire combiné, la bonification vaut seulement en résidence principale."); }
       else if (fossile === "oui") { r.status = "non"; r.titre = "Pas de bonification"; r.motifs.push("Un équipement capable d'utiliser une énergie fossile est conservé : la bonification suppose une décarbonation complète. La prime CEE de base reste possible."); }
       else if (!fossile || (f.rp && !rp)) { r.status = "incomplet"; }
-      else if (mod === "oui") { r.status = "oui"; r.titre = "Oui : coefficient ×" + f.modeste; r.motifs.push("Devis dans la période, aucun équipement fossile conservé, ménage modeste ou très modeste."); }
+      else if (mod === "oui") { r.status = "oui"; r.titre = "Oui : coefficient ×" + f.modeste; r.motifs.push("Devis dans la période, aucun équipement fossile conservé, ménage modeste."); }
       else if (mod === "non") { r.status = "oui"; r.titre = "Oui : coefficient ×" + f.autres; r.motifs.push("Devis dans la période, aucun équipement fossile conservé."); }
-      else { r.status = "oui"; r.titre = "Oui : coefficient ×" + f.autres + " ou ×" + f.modeste; r.motifs.push("×" + f.modeste + " si le ménage est modeste ou très modeste, ×" + f.autres + " sinon. Vérifiez ses revenus avec les plafonds 2026."); }
+      else { r.status = "oui"; r.titre = "Oui : coefficient ×" + f.autres + " ou ×" + f.modeste; r.motifs.push("×" + f.modeste + " si le ménage est modeste, ×" + f.autres + " sinon. Utilisez le calcul sous la question 5."); }
       if (r.status === "oui") r.alertes.push("Faites signer le devis avant le 31 décembre 2026.");
     }
     return r;
   }
 
-  function render() {
+  function render(e) {
+    if (!e || !e.target || e.target.name !== "modeste") calc();
     refresh();
     var r = verdict();
     if (!r || r.status === "incomplet") { out.hidden = true; return; }

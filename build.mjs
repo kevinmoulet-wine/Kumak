@@ -151,6 +151,7 @@ ${body}
     <a href="/veille/">Veille</a>
     <a href="/verificateur/">Vérificateur</a>
     <a href="/fiches/">Index des fiches</a>
+    <a href="/calendrier/">Calendrier</a>
     <a href="/feed.xml">RSS</a>
     <a href="/mentions-legales/">Mentions légales</a>
     <a href="/confidentialite/">Confidentialité</a>
@@ -277,7 +278,10 @@ const veilleBody = `<main class="article narrow">
   <div class="eyebrow">Veille</div>
   <h1>La veille CEE</h1>
   <p class="lede">Les textes CEE décodés : ce qui change, pour qui, et ce qu'il faut faire.</p>
-  <a class="fiche-search" href="/fiches/"><span><strong>Chercher par fiche</strong> BAR-TH-171, BAR-TH-174, BAT-TH-163…</span><span aria-hidden="true">→</span></a>
+  <div class="veille-tools">
+  <a class="fiche-search" href="/fiches/"><span><strong>Chercher par fiche</strong> BAR-TH-171, BAR-TH-174…</span><span aria-hidden="true">→</span></a>
+  <a class="fiche-search" href="/calendrier/"><span><strong>Calendrier des échéances</strong> À ajouter à votre agenda</span><span aria-hidden="true">→</span></a>
+  </div>
   <h2 class="list-title">Éditions hebdo</h2>
   ${editions.length
     ? `<ul class="archive">${editions.map((e) => `<li><a href="/editions/${e.slug}/"><span class="num">Nº ${e.numero}<br>${dateFr(e.date)}</span><span><strong>${esc(e.titre)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</strong><span class="acc">${esc(e.accroche)}</span></span></a></li>`).join("")}</ul>`
@@ -437,6 +441,60 @@ write("fiches/index.html", page({
 </main>`,
 }));
 
+// ---------- calendrier des échéances ----------
+// Construit uniquement à partir des tableaux « Calendrier » des numéros publiés (dates vérifiées). Dates floues (« Fin septembre ») ignorées.
+const MOIS_IDX = Object.fromEntries(MOIS.map((m, i) => [m, i + 1]));
+const parseDateFr = (t) => { const m = t.trim().match(/^(1er|\d{1,2}) ([a-zéû]+) (\d{4})$/); if (!m || !MOIS_IDX[m[2]]) return null; return `${m[3]}-${String(MOIS_IDX[m[2]]).padStart(2, "0")}-${String(m[1] === "1er" ? 1 : +m[1]).padStart(2, "0")}`; };
+const echeances = {};
+for (const src of sources) {
+  let inCal = false;
+  for (const line of src.body.split("\n")) {
+    if (/^## /.test(line)) inCal = /^## Calendrier/.test(line);
+    if (!inCal || !/^\|/.test(line) || /^\|[\s|:-]+\|$/.test(line)) continue;
+    const [d, label] = line.replace(/^\||\|$/g, "").split("|").map((x) => x.trim());
+    const iso = parseDateFr(d || "");
+    if (!iso || !label) continue;
+    const e = (echeances[iso] ||= { iso, label, tri: "", refs: [] });
+    if (src.tri > e.tri) { e.tri = src.tri; e.label = cleanMd(label); }
+    if (!e.refs.some((r) => r.url === src.url)) e.refs.push(src);
+  }
+}
+const TODAY = new Date().toISOString().slice(0, 10);
+const allEch = Object.values(echeances).sort((a, b) => a.iso.localeCompare(b.iso));
+const futur = allEch.filter((e) => e.iso >= TODAY), passe = allEch.filter((e) => e.iso < TODAY).reverse();
+const echItem = (e) => `<li><time datetime="${e.iso}">${dateFr(e.iso)}</time><div><strong>${linkFiches(esc(e.label))}</strong><span class="ech-src">Source : ${e.refs.sort((a, b) => b.tri.localeCompare(a.tri)).map((r) => `<a href="${r.url}">${esc(r.label)}</a>`).join(" · ")}</span></div></li>`;
+write("calendrier/index.html", page({
+  title: "Calendrier des échéances CEE",
+  description: "Les dates clés de la réglementation CEE : entrées en vigueur, fins de bonification, recensements. Chaque date avec sa source, à ajouter à votre agenda.",
+  path: "/calendrier/",
+  body: `<main class="article narrow">
+  <p class="meta"><a href="/veille/">Veille</a> · Calendrier</p>
+  <h1>Calendrier des échéances CEE</h1>
+  <p class="lede">Les dates qui comptent pour vos dossiers, chacune reprise d'un numéro de KUMAK et de sa source officielle.</p>
+  <div class="ech-sub">
+    <a class="btn" href="webcal://kumak.fr/calendrier.ics">Ajouter à mon agenda</a>
+    <p class="hint">Abonnement Outlook, Google Agenda ou Apple Calendrier : les nouvelles dates s'ajoutent toutes seules. Sur Google Agenda : « Autres agendas » → « À partir de l'URL » → <code>https://kumak.fr/calendrier.ics</code></p>
+  </div>
+  <h2 class="list-title">À venir</h2>
+  ${futur.length ? `<ul class="ech">${futur.map(echItem).join("")}</ul>` : "<p>Aucune échéance à venir pour l'instant.</p>"}
+  ${passe.length ? `<details class="ech-past"><summary>Déjà passées en 2026 (${passe.length})</summary><ul class="ech">${passe.map(echItem).join("")}</ul></details>` : ""}
+  <p class="disclaimer">Seules figurent les dates publiées dans KUMAK et vérifiées sur un texte officiel. Une date peut être modifiée par un nouveau texte : vérifiez toujours le texte en vigueur.</p>
+  <div class="cta-box" id="inscription">
+    <h2>Soyez prévenu des nouvelles dates.</h2>
+    ${signupForm("email-cal", "Votre adresse e-mail")}
+  </div>
+</main>`,
+}));
+const icsEsc = (t) => t.replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+const icsFold = (l) => { const out = []; let s = l; while (Buffer.byteLength(s) > 74) { let i = 74; while (Buffer.byteLength(s.slice(0, i)) > 74) i--; out.push(s.slice(0, i)); s = " " + s.slice(i); } out.push(s); return out.join("\r\n"); };
+const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
+const nextDay = (iso) => { const d = new Date(iso + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + 1); return d.toISOString().slice(0, 10).replace(/-/g, ""); };
+write("calendrier.ics", ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//KUMAK//Calendrier CEE//FR", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+  "X-WR-CALNAME:KUMAK · Échéances CEE", "X-WR-TIMEZONE:Europe/Paris", "REFRESH-INTERVAL;VALUE=DURATION:P1D", "X-PUBLISHED-TTL:P1D",
+  ...allEch.flatMap((e) => ["BEGIN:VEVENT", `UID:${e.iso}@kumak.fr`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${e.iso.replace(/-/g, "")}`, `DTEND;VALUE=DATE:${nextDay(e.iso)}`,
+    `SUMMARY:${icsEsc("CEE · " + e.label)}`, `DESCRIPTION:${icsEsc("Source : " + e.refs.map((r) => r.label + " " + cfg.url + r.url).join(" ; "))}`, `URL:${cfg.url}${e.refs[0].url}`, "TRANSP:TRANSPARENT", "END:VEVENT"]),
+  "END:VCALENDAR"].map(icsFold).join("\r\n") + "\r\n");
+
 // ---------- pages simples ----------
 const legal = (path, title, md) => write(`${path}/index.html`, page({
   title, path: `/${path}/`,
@@ -529,7 +587,18 @@ write("verificateur/index.html", page({
     </div>
     <div id="q-sol" hidden>
       <fieldset><legend>4. Un équipement au gaz, au fioul ou au charbon est-il conservé après les travaux ?</legend><p class="hint">Même en appoint, pour le chauffage ou l'eau chaude concernés.</p>${radio("fossile", [["non", "Non"], ["oui", "Oui"]])}</fieldset>
-      <fieldset><legend>5. Le ménage est-il modeste ou très modeste ?</legend>${radio("modeste", [["oui", "Oui"], ["non", "Non"], ["nsp", "Je ne sais pas"]])}</fieldset>
+      <fieldset><legend>5. Le ménage est-il modeste ?</legend><p class="hint">Revenus sous les plafonds « ménages modestes » des CEE.</p>${radio("modeste", [["oui", "Oui"], ["non", "Non"], ["nsp", "Je ne sais pas"]])}
+        <details class="calc" id="revenus">
+          <summary>Je ne sais pas : calculer avec les revenus du ménage</summary>
+          <div class="calc-grid">
+            <label>Personnes dans le ménage<input type="number" name="rev-pers" min="1" max="15" step="1" inputmode="numeric" placeholder="ex. 3"></label>
+            <label>Revenu fiscal de référence total<input type="number" name="rev-rfr" min="0" step="1" inputmode="numeric" placeholder="ex. 35000"><span class="hint">Somme des RFR de tous les avis d'imposition du foyer (revenus N-2 ; N-1 possible s'il est disponible)</span></label>
+            <div><span class="calc-lbl">Lieu du logement</span>${radio("rev-zone", [["idf", "Île-de-France"], ["autre", "Autre région"]])}</div>
+          </div>
+          <div id="calc-out" class="calc-out" role="status" aria-live="polite" hidden></div>
+          <p class="hint">Plafonds 2026 de l'<a href="https://aida.ineris.fr/reglementation/arrete-221225-portant-actualisation-plafonds-revenus-lannee-2026-cadre-dispositif" target="_blank" rel="noopener">arrêté du 22 décembre 2025</a> (JO du 26 décembre 2025), pour les opérations engagées en 2026. Aucune donnée n'est envoyée : le calcul se fait dans votre navigateur.</p>
+        </details>
+      </fieldset>
     </div>
   </form>
   <div id="verdict" class="verdict" role="status" aria-live="polite" hidden></div>
@@ -556,7 +625,7 @@ write("feed.xml", `<?xml version="1.0" encoding="utf-8"?>
 ${editions.filter((e) => !e.brouillon).map((e) => `<item><title>${esc(`Nº ${e.numero} · ${e.titre}`)}</title><link>${cfg.url}/editions/${e.slug}/</link><guid>${cfg.url}/editions/${e.slug}/</guid><pubDate>${rfc822(e.date)}</pubDate><description>${esc(e.accroche)}</description></item>`).join("\n")}
 </channel></rss>`);
 
-const urls = ["/", "/veille/", "/verificateur/", "/fiches/", ...codes.map((c) => `/fiches/${ficheSlug(c)}/`), "/mentions-legales/", "/confidentialite/",
+const urls = ["/", "/veille/", "/verificateur/", "/fiches/", "/calendrier/", ...codes.map((c) => `/fiches/${ficheSlug(c)}/`), "/mentions-legales/", "/confidentialite/",
   ...editions.filter((e) => !e.brouillon).map((e) => `/editions/${e.slug}/`),
   ...(retros.some((r) => !r.brouillon) ? ["/retro-2026/"] : []),
   ...retros.filter((r) => !r.brouillon).map((r) => `/retro-2026/${r.slug}/`)];
