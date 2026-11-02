@@ -150,7 +150,7 @@ ${body}
   <nav aria-label="Pied de page">
     <a href="/veille/">Veille</a>
     <a href="/verificateur/">Vérificateur</a>
-    <a href="/fiches/">Index des fiches</a>
+    <a href="/fiches/">Par équipement</a>
     <a href="/calendrier/">Calendrier</a>
     <a href="/feed.xml">RSS</a>
     <a href="/mentions-legales/">Mentions légales</a>
@@ -279,7 +279,7 @@ const veilleBody = `<main class="article narrow">
   <h1>La veille CEE</h1>
   <p class="lede">Les textes CEE décodés : ce qui change, pour qui, et ce qu'il faut faire.</p>
   <div class="veille-tools">
-  <a class="fiche-search" href="/fiches/"><span><strong>Chercher par fiche</strong> BAR-TH-171, BAR-TH-174…</span><span aria-hidden="true">→</span></a>
+  <a class="fiche-search" href="/fiches/"><span><strong>Chercher par équipement</strong> Pompe à chaleur, chauffe-eau, isolation…</span><span aria-hidden="true">→</span></a>
   <a class="fiche-search" href="/calendrier/"><span><strong>Calendrier des échéances</strong> À ajouter à votre agenda</span><span aria-hidden="true">→</span></a>
   </div>
   <h2 class="list-title">Éditions hebdo</h2>
@@ -365,7 +365,31 @@ const FICHE_NOMS = {
   "AGRI-EQ-110": "Séchage solaire par insufflation", "AGRI-EQ-112": "Double paroi gonflable sur serres",
   "AGRI-TH-108": "Pompe à chaleur air/eau ou eau/eau (agriculture)", "AGRI-TH-117": "Déshumidification thermodynamique pour serres",
   "AGRI-TH-119": "Déshumidification avec air extérieur",
+  "BAR-TH-106": "Chaudière individuelle à haute performance énergétique (supprimée en 2024)",
+  "BAR-TH-107": "Chaudière collective à haute performance énergétique", "BAR-TH-113": "Chaudière biomasse individuelle",
+  "BAR-TH-164": "Rénovation globale d'une maison individuelle",
 };
+// Thèmes en langage chantier + mots-clés de recherche (synonymes utilisés par les installateurs)
+const THEMES = [
+  { id: "pac", nom: "Pompes à chaleur", kw: "pompe a chaleur pompes pac chauffage chauffagiste air eau aerothermie aerothermique geothermie radiateur plancher chauffant climatisation",
+    codes: ["BAR-TH-171", "BAR-TH-172", "BAR-TH-166", "BAR-TH-179", "BAR-TH-180", "BAT-TH-113", "BAT-TH-163", "BAT-TH-164", "AGRI-TH-108"] },
+  { id: "chaud", nom: "Chaudières et géothermie", kw: "chaudiere chaudieres gaz fioul bois granules pellets biomasse buches chauffage chauffagiste geothermie geothermique forage sonde",
+    codes: ["BAR-TH-106", "BAR-TH-107", "BAR-TH-113", "BAR-TH-178", "BAT-TH-162", "BAT-TH-102"] },
+  { id: "ecs", nom: "Eau chaude et solaire", kw: "chauffe-eau chauffe eau ballon cumulus thermodynamique cet cesi solaire panneau panneaux capteur capteurs eau chaude sanitaire ecs plombier plomberie photovoltaique pvt",
+    codes: ["BAR-TH-101", "BAR-TH-143", "BAR-TH-148", "BAR-TH-162", "BAR-TH-168"] },
+  { id: "reno", nom: "Rénovation globale", kw: "renovation ampleur globale isolation isolant isoler combles murs toiture fenetres menuiserie dpe audit energetique maison appartement copropriete logement",
+    codes: ["BAR-TH-164", "BAR-TH-174", "BAR-TH-175", "BAR-TH-177"] },
+  { id: "reseau", nom: "Réseaux de chauffage", kw: "desembouage embouage reseau circuit chauffage collectif copropriete entretien",
+    codes: ["BAR-SE-109"] },
+  { id: "led", nom: "Éclairage", kw: "led eclairage luminaire luminaires lampe lampes electricien electricite parties communes bureaux",
+    codes: ["BAR-EQ-110", "BAT-EQ-127", "IND-BA-116"] },
+  { id: "agri", nom: "Agriculture et serres", kw: "serre serres agriculture agricole maraicher horticole sechage deshumidification exploitation",
+    codes: ["AGRI-EQ-108", "AGRI-EQ-110", "AGRI-EQ-112", "AGRI-TH-117", "AGRI-TH-119"] },
+  { id: "transp", nom: "Transport", kw: "pneu pneus pneumatiques gonflage garage station vehicule",
+    codes: ["TRA-SE-104"] },
+];
+const themeOf = (c) => THEMES.find((t) => t.codes.includes(c)) || { id: "autre", nom: "Autres", kw: "" };
+const norm = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 const SECTEURS = { BAR: "Résidentiel", BAT: "Tertiaire", IND: "Industrie", RES: "Réseaux", TRA: "Transport", AGRI: "Agriculture" };
 const VERIF_FICHES = ["BAR-TH-171", "BAR-TH-172", "BAR-TH-148", "BAR-TH-101", "BAR-TH-143"];
 const cleanMd = (l) => l.replace(/^\s*[-*]\s+/, "").replace(/^\|\s*|\s*\|\s*$/g, "").replace(/\s*\|\s*/g, " · ")
@@ -397,7 +421,7 @@ for (const src of sources) {
   for (const [c, f] of Object.entries(found)) (fiches[c] ||= []).push({ ...src, ...f });
 }
 const codes = Object.keys(fiches).sort();
-const ficheTitle = (c) => FICHE_NOMS[c] ? `${c} · ${FICHE_NOMS[c]}` : c;
+const ficheTitle = (c) => FICHE_NOMS[c] ? `${FICHE_NOMS[c].replace(/ \(supprimée.*\)$/, "")} (${c})` : c;
 const CATALOGUE = "https://www.ecologie.gouv.fr/politiques-publiques/operations-standardisees-deconomies-denergie";
 
 for (const c of codes) {
@@ -407,9 +431,9 @@ for (const c of codes) {
     description: `Fiche CEE ${c}${FICHE_NOMS[c] ? ` (${FICHE_NOMS[c]})` : ""} : tous les changements réglementaires de 2026 décodés par KUMAK.`,
     path: `/fiches/${ficheSlug(c)}/`,
     body: `<main class="article narrow">
-  <p class="meta"><a href="/veille/">Veille</a> · <a href="/fiches/">Index des fiches</a> · ${SECTEURS[c.split("-")[0]]}</p>
-  <h1>${c}</h1>
-  ${FICHE_NOMS[c] ? `<p class="lede">${esc(FICHE_NOMS[c])}</p>` : ""}
+  <p class="meta"><a href="/veille/">Veille</a> · <a href="/fiches/">Par équipement</a> · ${esc(themeOf(c).nom)}</p>
+  <div class="eyebrow fiche-code">Fiche ${c} · ${SECTEURS[c.split("-")[0]]}</div>
+  <h1>${esc(FICHE_NOMS[c] || c)}</h1>
   ${VERIF_FICHES.includes(c) ? `<p class="fiche-verif"><a class="btn" href="/verificateur/">Vérifier un chantier ${c} →</a></p>` : ""}
   <h2 class="list-title">Ce que KUMAK en a dit (${refs.length})</h2>
   <ul class="fiche-refs">${refs.map((r) => `<li>
@@ -426,20 +450,64 @@ for (const c of codes) {
   }));
 }
 
+const themesUsed = [...THEMES, { id: "autre", nom: "Autres", kw: "", codes: [] }].map((t) => ({ ...t, list: codes.filter((c) => themeOf(c).id === t.id) })).filter((t) => t.list.length);
+const hayClean = (t) => " " + norm(t).replace(/[^a-z0-9]+/g, " ").trim() + " ";
+const ficheHay = (c) => hayClean([c, c.replace(/-/g, ""), FICHE_NOMS[c] || "", themeOf(c).nom, themeOf(c).kw].join(" "));
+const ficheHay2 = (c) => hayClean(fiches[c].flatMap((r) => r.snippets).join(" "));
 write("fiches/index.html", page({
-  title: "Index des fiches CEE",
-  description: "Toutes les fiches d'opérations standardisées CEE citées par KUMAK, avec les changements de 2026 pour chacune.",
+  title: "Chercher une fiche CEE par équipement",
+  description: "Pompe à chaleur, chaudière, chauffe-eau, isolation, LED : retrouvez les fiches CEE par équipement et tout ce qui a changé en 2026.",
   path: "/fiches/",
   body: `<main class="article narrow">
-  <p class="meta"><a href="/veille/">Veille</a> · Index des fiches</p>
-  <h1>Index des fiches CEE</h1>
-  <p class="lede">Retrouvez, fiche par fiche, tout ce qui a changé en 2026 et les numéros de KUMAK qui en parlent.</p>
-  ${Object.entries(SECTEURS).filter(([k]) => codes.some((c) => c.startsWith(k + "-"))).map(([k, nom]) => `
-  <h2 class="list-title">${nom}</h2>
-  <ul class="fiche-index">${codes.filter((c) => c.startsWith(k + "-")).map((c) => `<li><a href="/fiches/${ficheSlug(c)}/"><strong>${c}</strong>${FICHE_NOMS[c] ? `<span>${esc(FICHE_NOMS[c])}</span>` : ""}<em>${fiches[c].length} numéro${fiches[c].length > 1 ? "s" : ""}</em></a></li>`).join("")}</ul>`).join("")}
-  <p class="disclaimer">Seules les fiches citées dans KUMAK figurent ici. Le catalogue complet est publié par le <a href="${CATALOGUE}" target="_blank" rel="noopener">ministère de la Transition écologique</a>.</p>
-</main>`,
+  <p class="meta"><a href="/veille/">Veille</a> · Par équipement</p>
+  <h1>Ce qui a changé pour votre équipement</h1>
+  <p class="lede">Tapez ce que vous posez : vous voyez les fiches CEE concernées et tout ce qui a changé en 2026.</p>
+  <div class="fsearch">
+    <label for="fq" class="sr-only">Rechercher un équipement</label>
+    <input id="fq" type="search" placeholder="Ex. pompe à chaleur, chauffe-eau, isolation, LED…" autocomplete="off">
+    <div class="fchips">${["Pompe à chaleur", "Chaudière", "Chauffe-eau", "Solaire", "Isolation", "LED", "Désembouage"].map((k) => `<button type="button" data-q="${k}">${k}</button>`).join("")}</div>
+  </div>
+  <p id="fnone" class="fnone" hidden></p>
+  ${themesUsed.map((t) => `<section class="ftheme" data-theme="${t.id}">
+  <h2 class="list-title">${t.nom}</h2>
+  <ul class="fiche-index">${t.list.map((c) => `<li data-hay="${esc(ficheHay(c))}" data-hay2="${esc(ficheHay2(c))}"><a href="/fiches/${ficheSlug(c)}/"><span class="fname">${esc(FICHE_NOMS[c] || "Fiche " + c)}</span><strong>${c}</strong><em>${fiches[c].length} numéro${fiches[c].length > 1 ? "s" : ""}</em></a></li>`).join("")}</ul></section>`).join("")}
+  <p class="disclaimer">Seules les fiches qui ont fait l'objet d'un texte décodé par KUMAK figurent ici. Le catalogue complet est publié par le <a href="${CATALOGUE}" target="_blank" rel="noopener">ministère de la Transition écologique</a>.</p>
+</main>
+<script>
+(function () {
+  var q = document.getElementById("fq"), none = document.getElementById("fnone");
+  var norm = function (t) { return t.normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase(); };
+  var STOP = " de du des la le les un une et a au aux en pour sur eau air ";
+  function match(h, phrase, words) {
+    if (words === null) return h.indexOf(" " + phrase) >= 0;
+    return words.length > 0 && words.every(function (w) { return h.indexOf(" " + w) >= 0 || (w.length > 4 && h.indexOf(" " + w.slice(0, -1)) >= 0); });
+  }
+  function pass(attr, phrase, words) {
+    var total = 0;
+    document.querySelectorAll(".ftheme").forEach(function (sec) {
+      var n = 0;
+      sec.querySelectorAll("li[data-hay]").forEach(function (li) { var ok = !phrase || match(li.getAttribute(attr), phrase, words); li.hidden = !ok; if (ok) n++; });
+      sec.hidden = n === 0; total += n;
+    });
+    return total;
+  }
+  function run() {
+    var phrase = norm(q.value).replace(/[^a-z0-9]+/g, " ").trim();
+    var words = phrase.split(" ").filter(function (w) { return w.length > 1 && STOP.indexOf(" " + w + " ") < 0; });
+    var total = pass("data-hay", phrase, null);
+    if (!total && phrase) total = pass("data-hay", phrase, words);
+    if (!total && phrase) total = pass("data-hay2", phrase, null);
+    if (!total && phrase) total = pass("data-hay2", phrase, words);
+    none.hidden = total > 0;
+    if (!total) none.innerHTML = "Aucune fiche liée à « " + q.value.replace(/[<>&]/g, "") + " » n'a fait l'objet d'un texte décodé par KUMAK en 2026. Si une règle change pour cet équipement, elle apparaîtra ici. Le détail des fiches en vigueur est dans le <a href=\\"${CATALOGUE}\\" target=\\"_blank\\" rel=\\"noopener\\">catalogue du ministère</a>.";
+  }
+  q.addEventListener("input", run);
+  document.querySelectorAll("[data-q]").forEach(function (b) { b.addEventListener("click", function () { q.value = b.getAttribute("data-q"); run(); q.focus(); }); });
+  var p = new URLSearchParams(location.search).get("q"); if (p) { q.value = p; run(); }
+})();
+</script>`,
 }));
+
 
 // ---------- calendrier des échéances ----------
 // Construit uniquement à partir des tableaux « Calendrier » des numéros publiés (dates vérifiées). Dates floues (« Fin septembre ») ignorées.
