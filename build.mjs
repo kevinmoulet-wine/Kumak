@@ -110,7 +110,7 @@ const navLink = (href, label, path, also = []) => {
   const on = path === href || also.some((a) => path.startsWith(a));
   return `<a href="${href}"${on ? ' aria-current="page"' : ""}>${label}</a>`;
 };
-function page({ title, description = cfg.description, path = "/", body, type = "website" }) {
+function page({ title, description = cfg.description, path = "/", body, type = "website", noindex = false }) {
   const fullTitle = title ? `${title} · ${cfg.name}` : `${cfg.name} · ${cfg.tagline}`;
   const url = cfg.url + path;
   return `<!doctype html>
@@ -120,7 +120,7 @@ function page({ title, description = cfg.description, path = "/", body, type = "
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(fullTitle)}</title>
 <meta name="description" content="${esc(description)}">
-<link rel="canonical" href="${url}">
+<link rel="canonical" href="${url}">${noindex ? '\n<meta name="robots" content="noindex">' : ""}
 <meta property="og:type" content="${type}">
 <meta property="og:site_name" content="${cfg.name}">
 <meta property="og:title" content="${esc(title || cfg.tagline)}">
@@ -143,9 +143,10 @@ ${ladder}
 <header class="nav">
   <a class="logo" href="/">KUMAK <small>VEILLE CEE</small></a>
   <nav class="main-links" aria-label="Navigation principale">
-    ${navLink("/installateurs/", "Installateurs", path, ["/verificateur/", "/fiches/"])}
-    ${navLink("/obliges-delegataires/", 'Obligés<span class="nl"> et délégataires</span>', path, ["/calendrier/"])}
-    ${navLink("/veille/", '<span class="nl">Toute la </span><span class="nc">v</span><span class="nu">V</span>eille', path, ["/editions/", "/retro-2026/"])}
+    ${navLink("/veille/", "Veille", path, ["/editions/", "/retro-2026/"])}
+    ${navLink("/calendrier/", "Échéances", path)}
+    ${navLink("/impact-outils/", 'Impact <span class="nl">sur vos </span>outils', path)}
+    ${navLink("/fiches/", "Fiches", path)}
   </nav>
   <a class="btn-sm nav-cta" href="/#inscription">S'inscrire</a>
 </header>
@@ -153,12 +154,10 @@ ${body}
 <footer>
   <span>${cfg.name} · kumak.fr · veille des certificats d'économies d'énergie. Information, pas de conseil juridique.</span>
   <nav aria-label="Pied de page">
-    <a href="/installateurs/">Installateurs</a>
-    <a href="/obliges-delegataires/">Obligés et délégataires</a>
-    <a href="/veille/">Toute la veille</a>
-    <a href="/verificateur/">Vérificateur</a>
-    <a href="/fiches/">Par équipement</a>
-    <a href="/calendrier/">Calendrier</a>
+    <a href="/veille/">Veille</a>
+    <a href="/calendrier/">Échéances</a>
+    <a href="/impact-outils/">Impact sur vos outils</a>
+    <a href="/fiches/">Fiches</a>
     <a href="/feed.xml">RSS</a>
     <a href="/mentions-legales/">Mentions légales</a>
     <a href="/confidentialite/">Confidentialité</a>
@@ -186,78 +185,7 @@ const sample = latest
   <div class="item">${badge("À LIRE")}<h3>C'est bon à savoir, sans action immédiate.</h3></div>
 </aside>`;
 
-write("index.html", page({
-  path: "/",
-  body: `<main>
-<div class="intro">
-  <div class="eyebrow">6ᵉ période CEE · 2026–2030</div>
-  <h1>Chaque arrêté CEE, <em>décodé en 5 minutes.</em></h1>
-  <p class="lede">Nouvelles fiches, bonifications, règles de contrôle : KUMAK lit le Journal officiel à votre place et vous dit ce que ça change pour vos dossiers, vos primes et vos marges.</p>
-</div>
-<section class="doors" aria-label="Vous êtes…">
-  <a class="door" href="/installateurs/">
-    <span class="eyebrow">Installateurs, artisans RGE</span>
-    <strong>Vous posez des équipements</strong>
-    <span class="door-q">Bonification, ménage modeste, ce qui change pour votre équipement.</span>
-    <span class="door-cta">Mon espace installateur →</span>
-  </a>
-  <a class="door" href="/obliges-delegataires/">
-    <span class="eyebrow">Obligés, délégataires, mandataires</span>
-    <strong>Vous financez ou gérez des CEE</strong>
-    <span class="door-q">Les textes décodés, les échéances, l'impact sur vos outils.</span>
-    <span class="door-cta">Mon espace obligé et délégataire →</span>
-  </a>
-</section>
-<div class="hero" id="inscription">
-  <div>
-    <div class="eyebrow">Gratuit · chaque lundi</div>
-    <h2>Recevez la veille dans votre boîte mail.</h2>
-    ${signupForm("email-hero")}
-    <div class="facts">
-      <div class="fact"><b>1 050</b><span>TWhc d'obligation par an</span></div>
-      <div class="fact"><b>280</b><span>TWhc pour la précarité</span></div>
-      <div class="fact"><b>5 min</b><span>de lecture le lundi</span></div>
-    </div>
-  </div>
-  ${sample}
-</div>
 
-<section>
-  <div class="eyebrow">Ce que vous recevez</div>
-  <h2>La réglementation, traduite en décisions.</h2>
-  <div class="grid3">
-    <div class="feat"><span class="tag">Chaque lundi</span><h3>L'édition hebdo</h3><p>Les textes CEE de la semaine, classés par impact : action requise, à surveiller, à lire. Chacun avec ses sources officielles.</p></div>
-    <div class="feat"><span class="tag">Par profil</span><h3>Concrètement, pour vous</h3><p>Installateur, délégataire, obligé : ce qui change pour vous, un exemple avec la fiche concernée et ce qu'il faut faire.</p></div>
-    <div class="feat"><span class="tag">Obligés et délégataires</span><h3>L'impact sur vos outils</h3><p>Les champs, règles et contrôles à adapter dans votre outil de gestion CEE, avec des cas de test prêts à l'emploi.</p></div>
-  </div>
-</section>
-
-<section>
-  <div class="eyebrow">Pour qui</div>
-  <h2>Pensé pour ceux qui montent les dossiers.</h2>
-  <ul class="who">
-    <li><strong>Installateurs RGE</strong><span>Savoir quelles primes proposer aux clients</span></li>
-    <li><strong>Délégataires et mandataires</strong><span>Sécuriser les dépôts au PNCEE</span></li>
-    <li><strong>Obligés et fournisseurs d'énergie</strong><span>Piloter le coût de l'obligation</span></li>
-    <li><strong>Bureaux d'études et AMO</strong><span>Conseiller sur la bonne fiche</span></li>
-    <li><strong>Collectivités et bailleurs</strong><span>Financer les programmes de rénovation</span></li>
-    <li><strong>Éditeurs et intégrateurs SI</strong><span>Tenir les règles métier à jour</span></li>
-  </ul>
-</section>
-
-<section>
-  <div class="eyebrow">Questions fréquentes</div>
-  <h2>Avant de vous inscrire.</h2>
-  <div class="faq">
-  <details><summary>C'est gratuit ?</summary><p>Oui. L'édition du lundi et toute la veille sont gratuites, sans engagement. Vous pouvez vous désinscrire en un clic.</p></details>
-  <details><summary>Qui rédige KUMAK ?</summary><p>Un professionnel du secteur des CEE. Chaque analyse cite ses sources officielles (Journal officiel, Légifrance, ministère), que vous pouvez vérifier.</p></details>
-  <details><summary>Est-ce un conseil juridique ?</summary><p>Non. KUMAK est une veille d'information. Pour un litige ou un contrôle en cours, adressez-vous à un avocat spécialisé.</p></details>
-  <details><summary>Que faites-vous de mon adresse e-mail ?</summary><p>Elle sert uniquement à vous envoyer KUMAK. Elle n'est ni vendue ni partagée. Vous pouvez vous désinscrire en un clic depuis chaque e-mail. Le détail figure sur la page <a href="/confidentialite/">Confidentialité</a>.</p></details>
-  <details><summary>Je ne reçois pas l'e-mail de confirmation.</summary><p>Vérifiez vos indésirables, puis écrivez à <a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a>.</p></details>
-  </div>
-</section>
-</main>`,
-}));
 
 // ---------- éditions : pages ----------
 for (const e of editions) {
@@ -434,10 +362,9 @@ for (const c of codes) {
     description: `Fiche CEE ${c}${FICHE_NOMS[c] ? ` (${FICHE_NOMS[c]})` : ""} : tous les changements réglementaires de 2026 décodés par KUMAK.`,
     path: `/fiches/${ficheSlug(c)}/`,
     body: `<main class="article narrow">
-  <p class="meta"><a href="/veille/">Veille</a> · <a href="/fiches/">Par équipement</a> · ${esc(themeOf(c).nom)}</p>
+  <p class="meta"><a href="/fiches/">Fiches</a> · ${esc(themeOf(c).nom)}</p>
   <div class="eyebrow fiche-code">Fiche ${c} · ${SECTEURS[c.split("-")[0]]}</div>
   <h1>${esc(FICHE_NOMS[c] || c)}</h1>
-  ${VERIF_FICHES.includes(c) ? `<p class="fiche-verif"><a class="btn" href="/verificateur/">Vérifier un chantier ${c} →</a></p>` : ""}
   <h2 class="list-title">Ce que KUMAK en a dit (${refs.length})</h2>
   <ul class="fiche-refs">${refs.map((r) => `<li>
     <p class="meta">${r.impact ? badge(r.impact) + " " : ""}${esc(r.label)}</p>
@@ -458,16 +385,16 @@ const hayClean = (t) => " " + norm(t).replace(/[^a-z0-9]+/g, " ").trim() + " ";
 const ficheHay = (c) => hayClean([c, c.replace(/-/g, ""), FICHE_NOMS[c] || "", themeOf(c).nom, themeOf(c).kw].join(" "));
 const ficheHay2 = (c) => hayClean(fiches[c].flatMap((r) => r.snippets).join(" "));
 write("fiches/index.html", page({
-  title: "Chercher une fiche CEE par équipement",
+  title: "Les fiches CEE, une par une",
   description: "Pompe à chaleur, chaudière, chauffe-eau, isolation, LED : retrouvez les fiches CEE par équipement et tout ce qui a changé en 2026.",
   path: "/fiches/",
   body: `<main class="article narrow">
-  <p class="meta"><a href="/veille/">Veille</a> · Par équipement</p>
-  <h1>Ce qui a changé pour votre équipement</h1>
-  <p class="lede">Tapez ce que vous posez : vous voyez les fiches CEE concernées et tout ce qui a changé en 2026.</p>
+  <p class="meta">Fiches</p>
+  <h1>Ce qui a changé, fiche par fiche</h1>
+  <p class="lede">Retrouvez chaque fiche d'opération standardisée citée par KUMAK et tout ce qui a changé en 2026. Cherchez par code ou par équipement.</p>
   <div class="fsearch">
     <label for="fq" class="sr-only">Rechercher un équipement</label>
-    <input id="fq" type="search" placeholder="Ex. pompe à chaleur, chauffe-eau, isolation, LED…" autocomplete="off">
+    <input id="fq" type="search" placeholder="Ex. BAR-TH-171, pompe à chaleur, rénovation d'ampleur…" autocomplete="off">
     <div class="fchips">${["Pompe à chaleur", "Chaudière", "Chauffe-eau", "Solaire", "Isolation", "LED", "Désembouage"].map((k) => `<button type="button" data-q="${k}">${k}</button>`).join("")}</div>
   </div>
   <p id="fnone" class="fnone" hidden></p>
@@ -535,12 +462,12 @@ const allEch = Object.values(echeances).sort((a, b) => a.iso.localeCompare(b.iso
 const futur = allEch.filter((e) => e.iso >= TODAY), passe = allEch.filter((e) => e.iso < TODAY).reverse();
 const echItem = (e) => `<li><time datetime="${e.iso}">${dateFr(e.iso)}</time><div><strong>${linkFiches(esc(e.label))}</strong><span class="ech-src">Source : ${e.refs.sort((a, b) => b.tri.localeCompare(a.tri)).map((r) => `<a href="${r.url}">${esc(r.label)}</a>`).join(" · ")}</span></div></li>`;
 write("calendrier/index.html", page({
-  title: "Calendrier des échéances CEE",
+  title: "Échéances CEE",
   description: "Les dates clés de la réglementation CEE : entrées en vigueur, fins de bonification, recensements. Chaque date avec sa source, à ajouter à votre agenda.",
   path: "/calendrier/",
   body: `<main class="article narrow">
-  <p class="meta"><a href="/veille/">Veille</a> · Calendrier</p>
-  <h1>Calendrier des échéances CEE</h1>
+  <p class="meta">Échéances</p>
+  <h1>Les échéances CEE</h1>
   <p class="lede">Les dates qui comptent pour vos dossiers, chacune reprise d'un numéro de KUMAK et de sa source officielle.</p>
   <div class="ech-sub">
     <a class="btn" href="webcal://kumak.fr/calendrier.ics">Ajouter à mon agenda</a>
@@ -595,7 +522,7 @@ const impacts = sources.filter((src) => /## Impact sur vos outils/.test(src.body
 const tool = (href, titre, txt, cta) => `<a class="tool" href="${href}"><strong>${titre}</strong><span>${txt}</span><em>${cta} →</em></a>`;
 
 write("installateurs/index.html", page({
-  title: "Espace installateurs",
+  title: "Espace installateurs", noindex: true,
   description: "Bonification CEE, ménage modeste, ce qui a changé pour votre équipement : les outils KUMAK pour les installateurs et artisans RGE.",
   path: "/installateurs/",
   body: `<main class="article narrow">
@@ -609,7 +536,6 @@ write("installateurs/index.html", page({
   </div>
   ${vInstall.length ? `<h2 class="list-title">Ce qui a changé pour vous récemment</h2>
   <div class="profile-grid space-grid">${vInstall.map(vignetteCard).join("")}</div>` : ""}
-  <p class="space-other">Vous financez aussi des opérations ? <a href="/obliges-delegataires/">Espace obligés et délégataires →</a></p>
   <div class="cta-box" id="inscription">
     <h2>Les règles changent souvent.</h2>
     <p>Chaque lundi, ce qui change pour vos chantiers, en 5 minutes.</p>
@@ -618,30 +544,102 @@ write("installateurs/index.html", page({
 </main>`,
 }));
 
-write("obliges-delegataires/index.html", page({
-  title: "Espace obligés et délégataires",
-  description: "La veille CEE pour les obligés, délégataires et mandataires : dernière édition, échéances, impact sur vos outils de gestion.",
-  path: "/obliges-delegataires/",
+write("obliges-delegataires/index.html", `<!doctype html><meta charset="utf-8"><title>KUMAK</title><meta name="robots" content="noindex"><link rel="canonical" href="${cfg.url}/"><meta http-equiv="refresh" content="0; url=/"><a href="/">kumak.fr</a>`);
+
+write("impact-outils/index.html", page({
+  title: "Impact sur vos outils de gestion CEE",
+  description: "Les champs, règles et cas de test à reprendre dans votre outil de gestion CEE après chaque nouveau texte.",
+  path: "/impact-outils/",
   body: `<main class="article narrow">
   <div class="eyebrow">Obligés, délégataires, mandataires</div>
-  <h1>Vous financez ou gérez des CEE</h1>
-  <p class="lede">Les textes décodés, les prochaines échéances et ce qu'il faut adapter dans vos outils.</p>
-  ${latest ? `<a class="space-latest" href="/editions/${latest.slug}/"><span class="eyebrow">Dernière édition · Nº ${latest.numero} · ${dateFr(latest.date)}</span><strong>${esc(latest.titre)}</strong><span>${esc(latest.accroche)}</span><em>Lire →</em></a>` : ""}
-  <h2 class="list-title">Prochaines échéances</h2>
-  ${futur.length ? `<ul class="ech">${futur.slice(0, 3).map(echItem).join("")}</ul>` : "<p>Aucune échéance à venir pour l'instant.</p>"}
-  <p class="space-more"><a href="/calendrier/">Tout le calendrier et l'abonnement agenda →</a></p>
-  ${impacts.length ? `<h2 class="list-title" id="outils">Impact sur vos outils</h2>
-  <p class="list-intro">Les champs, règles et cas de test à reprendre dans votre outil de gestion CEE, que vous l'ayez développé en interne, paramétré dans un outil généraliste ou acheté à un éditeur.</p>
-  <ul class="impact-list">${impacts.map((i) => `<li><a href="${i.url}#outils-si"><span class="meta">${esc(i.label)}</span><strong>${esc(i.sujets[0] || i.titre)}</strong>${i.sujets.length > 1 ? `<span>${i.sujets.slice(1).map(esc).join(" · ")}</span>` : ""}</a></li>`).join("")}</ul>` : ""}
-  ${vOblige.length ? `<h2 class="list-title">Ce qui a changé pour vous récemment</h2>
-  <div class="profile-grid space-grid">${vOblige.map(vignetteCard).join("")}</div>` : ""}
-  <p class="space-more"><a href="/fiches/">Chercher par fiche ou par équipement →</a> · <a href="/veille/">Toute la veille →</a></p>
-  <p class="space-other">Vous travaillez avec des installateurs ? <a href="/installateurs/">Espace installateurs →</a></p>
-  <div class="cta-box" id="inscription">
-    <h2>Chaque lundi, en 5 minutes.</h2>
-    <p>Les textes de la semaine classés par impact, avec leurs sources.</p>
-    ${signupForm("email-oblige", "Votre adresse e-mail")}
+  <h1>Impact sur vos outils</h1>
+  <p class="lede">Quand un texte change une règle, votre outil de gestion CEE doit suivre. Pour chaque texte important, KUMAK traduit la règle en champs, valeurs, contrôles et cas de test.</p>
+  <div class="grid3 it-families">
+    <div class="feat"><span class="tag">Développé en interne</span><p>Les tableaux et cas de test servent d'expression de besoin et de recette pour votre équipe.</p></div>
+    <div class="feat"><span class="tag">Outil généraliste paramétrable</span><p>Les objets, champs et règles à créer ou à modifier, prêts à confier à votre intégrateur.</p></div>
+    <div class="feat"><span class="tag">Progiciel CEE du marché</span><p>Les questions à poser à votre éditeur et les cas de test à lui faire dérouler.</p></div>
   </div>
+  ${impacts.length ? `<h2 class="list-title">Les textes traduits</h2>
+  <ul class="impact-list">${impacts.map((i) => `<li><a href="${i.url}#outils-si"><span class="meta">${esc(i.label)}</span><strong>${esc(i.sujets[0] || i.titre)}</strong>${i.sujets.length > 1 ? `<span>${i.sujets.slice(1).map(esc).join(" · ")}</span>` : ""}</a></li>`).join("")}</ul>` : ""}
+  <div class="cta-box" id="inscription">
+    <h2>Le prochain cahier, dès sa parution.</h2>
+    <p>Chaque lundi, les textes de la semaine classés par impact, et leur traduction pour vos outils.</p>
+    ${signupForm("email-impact", "Votre adresse e-mail")}
+  </div>
+</main>`,
+}));
+
+// ---------- accueil (obligés, délégataires, mandataires) ----------
+write("index.html", page({
+  path: "/",
+  body: `<main>
+<div class="hero" id="inscription">
+  <div>
+    <div class="eyebrow">Veille CEE · obligés, délégataires, mandataires</div>
+    <h1>Chaque texte CEE, <em>décodé pour ceux qui financent.</em></h1>
+    <p class="lede">Arrêtés, décrets, fiches, contrôles : chaque lundi, ce qui change pour vos dossiers, vos contrats, votre stock de certificats et vos outils de gestion. Avec la source officielle.</p>
+    ${signupForm("email-hero")}
+    <div class="facts">
+      <div class="fact"><b>1 050</b><span>TWhc d'obligation par an</span></div>
+      <div class="fact"><b>280</b><span>TWhc pour la précarité</span></div>
+      <div class="fact"><b>5 min</b><span>de lecture le lundi</span></div>
+    </div>
+  </div>
+  ${sample}
+</div>
+
+<section>
+  <div class="home-grid">
+    <div>
+      <div class="eyebrow">À ne pas manquer</div>
+      <h2>Prochaines échéances</h2>
+      ${futur.length ? `<ul class="ech">${futur.slice(0, 3).map(echItem).join("")}</ul>` : "<p>Aucune échéance à venir pour l'instant.</p>"}
+      <p class="space-more"><a href="/calendrier/">Toutes les échéances et l'abonnement agenda →</a></p>
+    </div>
+    <div>
+      <div class="eyebrow">Pour vos équipes SI</div>
+      <h2>Impact sur vos outils</h2>
+      <ul class="impact-list">${impacts.slice(0, 3).map((i) => `<li><a href="${i.url}#outils-si"><span class="meta">${esc(i.label)}</span><strong>${esc(i.sujets[0] || i.titre)}</strong></a></li>`).join("")}</ul>
+      <p class="space-more"><a href="/impact-outils/">Tous les cahiers de modifications →</a></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Ce que vous recevez</div>
+  <h2>La réglementation, traduite en décisions.</h2>
+  <div class="grid3">
+    <div class="feat"><span class="tag">Chaque lundi</span><h3>Les textes classés par impact</h3><p>Action requise, à surveiller, à lire : chaque texte de la semaine, ce qu'il change et pour qui, avec ses sources officielles.</p></div>
+    <div class="feat"><span class="tag">Par métier</span><h3>Concrètement, pour vous</h3><p>Obligé, délégataire, acheteur ou vendeur de CEE : ce qui change pour vous, un exemple chiffré et ce qu'il faut faire.</p></div>
+    <div class="feat"><span class="tag">SI et conformité</span><h3>L'impact sur vos outils</h3><p>Les champs, règles et contrôles à adapter dans votre outil de gestion CEE, avec des cas de test prêts à l'emploi.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Pour qui</div>
+  <h2>Pensé pour ceux qui portent l'obligation.</h2>
+  <ul class="who">
+    <li><strong>Obligés et fournisseurs d'énergie</strong><span>Piloter le coût de l'obligation et le stock de certificats</span></li>
+    <li><strong>Délégataires et mandataires</strong><span>Sécuriser les dépôts et le statut au PNCEE</span></li>
+    <li><strong>Acheteurs et vendeurs de CEE</strong><span>Appliquer la diligence sur les cessions</span></li>
+    <li><strong>Conformité et contrôle</strong><span>Anticiper les contrôles et les sanctions</span></li>
+    <li><strong>Équipes SI et éditeurs</strong><span>Tenir les règles métier à jour dans les outils</span></li>
+    <li><strong>Directions et partenaires</strong><span>Suivre la P6 sans lire le Journal officiel</span></li>
+  </ul>
+</section>
+
+<section>
+  <div class="eyebrow">Questions fréquentes</div>
+  <h2>Avant de vous inscrire.</h2>
+  <div class="faq">
+  <details><summary>C'est gratuit ?</summary><p>Oui. L'édition du lundi et toute la veille sont gratuites, sans engagement. Vous pouvez vous désinscrire en un clic.</p></details>
+  <details><summary>Qui rédige KUMAK ?</summary><p>Un professionnel du secteur des CEE. Chaque analyse cite ses sources officielles (Journal officiel, Légifrance, ministère), que vous pouvez vérifier.</p></details>
+  <details><summary>Qu'est-ce que l'« impact sur vos outils » ?</summary><p>Pour les textes qui changent une règle de gestion, KUMAK la traduit en champs, valeurs, contrôles et cas de test, que votre outil soit développé en interne, paramétré dans un outil généraliste ou acheté à un éditeur.</p></details>
+  <details><summary>Est-ce un conseil juridique ?</summary><p>Non. KUMAK est une veille d'information. Pour un litige ou un contrôle en cours, adressez-vous à un avocat spécialisé.</p></details>
+  <details><summary>Que faites-vous de mon adresse e-mail ?</summary><p>Elle sert uniquement à vous envoyer KUMAK. Elle n'est ni vendue ni partagée. Vous pouvez vous désinscrire en un clic depuis chaque e-mail. Le détail figure sur la page <a href="/confidentialite/">Confidentialité</a>.</p></details>
+  <details><summary>Je ne reçois pas l'e-mail de confirmation.</summary><p>Vérifiez vos indésirables, puis écrivez à <a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a>.</p></details>
+  </div>
+</section>
 </main>`,
 }));
 
@@ -710,7 +708,7 @@ Rien reçu dans quelques minutes ? Regardez dans vos indésirables, ou écrivez 
 // ---------- vérificateur de bonification ----------
 const radio = (name, opts) => `<div class="choices">${opts.map(([v, l]) => `<label><input type="radio" name="${name}" value="${v}"><span>${l}</span></label>`).join("")}</div>`;
 write("verificateur/index.html", page({
-  title: "Vérificateur de bonification CEE",
+  title: "Vérificateur de bonification CEE", noindex: true,
   description: "Votre chantier a-t-il droit à la bonification CEE ? PAC, chauffe-eau thermodynamique, solaire : réponse immédiate avec le motif et la source.",
   path: "/verificateur/",
   body: `<main class="article narrow">
@@ -779,7 +777,7 @@ write("feed.xml", `<?xml version="1.0" encoding="utf-8"?>
 ${editions.filter((e) => !e.brouillon).map((e) => `<item><title>${esc(`Nº ${e.numero} · ${e.titre}`)}</title><link>${cfg.url}/editions/${e.slug}/</link><guid>${cfg.url}/editions/${e.slug}/</guid><pubDate>${rfc822(e.date)}</pubDate><description>${esc(e.accroche)}</description></item>`).join("\n")}
 </channel></rss>`);
 
-const urls = ["/", "/veille/", "/verificateur/", "/installateurs/", "/obliges-delegataires/", "/fiches/", "/calendrier/", ...codes.map((c) => `/fiches/${ficheSlug(c)}/`), "/mentions-legales/", "/confidentialite/",
+const urls = ["/", "/veille/", "/impact-outils/", "/fiches/", "/calendrier/", ...codes.map((c) => `/fiches/${ficheSlug(c)}/`), "/mentions-legales/", "/confidentialite/",
   ...editions.filter((e) => !e.brouillon).map((e) => `/editions/${e.slug}/`),
   ...(retros.some((r) => !r.brouillon) ? ["/retro-2026/"] : []),
   ...retros.filter((r) => !r.brouillon).map((r) => `/retro-2026/${r.slug}/`)];
