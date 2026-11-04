@@ -851,7 +851,7 @@ const heroHtml = (right, cls = "") => `<div class="hero ${cls}" id="inscription"
 const homeBody = HV === "A"
   ? `<main>\n${heroHtml(nowPanel, "hero-a")}\n${secRecevez(true)}\n${secMethode}\n${secPourQui}\n${secFaq}\n${secCta}\n</main>`
   : HV === "B"
-    ? `<main>\n${heroHtml(sampleB)}\n${secRecevez(false)}\n${secNow}\n${secPourQui}\n${secFaq}\n${secCta}\n</main>`
+    ? `<main>\n${heroHtml(sampleB)}\n${secRecevez(false)}\n${secNow}\n${secMethode}\n${secPourQui}\n${secFaq}\n${secCta}\n</main>`
     : `<main>\n${heroHtml(sample)}\n${secGrid}\n${secRecevez(false)}\n${secPourQui}\n${secFaq}\n</main>`;
 
 write("index.html", page({ path: "/", body: homeBody }));
