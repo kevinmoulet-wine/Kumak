@@ -63,7 +63,7 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
     html = html.replace(/<h3>\[(ACTION|SURVEILLER|À LIRE)\]\s*(.*?)<\/h3>/g, (_, k, t) => { items.push({ k, t }); const id = `t${items.length}`; return `<h3 id="${id}">${badge(k)} <span>${t}</span></h3>`; });
     // Rubrique « Concrètement, pour vous » : une carte par profil
     // Markdown attendu : - **Vous êtes…** puis sous-liste « Ce qui change : … », « Exemple : … », « À faire : … »
-    html = html.replace(/<h2>Concrètement, pour vous<\/h2>\s*([\s\S]*?)(?=<h2|<h3>(?:<span class="imp)|$)/, (_, lis) => {
+    html = html.replace(/<h2>Concrètement, pour vous<\/h2>\s*([\s\S]*?)(?=<h2|<h3|$)/, (_, lis) => {
       const cards = lis.split(/<li>(?=\s*<strong>)/).slice(1).map((li) => {
         const who = (li.match(/<strong>(.*?)<\/strong>/) || [, ""])[1];
         const rows = [...li.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, r]) => {
@@ -78,6 +78,10 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
     html = html.replace(/<h2>Impact sur vos outils<\/h2>([\s\S]*?)(?=<h2|$)/, (_, inner) =>
       `<details class="it-impact" id="outils-si"><summary><span class="eyebrow">Obligés et délégataires</span><strong>Impact sur vos outils</strong><span class="it-hint">Données, règles, documents : ce qu'il faut adapter</span></summary><div class="it-body">${inner}</div></details>`);
     html = linkFiches(html);
+    // Garde-fou : aucune section ni vignette du Markdown ne doit disparaître au rendu
+    const nSec = (body.match(/^### \[(ACTION|SURVEILLER|À LIRE)\]/gm) || []).length, nSecHtml = (html.match(/<h3 id="t\d+">/g) || []).length;
+    const nCard = (body.match(/^- \*\*Vous /gm) || []).length, nCardHtml = (html.match(/<div class="profile">/g) || []).length;
+    if (nSec !== nSecHtml || nCard !== nCardHtml) throw new Error(`${f} : rendu incomplet (sections ${nSecHtml}/${nSec}, vignettes ${nCardHtml}/${nCard}). Publication bloquée.`);
     return { ...data, date: String(data.date), slug, html, body, items, todo };
   })
   .filter((e) => DRAFTS || !e.brouillon);
