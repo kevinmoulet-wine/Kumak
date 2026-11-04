@@ -73,7 +73,7 @@ L'arrêté du 11 mai 2026 (JO nº 112 du 13 mai 2026) fixe, à partir du **1er j
 
 ## Impact sur vos outils
 
-### Agrément PAC (BAR-TH-171 et BAR-TH-172)
+### Agrément PAC (BAR-TH-171 et BAR-TH-172, opérations engagées à partir du 1er septembre 2026)
 
 **1. Champs à ajouter sur l'opération**
 

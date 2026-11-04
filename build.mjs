@@ -525,7 +525,32 @@ const vOblige = vignettes.filter((v) => PROFIL_OBLIGE.test(v.who)).slice(0, 6);
 // Numéros avec une rubrique « Impact sur vos outils »
 const impacts = sources.filter((src) => src.cahier).map((src) => ({ ...src, sujets: src.cahier.sujets, cahierUrl: src.cahier.url }))
   .sort((a, b) => b.tri.localeCompare(a.tri));
-const impactItem = (i) => `<li><a href="${i.cahierUrl}"><span class="meta">${esc(i.label)}</span><strong>${esc(i.sujets[0] || i.titre)}</strong>${i.sujets.length > 1 ? `<span>${i.sujets.slice(1).map(esc).join(" · ")}</span>` : ""}</a></li>`;
+const DATE_FR_RE = /(1er|\d{1,2}) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d{4})/;
+const plur = (n, s, p) => `${n} ${n > 1 ? p : s}`;
+const cahierMeta = (i) => {
+  const subj = i.sujets[0] || i.titre;
+  const m = subj.match(/^(.*?)\s*\((.*)\)\s*$/);
+  const titre = m ? m[1] : subj, ctx = m ? m[2] : "";
+  const dm = ctx.match(DATE_FR_RE);
+  const iso = dm ? parseDateFr(dm[0]) : null;
+  const tables = [...i.cahier.html.matchAll(/<table>[\s\S]*?<\/table>/g)].map((x) => x[0]);
+  const rows = (tb) => ((tb.match(/<tbody>[\s\S]*?<\/tbody>/) || [""])[0].match(/<tr>/g) || []).length;
+  const head = (tb) => (tb.match(/<thead>[\s\S]*?<\/thead>/) || [""])[0].replace(/<[^>]+>/g, " ").toLowerCase();
+  const champs = tables.filter((tb) => /\bchamp\b|\bcolonne\b/.test(head(tb))).reduce((a, tb) => a + rows(tb), 0);
+  const tests = tables.filter((tb) => /résultat attendu/.test(head(tb))).reduce((a, tb) => a + rows(tb), 0);
+  const regles = (i.cahier.html.match(/<pre>/g) || []).length;
+  const docs = (i.cahier.html.match(/<strong>\d+\. Document/g) || []).length;
+  const counts = [champs && plur(champs, "champ", "champs"), regles && plur(regles, "règle", "règles"), tests && plur(tests, "cas de test", "cas de test"), docs && plur(docs, "document", "documents")].filter(Boolean).join(" · ");
+  const chip = iso ? `<span class="cc-date ${iso <= TODAY ? "on" : "soon"}">${iso <= TODAY ? "En vigueur depuis le" : "À partir du"} ${dateFr(iso)}</span>` : "";
+  return { titre, ctx, iso, counts, chip };
+};
+const impactItem = (i) => { const mt = cahierMeta(i); return `<li class="cahier-card"><a href="${i.cahierUrl}">
+  <span class="cc-top">${mt.chip}<span class="meta">${esc(i.label)}</span></span>
+  <strong>${esc(mt.titre)}</strong>
+  ${mt.ctx ? `<span class="cc-ctx">${esc(mt.ctx.replace(/^./, (ch) => ch.toUpperCase()))}</span>` : ""}
+  ${i.sujets.length > 1 ? `<span class="cc-more">Et aussi : ${i.sujets.slice(1).map(esc).join(" · ")}</span>` : ""}
+  ${mt.counts ? `<span class="cc-counts">${mt.counts}</span>` : ""}
+  <em>Ouvrir le cahier →</em></a></li>`; };
 
 for (const i of impacts) {
   write(`impact-outils/${i.slug}/index.html`, page({
@@ -536,7 +561,8 @@ for (const i of impacts) {
     body: `<main class="article narrow">
   <p class="meta"><a href="/impact-outils/">Impact sur vos outils</a> · ${esc(i.label)}</p>
   <div class="eyebrow">Cahier de modifications</div>
-  <h1>${esc(i.sujets[0] || i.titre)}</h1>
+  <h1>${esc(cahierMeta(i).titre)}</h1>
+  <p class="cc-top cahier-top">${cahierMeta(i).chip}${cahierMeta(i).ctx ? `<span class="cc-ctx">${esc(cahierMeta(i).ctx.replace(/^./, (ch) => ch.toUpperCase()))}</span>` : ""}</p>
   ${i.sujets.length > 1 ? `<p class="lede">Ce cahier couvre aussi : ${i.sujets.slice(1).map(esc).join(" ; ")}.</p>` : ""}
   <p class="cahier-src">Texte décodé dans <a href="${i.url}">${esc(i.label)} : ${esc(i.titre)}</a>.</p>
   <div class="prose cahier">${i.sujets.length === 1 ? i.cahier.html.replace(/^\s*<h2>.*?<\/h2>/, "") : i.cahier.html}</div>
@@ -578,19 +604,25 @@ write("obliges-delegataires/index.html", `<!doctype html><meta charset="utf-8"><
 
 write("impact-outils/index.html", page({
   title: "Impact sur vos outils de gestion CEE",
-  description: "Les champs, règles et cas de test à reprendre dans votre outil de gestion CEE après chaque nouveau texte.",
+  description: "Pour chaque texte qui change une règle de gestion, un cahier prêt pour vos équipes SI : champs, règle, cas de test, selon votre outil.",
   path: "/impact-outils/",
   body: `<main class="article narrow">
   <div class="eyebrow">Obligés, délégataires, mandataires</div>
   <h1>Impact sur vos outils</h1>
-  <p class="lede">Quand un texte change une règle, votre outil de gestion CEE doit suivre. Pour chaque texte important, KUMAK traduit la règle en champs, valeurs, contrôles et cas de test.</p>
-  <div class="grid3 it-families">
-    <div class="feat"><span class="tag">Développé en interne</span><p>Les tableaux et cas de test servent d'expression de besoin et de recette pour votre équipe.</p></div>
-    <div class="feat"><span class="tag">Outil généraliste paramétrable</span><p>Les objets, champs et règles à créer ou à modifier, prêts à confier à votre intégrateur.</p></div>
-    <div class="feat"><span class="tag">Progiciel CEE du marché</span><p>Les questions à poser à votre éditeur et les cas de test à lui faire dérouler.</p></div>
+  <p class="lede">Quand un texte change une règle de gestion, votre outil CEE doit suivre. Pour chaque texte important, KUMAK livre un cahier prêt à transmettre à vos équipes SI ou à votre éditeur.</p>
+  <div class="howto">
+    <div class="eyebrow">Chaque cahier se lit de la même façon</div>
+    <ol>
+      <li><b>1</b><span><strong>Les champs</strong> à créer ou à modifier, avec leur type et leurs valeurs</span></li>
+      <li><b>2</b><span><strong>La règle</strong>, écrite en « SI… ET… ALORS… », à transposer telle quelle</span></li>
+      <li><b>3</b><span><strong>Les cas de test</strong>, avec le résultat attendu, pour la recette</span></li>
+      <li><b>4</b><span><strong>Selon votre outil</strong> : développé en interne, généraliste paramétrable ou progiciel CEE du marché</span></li>
+    </ol>
   </div>
-  ${impacts.length ? `<h2 class="list-title">Les textes traduits</h2>
-  <ul class="impact-list">${impacts.map(impactItem).join("")}</ul>` : ""}
+  <h2 class="list-title">${plur(impacts.length, "cahier disponible", "cahiers disponibles")}</h2>
+  <p class="list-intro">Du plus récent au plus ancien. La date indique à partir de quand la règle s'applique.</p>
+  <ul class="impact-list">${impacts.map(impactItem).join("")}</ul>
+  <p class="disclaimer">Un cahier traduit un texte réglementaire en règles de gestion. Il ne remplace ni le texte officiel ni l'analyse de vos équipes.</p>
   <div class="cta-box" id="inscription">
     <h2>Le prochain cahier, dès sa parution.</h2>
     <p>Chaque lundi, les textes de la semaine classés par impact, et leur traduction pour vos outils.</p>

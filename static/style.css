@@ -385,3 +385,26 @@ header.nav{flex-wrap:nowrap}
 .badge.b-outils{color:var(--ink);border-color:var(--ink)}
 .cahier-src{margin:0 0 24px;padding:12px 16px;background:var(--soft);border-radius:6px;font-size:15px}
 .cahier h2{font-size:26px;margin-top:36px}
+
+/* Impact sur vos outils : mode d'emploi + cartes */
+.howto{margin:8px 0 36px;padding:18px 20px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.howto ol{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}
+.howto li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.45}
+.howto b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:13px;font-weight:500}
+@media (max-width:620px){.howto ol{grid-template-columns:1fr}}
+.cahier-card a{display:grid;gap:6px;padding:18px 20px;border-left:4px solid var(--ink)}
+.cahier-card strong{font-family:var(--display);font-stretch:75%;font-weight:800;font-size:24px;line-height:1.1}
+.cc-top{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.cc-top .meta{margin:0;font-size:13px}
+.cc-date{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.03em;padding:3px 8px;border-radius:4px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.cc-date.on{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.cc-date.soon{border-color:var(--warn);color:var(--warn)}
+.cahier-card .cc-ctx,.cahier-top .cc-ctx{color:var(--muted);font-size:15px}
+.cc-more{color:var(--muted);font-size:14px}
+.cc-counts{font-family:var(--mono);font-size:13px;color:var(--ink);margin-top:2px}
+.cahier-card em{font-style:normal;font-weight:600;color:var(--accent)}
+.cahier-top{margin:-6px 0 20px}
+.impact-list{grid-template-columns:minmax(0,1fr)}
+.cahier-card,.cahier-card a,.cahier-card a>*{min-width:0}
+.cc-top{min-width:0}
+.cc-date{white-space:normal}
