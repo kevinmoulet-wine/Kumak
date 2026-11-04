@@ -5,13 +5,14 @@ periode: Septembre 2026
 titre: Remplacer une chaudière déjà financée par des CEE redevient possible
 accroche: L'arrêté du 4 septembre lève le verrou de la durée de vie conventionnelle pour passer d'une ancienne chaudière à une PAC ou un réseau de chaleur. L'agrément PAC entre en vigueur et une vingtaine de fiches sont menacées.
 brouillon: false
+verifie: 2026-11-04
 ---
 
 ## L'essentiel en 30 secondes
 
 - **Remplacement d'équipements déjà valorisés** : une chaudière financée par des CEE avant 2021 peut être remplacée par une PAC, un système géothermique ou un raccordement à un réseau de chaleur, avec de nouveaux CEE, depuis le 7 septembre.
 - **1er septembre** : agrément PAC, bonifications solaire et CET, et nouvelles règles de rénovation d'ampleur s'appliquent.
-- **Consultation** : une vingtaine de fiches, liées aux énergies fossiles ou inactives, pourraient être supprimées.
+- **Projet** : 27 fiches, liées aux énergies fossiles ou inactives, sont proposées à la suppression (texte publié le 28 octobre, voir le numéro d'octobre).
 
 ## Concrètement, pour vous
 
@@ -49,9 +50,9 @@ brouillon: false
 
 L'arrêté du 18 septembre 2026 (JO nº 222 du 23 septembre 2026) supprime à partir du 24 septembre les fiches **TRA-SE-104** (station de gonflage des pneumatiques) et **AGRI-EQ-110** (séchage solaire par insufflation avec panneaux solaires hybrides). Les opérations engagées doivent être recensées sous dix jours calendaires, soit vers le 3 octobre, avec le modèle de la DGEC propre à chaque fiche.
 
-### [SURVEILLER] Vers la suppression d'une vingtaine de fiches
+### [SURVEILLER] Vers la suppression de 27 fiches
 
-Un projet d'arrêté, en consultation publique jusqu'au **7 octobre 2026**, prévoit de supprimer une vingtaine de fiches : des fiches liées à des équipements à énergie fossile, et des fiches jugées inactives. La liste figure en annexe du projet.
+Un projet d'arrêté, présenté au Conseil supérieur de l'énergie le 10 septembre 2026 puis soumis à consultation publique, prévoit de supprimer **27 fiches** : 18 fiches liées à des équipements à énergie fossile (5,56 TWhc engagés en 2025, selon la DGEC) et 10 fiches inactives, une fiche figurant dans les deux lots. **Suite :** l'arrêté a été publié le 28 octobre 2026 ; il est détaillé dans le [numéro d'octobre](/retro-2026/10-octobre/).
 
 ## Calendrier
 
@@ -60,7 +61,6 @@ Un projet d'arrêté, en consultation publique jusqu'au **7 octobre 2026**, pré
 | 7 septembre 2026 | Remplacement d'équipements déjà valorisés |
 | Fin septembre 2026 | Pièces des titulaires de comptes Emmy existants (voir juin) |
 | 3 octobre 2026 | Recensement des opérations TRA-SE-104 et AGRI-EQ-110 |
-| 7 octobre 2026 | Fin de la consultation sur la suppression de fiches |
 
 ## Sources
 
@@ -69,4 +69,6 @@ Un projet d'arrêté, en consultation publique jusqu'au **7 octobre 2026**, pré
 - [Infodiag : un verrou saute pour le remplacement des anciennes chaudières](https://infodiag.fr/remplacement-chaudiere-cee-duree-vie-conventionnelle/)
 - [Arrêté du 18 septembre 2026 supprimant TRA-SE-104 et AGRI-EQ-110 (AIDA-Ineris)](https://aida.ineris.fr/reglementation/arrete-180926-abrogeant-fiches-doperations-standardisees-tra-104-station-gonflage)
 - [Service-Public.fr : pompe à chaleur, agrément obligatoire depuis le 1er septembre 2026](https://www.service-public.gouv.fr/particuliers/actualites/A19057)
+- [Lettre d'information CEE de la DGEC, septembre 2026 (ministère de la Transition écologique)](https://www.ecologie.gouv.fr/sites/default/files/documents/2026-09%20lettre%20d'infos%20CEE%20vf.pdf)
+- [Banque des Territoires : les chaudières fossiles déjà valorisées éligibles pour leur remplacement](https://www.banquedesterritoires.fr/certificats-deconomie-denergie-les-chaudieres-fossiles-deja-valorisees-desormais-eligibles-pour)
 - [Actu-Environnement : quelles fiches supprimées par le projet d'arrêté ? (16 septembre 2026)](https://www.actu-environnement.com/ae/news/cee-suppression-fiches-energies-fossiles-inactives-projet-arrete-consultation-48523.php4)

@@ -4,6 +4,7 @@ date: 2026-10-29
 titre: P6 : ce qui change vraiment en 2026
 accroche: La sixième période des CEE a démarré le 1er janvier. Dix mois plus tard, voici les règles qui pèsent vraiment sur vos dossiers, vos contrats et vos stocks de certificats.
 brouillon: false
+verifie: 2026-11-04
 ---
 
 ## L'essentiel en 30 secondes
@@ -19,7 +20,7 @@ brouillon: false
   - Exemple : vous remplacez une chaudière gaz par une PAC air/eau (fiche BAR-TH-171). Si le financeur n'est pas validé, la prime promise au client peut ne jamais être versée.
   - À faire : avant le devis, demandez au financeur la preuve que son statut P6 est validé par le PNCEE.
 - **Vous êtes délégataire ou mandataire**
-  - Ce qui change : il faut au moins 300 GWh cumac, un système qualité certifié et une capacité technique et financière suffisante.
+  - Ce qui change : il faut au moins 300 GWh cumac d'obligations déléguées et un système de management de la qualité certifié.
   - Exemple : un délégataire qui gère 200 GWh cumac ne remplit plus la condition de volume.
   - À faire : faites valider votre statut P6 par le PNCEE avant d'engager des opérations.
 - **Vous distribuez du fioul ou des carburants**
@@ -37,7 +38,7 @@ brouillon: false
 
 ### [ACTION] Délégataires : un statut à faire valider avant d'engager
 
-**Ce qui change.** Le décret relève les exigences pour devenir délégataire. Il faut un volume minimal de 300 GWh cumac, un système de management de la qualité certifié, et une capacité technique et financière appréciée au-delà du seul volume délégué. Pour une délégation partielle, le volume minimal passe de 1 à 2 TWhc.
+**Ce qui change.** Le décret relève les exigences pour devenir délégataire (article R. 221-6 du code de l'énergie) : un volume minimal de 300 millions de kWh cumac d'obligations reçues, soit 300 GWh cumac, et un système de management de la qualité certifié par un organisme accrédité. Pour une délégation partielle, le volume minimal passe de 1 à 2 TWhc (article R. 221-5).
 
 **Qui est concerné.** Les délégataires et mandataires, mais aussi les installateurs et bureaux d'études qui travaillent avec eux.
 
@@ -68,12 +69,14 @@ Au sein d'un même groupe, une seule société peut bénéficier de la franchise
 ### [À LIRE] Les autres changements
 
 - **Programmes CEE** : leur volume est plafonné à 500 TWhc sur toute la période.
-- **Critères de pondération** issus de la loi n° 2025-594 du 30 juin 2025 : un temps de retour sur investissement minimal ou un reste à charge minimal pour les bénéficiaires peut désormais être pris en compte.
-- **Coefficients d'obligation** : ils sont révisés pour chaque énergie. La part précarité s'obtient en appliquant un coefficient de 0,364 à l'obligation classique, ce qui donne un volume équivalent à la moyenne annuelle de la P5.
+- **Critères de pondération** : les pondérations des certificats peuvent désormais viser « un temps minimal de retour sur investissement » ou « un reste minimal à la charge des bénéficiaires » (article R. 221-18).
+- **Coefficients d'obligation** : ils sont révisés pour chaque énergie. L'obligation précarité s'obtient en appliquant un coefficient de 0,364 à l'obligation classique (article R. 221-4-1), soit 280 TWhc par an d'après la DGEC.
 - **Registre** : la DGEC annonce une refonte, avec la déclaration de toutes les opérations dès leur engagement et non plus seulement à leur achèvement. À suivre.
 
 ## Sources
 
 - [Décret n° 2025-1048 du 30 octobre 2025, JORF du 4 novembre 2025, texte n° 21 (Légifrance)](https://www.legifrance.gouv.fr/jorf/jo/2025/11/04/0259)
 - [DGEC, webinaire de présentation de la 6e période des CEE, 2 décembre 2025 (ministère de la Transition écologique)](https://www.ecologie.gouv.fr/sites/default/files/documents/2025-12-02%20Webinaire%20DGEC%20P6%20CEE%20vweb.pdf)
+- [Code de l'énergie consolidé, partie CEE : articles R. 221-1 à R. 221-25 (ministère de la Transition écologique)](https://www.ecologie.gouv.fr/sites/default/files/documents/Code%20de%20l%27%C3%A9nergie%20consolid%C3%A9_2.pdf)
+- [Conseil d'État, 22 juillet 2026, nº 510621 : rejet des recours contre le décret P6](https://www.conseil-etat.fr/fr/arianeweb/CE/decision/2026-07-22/510621)
 - [Banque des Territoires : le décret relatif à la sixième période est paru](https://www.banquedesterritoires.fr/certificats-deconomies-denergie-le-decret-relatif-la-sixieme-periode-est-paru)

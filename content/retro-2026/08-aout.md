@@ -5,6 +5,7 @@ periode: Août 2026
 titre: Solaire et chauffe-eau : bonifications jusqu'à ×7, quatre mois seulement
 accroche: Deux arrêtés du 17 août relèvent fortement les bonifications du solaire et du chauffe-eau thermodynamique jusqu'au 31 décembre, et recentrent la rénovation d'ampleur sur les logements classés E à G.
 brouillon: false
+verifie: 2026-11-04
 ---
 
 ## L'essentiel en 30 secondes
@@ -42,7 +43,9 @@ brouillon: false
 | BAR-TH-148 | Chauffe-eau thermodynamique à accumulation | **×7** | ×4 |
 | BAR-TH-162 | Système photovoltaïque et thermique à circulation d'eau | ×5 | ×4 |
 
-**Condition.** Les bonifications supposent la **décarbonation complète** des systèmes de chauffage et/ou d'eau chaude sanitaire après travaux. Conserver un équipement au gaz fait perdre la bonification. Le périmètre exact de cette condition selon la fiche est à vérifier dans le texte.
+**Condition.** Les bonifications supposent la **décarbonation complète** des systèmes de chauffage et/ou d'eau chaude sanitaire après travaux : aucun équipement « susceptible d'utiliser des combustibles fossiles » ne doit être installé ni conservé. Le périmètre dépend de la fiche : chauffage et eau chaude pour BAR-TH-143 et le volet chauffage de BAR-TH-168 ; eau chaude seule pour BAR-TH-101, BAR-TH-148 et le volet eau chaude de BAR-TH-168 ; chauffage ou eau chaude selon l'usage pour BAR-TH-162. Pour BAR-TH-143, le logement doit être une résidence principale. Les opérations pour lesquelles une demande de MaPrimeRénov' a été déposée avant le 1er septembre 2026 sont exclues, sauf refus de la prime.
+
+**Mise à jour du 4 novembre 2026.** Un arrêté du 28 octobre 2026 (JO du 3 novembre) supprime la fiche BAR-TH-168 à compter du 4 novembre 2026 ; les opérations déjà engagées restent valorisables si elles sont recensées sous dix jours. La bonification ci-dessus ne concerne donc plus, pour les nouvelles opérations, que les quatre autres fiches.
 
 **Qui est concerné.** Installateurs solaires, plombiers-chauffagistes, délégataires qui financent ces gestes.
 

@@ -5,12 +5,13 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, cpSync, ex
 import { join } from "node:path";
 import { marked } from "marked";
 
-const DRAFTS = process.argv.includes("--drafts");
+const DRAFTS = process.argv.includes("--drafts") || process.argv.includes("--faits");
+const FAITS = (() => { const i = process.argv.indexOf("--faits"); return i >= 0 ? process.argv[i + 1] : null; })();
 import { createHash } from "node:crypto";
 const ASSET_V = createHash("md5").update(readFileSync("static/style.css")).update(readFileSync("static/signup.js")).update(readFileSync("static/verif.js")).digest("hex").slice(0, 8);
 const cfg = JSON.parse(readFileSync("site.config.json", "utf8"));
 const OUT = "dist";
-rmSync(OUT, { recursive: true, force: true });
+if (!FAITS) rmSync(OUT, { recursive: true, force: true });
 
 // ---------- utilitaires ----------
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -49,6 +50,56 @@ const ficheSlug = (c) => c.toLowerCase();
 const linkFiches = (html) => html.split(/(<a\b[\s\S]*?<\/a>|<[^>]+>)/).map((seg) =>
   seg.startsWith("<") ? seg : seg.replace(FICHE_RE, (c) => `<a class="fiche-link" href="/fiches/${ficheSlug(c)}/">${c}</a>`)).join("");
 
+const FICHE_NOMS = {
+  "BAR-TH-101": "Chauffe-eau solaire individuel", "BAR-TH-143": "Système solaire combiné",
+  "BAR-TH-148": "Chauffe-eau thermodynamique à accumulation", "BAR-TH-162": "Système photovoltaïque et thermique à circulation d'eau",
+  "BAR-TH-166": "Pompe à chaleur collective (supprimée)", "BAR-TH-168": "Dispositif solaire thermique",
+  "BAR-TH-171": "Pompe à chaleur air/eau", "BAR-TH-172": "Pompe à chaleur eau/eau ou eau glycolée/eau",
+  "BAR-TH-174": "Rénovation d'ampleur d'une maison individuelle", "BAR-TH-175": "Rénovation d'ampleur d'un appartement",
+  "BAR-TH-177": "Rénovation globale d'un bâtiment résidentiel collectif",
+  "BAR-TH-178": "Système géothermique (résidentiel collectif)", "BAR-TH-179": "Pompe à chaleur collective air/eau",
+  "BAR-TH-180": "Pompe à chaleur collective eau/eau ou eau glycolée/eau",
+  "BAR-SE-109": "Désembouage d'un réseau de chauffage collectif", "BAR-EQ-110": "Luminaire LED pour parties communes",
+  "BAT-EQ-127": "Luminaire d'éclairage général à modules LED (tertiaire)", "BAT-TH-113": "Pompe à chaleur (tertiaire, supprimée)",
+  "BAT-TH-162": "Système géothermique (tertiaire)", "BAT-TH-163": "Pompe à chaleur air/eau (tertiaire)",
+  "BAT-TH-164": "Pompe à chaleur eau/eau ou eau glycolée/eau (tertiaire)", "IND-BA-116": "Luminaires à modules LED (industrie)",
+  "TRA-SE-104": "Station de gonflage des pneumatiques", "AGRI-EQ-108": "Stockage d'eau pour une serre bioclimatique",
+  "AGRI-EQ-110": "Séchage solaire par insufflation", "AGRI-EQ-112": "Double paroi gonflable sur serres",
+  "AGRI-TH-108": "Pompe à chaleur pour serres (agriculture)", "AGRI-TH-117": "Déshumidification thermodynamique pour serres",
+  "AGRI-TH-119": "Déshumidification avec air extérieur",
+  "BAR-TH-106": "Chaudière individuelle à haute performance énergétique (supprimée en 2024)",
+  "BAT-TH-102": "Chaudière collective haute performance énergétique (tertiaire, supprimée en 2025)",
+  "BAR-TH-122": "Récupérateur de chaleur à condensation (supprimée le 29 octobre 2026)",
+  "BAR-EN-110": "Fenêtre ou porte-fenêtre complète avec vitrage pariétodynamique (supprimée le 29 octobre 2026)",
+  "BAR-SE-105": "Contrat de performance énergétique Services (supprimée le 29 octobre 2026)",
+  "BAT-EN-111": "Fenêtre ou porte-fenêtre à vitrage pariétodynamique, tertiaire (supprimée le 29 octobre 2026)",
+  "BAT-SE-104": "Contrat de performance énergétique Services Chauffage, tertiaire (supprimée le 29 octobre 2026)",
+  "IND-BA-114": "Conduits de lumière naturelle (supprimée le 29 octobre 2026)",
+  "IND-BA-117": "Chauffage décentralisé performant (supprimée le 29 octobre 2026)",
+  "IND-UT-104": "Économiseur sur les effluents gazeux d'une chaudière vapeur (supprimée le 29 octobre 2026)",
+  "IND-UT-105": "Brûleur micromodulant sur chaudière industrielle (supprimée le 29 octobre 2026)",
+  "IND-UT-118": "Brûleur avec récupération de chaleur sur un four industriel (supprimée le 29 octobre 2026)",
+  "IND-UT-130": "Condenseur sur les effluents gazeux d'une chaudière vapeur (supprimée le 29 octobre 2026)",
+  "TRA-EQ-104": "Lubrifiant économiseur d'énergie pour véhicules légers (supprimée le 29 octobre 2026)",
+  "TRA-EQ-111": "Groupes frigorifiques autonomes haute efficacité pour camions et remorques (supprimée le 29 octobre 2026)",
+  "TRA-EQ-113": "Lubrifiant économiseur d'énergie pour véhicules de transport (supprimée le 29 octobre 2026)",
+  "TRA-EQ-115": "Véhicules de transport de marchandises optimisés (supprimée le 29 octobre 2026)",
+  "TRA-EQ-119": "Optimisation de la combustion et de la propreté des moteurs Diesel (supprimée le 29 octobre 2026)",
+  "TRA-EQ-122": "Stop & Start pour engins automoteurs non routiers neufs (supprimée le 29 octobre 2026)",
+  "TRA-EQ-123": "Simulateur de conduite (supprimée le 29 octobre 2026)",
+  "TRA-EQ-125": "Stop & Start pour véhicules ferroviaires (supprimée le 29 octobre 2026)",
+  "TRA-SE-101": "Formation d'un chauffeur de transport à la conduite économe (supprimée le 29 octobre 2026)",
+  "TRA-SE-102": "Formation d'un chauffeur de véhicule léger à la conduite économe (supprimée le 29 octobre 2026)",
+  "TRA-SE-107": "Carénage sur une unité de transport fluvial (supprimée le 29 octobre 2026)",
+  "TRA-SE-111": "Gestion optimisée du poste pneumatique, transport de personnes (supprimée le 29 octobre 2026)",
+  "TRA-SE-112": "Service d'autopartage en boucle (supprimée le 29 octobre 2026)",
+  "TRA-SE-113": "Suivi des consommations de carburant par cartes privatives (supprimée le 29 octobre 2026)",
+  "AGRI-EQ-105": "Stop & Start pour véhicules agricoles à moteur (supprimée le 29 octobre 2026)",
+  "AGRI-EQ-106": "Régulation de la ventilation des silos et stockages de céréales (supprimée le 29 octobre 2026)",
+  "BAR-TH-107": "Chaudière collective à haute performance énergétique", "BAR-TH-113": "Chaudière biomasse individuelle",
+  "BAR-TH-164": "Rénovation globale d'une maison individuelle",
+};
+
 // ---------- éditions ----------
 const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
   .filter((f) => f.endsWith(".md"))
@@ -58,6 +109,27 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
     for (const k of required) if (!data[k]) throw new Error(`${f} : champ « ${k} » manquant`);
     const todo = /À COMPLÉTER/i.test(body);
     if (!data.brouillon && todo) throw new Error(`${f} : il reste des « À COMPLÉTER ». Complétez-les ou remettez « brouillon: true ».`);
+    // ---- Garde-fous de publication (protocole de vérification) ----
+    if (!data.brouillon) {
+      const pb = [];
+      if (!data.verifie || !/^\d{4}-\d{2}-\d{2}$/.test(String(data.verifie))) pb.push("champ « verifie: AAAA-MM-JJ » manquant : les faits doivent avoir été vérifiés sur les sources officielles avant publication");
+      const hedges = body.match(/\bà vérifier\b|\bà confirmer\b|\bsemble-t-il\b|\bprobablement\b/gi);
+      if (hedges) pb.push(`formulations incertaines à retirer ou à trancher : ${[...new Set(hedges)].join(", ")}`);
+      const srcSec = body.split(/^## Sources\s*$/m)[1];
+      const nLinks = srcSec ? (srcSec.match(/\]\(https?:\/\//g) || []).length : 0;
+      const nSections = (body.match(/^### \[(ACTION|SURVEILLER|À LIRE)\]/gm) || []).length;
+      if (!srcSec || nLinks === 0) pb.push("rubrique « ## Sources » absente ou sans lien");
+      else if (nLinks < nSections) pb.push(`${nLinks} source(s) pour ${nSections} sections : chaque section doit pouvoir être vérifiée`);
+      const unknown = [...new Set(body.match(FICHE_RE) || [])].filter((c) => !FICHE_NOMS[c]);
+      if (unknown.length) pb.push(`fiches sans intitulé vérifié au catalogue (à ajouter dans FICHE_NOMS) : ${unknown.join(", ")}`);
+      for (const line of body.split("\n")) {
+        if (/^\|\s*\d/.test(line) && /^## Calendrier/.test(body.slice(0, body.indexOf(line)).split(/\n## /).pop() ? "## " + body.slice(0, body.indexOf(line)).split(/\n## /).pop() : "")) {
+          const d = line.replace(/^\|/, "").split("|")[0].trim();
+          if (!/^(1er|\d{1,2}) [a-zéû]+ \d{4}$/.test(d)) pb.push(`date de calendrier non reconnue : « ${d} »`);
+        }
+      }
+      if (pb.length) throw new Error(`${f} : publication bloquée.\n  - ${pb.join("\n  - ")}`);
+    }
     let html = marked.parse(body);
     const items = [];
     html = html.replace(/<h3>\[(ACTION|SURVEILLER|À LIRE)\]\s*(.*?)<\/h3>/g, (_, k, t) => { items.push({ k, t }); const id = `t${items.length}`; return `<h3 id="${id}">${badge(k)} <span>${t}</span></h3>`; });
@@ -96,6 +168,24 @@ const editions = loadSeries("content/editions", ["numero", "date", "titre", "acc
 // Rétrospective 2026 : numéros mis en ligne après coup, chacun couvrant une période passée
 const retros = loadSeries("content/retro-2026", ["numero", "date", "periode", "titre", "accroche"])
   .sort((a, b) => a.numero - b.numero);
+
+// ---------- Relevé des faits (relecture du dimanche) : node build.mjs --faits <slug> ----------
+if (FAITS) {
+  const n = [...editions, ...retros].find((x) => x.slug === FAITS || x.slug.includes(FAITS));
+  if (!n) { console.error(`Aucun numéro ne correspond à « ${FAITS} »`); process.exit(1); }
+  const FACT = /\b(1er|\d{1,2}) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)( \d{4})?\b|\d{1,2}\/\d{2}\/\d{4}|\b(JO|JORF)\b|\b(n[°º]|nº)\s?\d|\b[RLD]\. ?\d{3}-\d|\b(TWhc|GWh|kWh|M€|€|%|m³|tonnes?)\b|\d[\d\s]*\d\s?(€|%)|\b(BAR|BAT|IND|RES|TRA|AGRI)-[A-Z]{2,3}-\d{2,3}|\b(décret|arrêté|ordonnance|décision|loi)\b/i;
+  let section = "(en-tête)", k = 0;
+  console.log(`\nRELEVÉ DES FAITS — ${n.titre} (${n.slug})\nChaque ligne doit être confirmée sur une source officielle avant de passer « brouillon: false » et de renseigner « verifie: ».\n`);
+  for (const raw of [n.titre, n.accroche, ...n.body.split("\n")]) {
+    const line = raw.trim();
+    if (/^#{2,3} /.test(line)) { section = line.replace(/^#+ /, ""); continue; }
+    if (!line || /^\|[-| ]+\|$/.test(line) || /^## Sources/.test(section) || /^Sources$/.test(section)) continue;
+    const parts = line.startsWith("|") ? [line] : line.split(/(?<=[.;!?])\s+(?=[A-ZÀ-Ü«(])/);
+    for (const p of parts) if (FACT.test(p)) console.log(`${String(++k).padStart(3)}. [${section.slice(0, 40)}] ${p.replace(/\*\*/g, "")}`);
+  }
+  console.log(`\n${k} éléments à vérifier. Sources citées : ${(n.body.split(/^## Sources\s*$/m)[1] || "").split("\n").filter((l) => l.includes("](")).length}.\n`);
+  process.exit(0);
+}
 
 // ---------- gabarits ----------
 const toc = (items, cahier) => items.length + (cahier ? 1 : 0) < 2 ? "" : `<nav class="toc" aria-label="Dans ce numéro"><div class="eyebrow">Dans ce numéro</div><ol>${items.map((it, i) => `<li><a href="#t${i + 1}">${badge(it.k)}<span>${it.t}</span></a></li>`).join("")}${cahier ? `<li><a href="#outils-si"><span class="badge b-outils">OUTILS</span><span>Impact sur vos outils : ${cahier.sujets[0] || ""}</span></a></li>` : ""}</ol></nav>`;
@@ -203,7 +293,7 @@ for (const e of editions) {
     path: `/editions/${e.slug}/`,
     type: "article",
     body: `<main class="article narrow">
-  <p class="meta"><a href="/veille/">Veille</a> · Nº ${e.numero} · ${dateFr(e.date)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
+  <p class="meta"><a href="/veille/">Veille</a> · Nº ${e.numero} · ${dateFr(e.date)}${e.verifie ? ` · <span class="verif">Faits vérifiés le ${dateFr(String(e.verifie))}</span>` : ""}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
   <h1>${esc(e.titre)}</h1>
   <p class="lede">${esc(e.accroche)}</p>
   ${toc(e.items, e.cahier)}<div class="prose">${e.html}</div>
@@ -250,7 +340,7 @@ for (const [i, r] of retros.entries()) {
     path: `/retro-2026/${r.slug}/`,
     type: "article",
     body: `<main class="article narrow">
-  <p class="meta"><a href="/veille/">Veille</a> · <a href="/retro-2026/">Rétrospective 2026</a> · Nº ${r.numero} · <strong>Période couverte : ${esc(r.periode)}</strong>${r.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
+  <p class="meta"><a href="/veille/">Veille</a> · <a href="/retro-2026/">Rétrospective 2026</a> · Nº ${r.numero} · <strong>Période couverte : ${esc(r.periode)}</strong>${r.verifie ? ` · <span class="verif">Faits vérifiés le ${dateFr(String(r.verifie))}</span>` : ""}${r.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
   <h1>${esc(r.titre)}</h1>
   <p class="lede">${esc(r.accroche)}</p>
   <p class="retro-note">Numéro de la rétrospective 2026, mis en ligne le ${dateFr(r.date)}. Il reprend l'actualité de la période couverte ; certaines règles ont pu évoluer depuis.</p>
@@ -287,27 +377,7 @@ if (retros.length) write("retro-2026/index.html", page({
 
 // ---------- index des fiches ----------
 // Intitulés repris des numéros publiés (et vérifiés) ; vide si l'intitulé officiel n'a pas été vérifié.
-const FICHE_NOMS = {
-  "BAR-TH-101": "Chauffe-eau solaire individuel", "BAR-TH-143": "Système solaire combiné",
-  "BAR-TH-148": "Chauffe-eau thermodynamique à accumulation", "BAR-TH-162": "Système photovoltaïque et thermique à circulation d'eau",
-  "BAR-TH-166": "Pompe à chaleur collective (supprimée)", "BAR-TH-168": "Dispositif solaire thermique",
-  "BAR-TH-171": "Pompe à chaleur air/eau", "BAR-TH-172": "Pompe à chaleur eau/eau ou eau glycolée/eau",
-  "BAR-TH-174": "Rénovation d'ampleur d'une maison individuelle", "BAR-TH-175": "Rénovation d'ampleur d'un appartement",
-  "BAR-TH-177": "Rénovation globale d'un bâtiment résidentiel collectif",
-  "BAR-TH-178": "Système géothermique (résidentiel collectif)", "BAR-TH-179": "Pompe à chaleur collective air/eau",
-  "BAR-TH-180": "Pompe à chaleur collective eau/eau ou eau glycolée/eau",
-  "BAR-SE-109": "Désembouage d'un réseau de chauffage collectif", "BAR-EQ-110": "Luminaire LED pour parties communes",
-  "BAT-EQ-127": "Luminaires LED (tertiaire)", "BAT-TH-113": "Pompe à chaleur (tertiaire, supprimée)",
-  "BAT-TH-162": "Système géothermique (tertiaire)", "BAT-TH-163": "Pompe à chaleur air/eau (tertiaire)",
-  "BAT-TH-164": "Pompe à chaleur eau/eau ou eau glycolée/eau (tertiaire)", "IND-BA-116": "Luminaires à modules LED (industrie)",
-  "TRA-SE-104": "Station de gonflage des pneumatiques", "AGRI-EQ-108": "Stockage d'eau pour une serre bioclimatique",
-  "AGRI-EQ-110": "Séchage solaire par insufflation", "AGRI-EQ-112": "Double paroi gonflable sur serres",
-  "AGRI-TH-108": "Pompe à chaleur air/eau ou eau/eau (agriculture)", "AGRI-TH-117": "Déshumidification thermodynamique pour serres",
-  "AGRI-TH-119": "Déshumidification avec air extérieur",
-  "BAR-TH-106": "Chaudière individuelle à haute performance énergétique (supprimée en 2024)",
-  "BAR-TH-107": "Chaudière collective à haute performance énergétique", "BAR-TH-113": "Chaudière biomasse individuelle",
-  "BAR-TH-164": "Rénovation globale d'une maison individuelle",
-};
+
 // Thèmes en langage chantier + mots-clés de recherche (synonymes utilisés par les installateurs)
 const THEMES = [
   { id: "pac", nom: "Pompes à chaleur", kw: "pompe a chaleur pompes pac chauffage chauffagiste air eau aerothermie aerothermique geothermie radiateur plancher chauffant climatisation",
@@ -323,9 +393,13 @@ const THEMES = [
   { id: "led", nom: "Éclairage", kw: "led eclairage luminaire luminaires lampe lampes electricien electricite parties communes bureaux",
     codes: ["BAR-EQ-110", "BAT-EQ-127", "IND-BA-116"] },
   { id: "agri", nom: "Agriculture et serres", kw: "serre serres agriculture agricole maraicher horticole sechage deshumidification exploitation",
-    codes: ["AGRI-EQ-108", "AGRI-EQ-110", "AGRI-EQ-112", "AGRI-TH-117", "AGRI-TH-119"] },
-  { id: "transp", nom: "Transport", kw: "pneu pneus pneumatiques gonflage garage station vehicule",
-    codes: ["TRA-SE-104"] },
+    codes: ["AGRI-EQ-108", "AGRI-EQ-110", "AGRI-EQ-112", "AGRI-TH-117", "AGRI-TH-119", "AGRI-EQ-105", "AGRI-EQ-106"] },
+  { id: "transp", nom: "Transport", kw: "pneu pneus pneumatiques gonflage garage station vehicule camion poids lourd lubrifiant chauffeur ecoconduite autopartage carburant",
+    codes: ["TRA-SE-104", "TRA-EQ-104", "TRA-EQ-111", "TRA-EQ-113", "TRA-EQ-115", "TRA-EQ-119", "TRA-EQ-122", "TRA-EQ-123", "TRA-EQ-125", "TRA-SE-101", "TRA-SE-102", "TRA-SE-107", "TRA-SE-111", "TRA-SE-112", "TRA-SE-113"] },
+  { id: "ind", nom: "Industrie", kw: "industrie usine chaudiere vapeur bruleur four economiseur condenseur chauffage decentralise lumiere",
+    codes: ["IND-BA-114", "IND-BA-117", "IND-UT-104", "IND-UT-105", "IND-UT-118", "IND-UT-130"] },
+  { id: "batdivers", nom: "Autres fiches du bâtiment", kw: "fenetre vitrage parietodynamique contrat performance energetique cpe services recuperateur chaleur condensation",
+    codes: ["BAR-EN-110", "BAT-EN-111", "BAR-SE-105", "BAT-SE-104", "BAR-TH-122"] },
 ];
 const themeOf = (c) => THEMES.find((t) => t.codes.includes(c)) || { id: "autre", nom: "Autres", kw: "" };
 const norm = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();

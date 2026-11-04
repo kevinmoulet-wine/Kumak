@@ -5,6 +5,7 @@ periode: Janvier 2026
 titre: La P6 démarre : nouvelles règles, nouvelles fiches PAC
 accroche: Le 1er janvier 2026, la sixième période des CEE entre en vigueur avec un arrêté d'application, de nouvelles fiches pour les pompes à chaleur collectives et un Coup de pouce rénovation d'ampleur prolongé.
 brouillon: false
+verifie: 2026-11-04
 ---
 
 ## L'essentiel en 30 secondes
@@ -60,7 +61,7 @@ brouillon: false
 
 - les Coups de pouce « Rénovation d'ampleur d'une maison ou d'un appartement individuel » et « Rénovation performante d'un bâtiment résidentiel collectif » sont prolongés ;
 - le coefficient de bonification pour les ménages modestes ne vaut que pour les logements occupés à titre de **résidence principale** ;
-- l'avis d'imposition ou de non-imposition de l'occupant devient une pièce justificative obligatoire (les bailleurs sociaux en sont dispensés).
+- l'avis d'imposition ou de non-imposition de l'occupant devient une pièce justificative spécifique de ces opérations, sauf quand le demandeur est l'Anah ou quand le bénéficiaire est un bailleur social.
 
 ### [À LIRE] Les plafonds de revenus 2026 sont publiés
 
@@ -75,7 +76,7 @@ Le 15 janvier 2026 (référé, nº 510623), le juge des référés rejette la de
 | Date | Échéance |
 |---|---|
 | 1er février 2026 | Les éligibles qui agissent sur leur propre patrimoine peuvent obtenir les Coups de pouce sans signer les chartes |
-| 1er avril 2026 | Nouvelles exigences d'installation, de mise en service et d'entretien des équipements |
+| 1er avril 2026 | Équipements installés et mis en service à la date d'achèvement, maintien en fonctionnement attesté |
 | 1er juillet 2026 | Les demandes doivent déclarer le SIRET, le coût des opérations et les aides publiques reçues |
 
 ## Sources

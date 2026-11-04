@@ -5,6 +5,7 @@ periode: Mai 2026
 titre: PAC individuelles : le Coup de pouce exigera un agrément
 accroche: Le 29 mai, un décret et deux arrêtés réservent le Coup de pouce Chauffage des PAC individuelles aux modèles agréés « qualité et résilience industrielle », à partir du 1er septembre. FEEBAT et PROFEEL sont reconduits.
 brouillon: false
+verifie: 2026-11-04
 ---
 
 ## L'essentiel en 30 secondes
@@ -33,7 +34,7 @@ brouillon: false
 **Les textes**, tous datés du 29 mai 2026 :
 
 - l'arrêté modifiant les arrêtés cadres des CEE, publié au JO nº 125 du 30 mai 2026 ;
-- le décret nº 2026-413, qui organise l'instruction des demandes d'agrément par l'ADEME ;
+- le décret nº 2026-413, qui organise l'agrément : les demandes sont instruites par l'ADEME, les agréments délivrés par les ministres chargés de l'industrie et de l'énergie ;
 - un arrêté fixant les conditions d'agrément d'un modèle.
 
 **Ce qui change.** La bonification des fiches **BAR-TH-171** (PAC air/eau) et **BAR-TH-172** (PAC eau/eau ou eau glycolée/eau) est un coefficient 5, pour une résidence principale, quand la PAC remplace une chaudière individuelle au charbon, au fioul ou au gaz. Elle exige désormais que le modèle installé **détienne l'agrément à la date d'engagement** de l'opération. La preuve de réalisation doit mentionner le **numéro d'agrément** du modèle.

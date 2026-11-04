@@ -99,7 +99,10 @@
       else if (mod === "oui") { r.status = "oui"; r.titre = "Oui : coefficient ×" + f.modeste; r.motifs.push("Devis dans la période, aucun équipement fossile conservé, ménage modeste."); }
       else if (mod === "non") { r.status = "oui"; r.titre = "Oui : coefficient ×" + f.autres; r.motifs.push("Devis dans la période, aucun équipement fossile conservé."); }
       else { r.status = "oui"; r.titre = "Oui : coefficient ×" + f.autres + " ou ×" + f.modeste; r.motifs.push("×" + f.modeste + " si le ménage est modeste, ×" + f.autres + " sinon. Utilisez le calcul sous la question 5."); }
-      if (r.status === "oui") r.alertes.push("Faites signer le devis avant le 31 décembre 2026.");
+      if (r.status === "oui") {
+        r.alertes.push("Faites signer le devis avant le 31 décembre 2026.");
+        r.alertes.push("Si une demande MaPrimeRénov' a été déposée pour cette opération avant le 1er septembre 2026, la bonification ne s'applique pas, sauf refus de la prime (article 4 de l'arrêté du 17 août 2026).");
+      }
     }
     return r;
   }

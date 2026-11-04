@@ -408,3 +408,4 @@ header.nav{flex-wrap:nowrap}
 .cahier-card,.cahier-card a,.cahier-card a>*{min-width:0}
 .cc-top{min-width:0}
 .cc-date{white-space:normal}
+.meta .verif{color:var(--accent)}

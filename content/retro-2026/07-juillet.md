@@ -5,13 +5,14 @@ periode: Juillet 2026
 titre: Contrôles assouplis pour 2026, décret P6 validé par le Conseil d'État
 accroche: L'arrêté du 27 juillet assouplit le seuil de non-conformité pour 2026 avant de le resserrer. Le Conseil d'État rejette les recours des distributeurs de fioul contre le décret P6, et la première liste des PAC agréées est publiée.
 brouillon: false
+verifie: 2026-11-04
 ---
 
 ## L'essentiel en 30 secondes
 
 - **Seuil de non-conformité** : 14 % pour les dossiers déposés en 2026, 12 % en 2027 et 10 % à partir de 2028.
 - **Décret P6** : le Conseil d'État rejette tous les recours contre le décret du 30 octobre 2025.
-- **PAC agréées** : une première liste de 1 567 modèles de 27 marques est publiée.
+- **PAC agréées** : la première liste officielle est publiée, avec plus de 1 500 modèles de 27 marques.
 - **1er juillet** : les dossiers doivent déclarer le SIRET, le coût des opérations et les aides publiques.
 
 ## Concrètement, pour vous
@@ -70,7 +71,7 @@ Le Conseil d'État écarte aussi la qualification d'aide d'État. Le cadre de la
 
 **Le texte.** Arrêté du 2 juillet 2026, publié au JO du 5 juillet 2026.
 
-**Contenu.** **1 567 modèles** de **27 marques** reçoivent un agrément définitif, et 201 modèles de cinq marques un agrément transitoire d'un an. La liste est consultable sur la plateforme de l'ADEME (bonus-pac.ademe.fr) et sera mise à jour.
+**Contenu.** L'annexe I agrée définitivement **plus de 1 500 modèles de 27 marques** ; l'annexe II accorde à environ 200 modèles un agrément transitoire valable jusqu'au 15 juillet 2027 (décompte de la presse spécialisée à partir des annexes publiées au JO). La liste est consultable sur la plateforme de l'ADEME (bonus-pac.ademe.fr) et mise à jour par arrêté.
 
 **À faire.** Avant de signer un devis BAR-TH-171 ou BAR-TH-172 bonifié, vérifier que le modèle figure sur la liste.
 

@@ -5,11 +5,12 @@ periode: Avril 2026
 titre: Géothermie et PAC collectives sous contrôle renforcé
 accroche: Les six fiches de PAC collectives et de géothermie créées en janvier passent sous un contrôle sur site qui atteindra 100 % en 2028. Un programme finance la location sociale de voitures électriques.
 brouillon: false
+verifie: 2026-11-04
 ---
 
 ## L'essentiel en 30 secondes
 
-- **1er avril** : les nouvelles exigences d'installation, de mise en service et d'entretien s'appliquent.
+- **1er avril** : les équipements doivent être installés et mis en service à la date d'achèvement, et leur maintien en fonctionnement attesté.
 - **Géothermie et PAC collectives** : contrôle sur site à 50 % dès le 1er mai, 75 % en 2027 et 100 % en 2028.
 - **Mobilité** : le programme PRO-INNO-86 finance la location sociale de voitures électriques jusqu'en 2031.
 
@@ -20,9 +21,9 @@ brouillon: false
   - Exemple : sur 10 opérations de géothermie (BAR-TH-178) en 2026, au moins 5 seront contrôlées sur place ; en 2028, les 10.
   - À faire : prévoyez ces visites dans vos plannings et vos prix.
 - **Vous êtes installateur, tous gestes confondus**
-  - Ce qui change : depuis le 1er avril, de nouvelles exigences d'installation, de mise en service et d'entretien s'appliquent.
-  - Exemple : pour une chaudière ou une PAC, le dossier doit maintenant prouver une installation et une mise en service conformes.
-  - À faire : mettez à jour vos procès-verbaux et attestations.
+  - Ce qui change : depuis le 1er avril, l'équipement doit être installé et mis en service à la date d'achèvement, et son maintien en fonctionnement est attesté.
+  - Exemple : pour une PAC, l'attestation de réalisation doit mentionner la mise en service et l'engagement de maintien en fonctionnement.
+  - À faire : mettez à jour vos attestations de réalisation.
 - **Vous êtes délégataire**
   - Ce qui change : la part d'opérations contrôlées sur site sur ces six fiches augmente chaque année.
   - Exemple : en 2028, chaque opération de PAC collective devra recevoir une visite de contrôle.
@@ -44,9 +45,9 @@ brouillon: false
 
 **Qui est concerné.** Bureaux d'études sous-sol, foreurs, installateurs de PAC collectives, délégataires et organismes d'inspection.
 
-### [ACTION] 1er avril : installation, mise en service et entretien
+### [ACTION] 1er avril : installation, mise en service et maintien en fonctionnement
 
-L'arrêté du 21 décembre 2025 rend applicables au **1er avril 2026** de nouvelles exigences sur l'installation, la mise en service et l'entretien des équipements. Les pièces des dossiers engagés à partir de cette date doivent en tenir compte.
+L'arrêté du 21 décembre 2025 rend applicables au **1er avril 2026** de nouvelles règles : les équipements des opérations standardisées sont installés et mis en service à la date d'achèvement (nouvel article 2 quater de l'arrêté du 22 décembre 2014), et leur maintien en fonctionnement pendant six ans au moins est attesté (annexe 7-1). Les pièces des dossiers engagés à partir de cette date doivent en tenir compte.
 
 ### [À LIRE] Programme PRO-INNO-86 : location sociale de voitures électriques
 
@@ -58,7 +59,7 @@ L'arrêté du 21 décembre 2025 rend applicables au **1er avril 2026** de nouvel
 
 | Date | Échéance |
 |---|---|
-| 1er avril 2026 | Exigences d'installation, de mise en service et d'entretien |
+| 1er avril 2026 | Installation et mise en service à l'achèvement, maintien en fonctionnement attesté |
 | 1er mai 2026 | Contrôles à 50 % (géothermie, PAC collectives) ; indépendance des organismes d'inspection |
 | 1er juillet 2026 | Déclaration du SIRET, du coût des opérations et des aides publiques |
 

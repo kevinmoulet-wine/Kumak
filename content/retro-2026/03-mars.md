@@ -5,6 +5,7 @@ periode: Mars 2026
 titre: Organismes d'inspection : la chasse aux liens de contrôle
 accroche: Un arrêté interdit qu'un organisme d'inspection et les autres acteurs d'un dossier soient contrôlés par la même personne. Le solaire combiné passe à de nouveaux taux de contrôle.
 brouillon: false
+verifie: 2026-11-04
 ---
 
 ## L'essentiel en 30 secondes
@@ -23,9 +24,9 @@ brouillon: false
   - Exemple : si votre actionnaire contrôle aussi un installateur, vous ne pouvez plus contrôler ses chantiers.
   - À faire : faites la liste des sociétés liées à votre actionnariat.
 - **Vous installez du solaire combiné**
-  - Ce qui change : depuis le 1er mars, la fiche BAR-TH-143 a de nouveaux taux de contrôle et ne se cumule plus avec certaines fiches.
+  - Ce qui change : depuis le 1er mars, la fiche BAR-TH-143 est soumise à des contrôles sur site (15 %) et par contact (30 %) ; sa nouvelle version n'est pas cumulable avec BAR-TH-171, BAR-TH-172 et BAR-TH-113.
   - Exemple : un système solaire combiné posé avec une PAC air/eau ne peut pas cumuler BAR-TH-143 et BAR-TH-171.
-  - À faire : choisissez une seule fiche par opération.
+  - À faire : choisissez une seule fiche par opération, et prévoyez les contrôles dans vos délais.
 
 ### [ACTION] Organismes d'inspection : nouvelle règle d'indépendance au 1er mai
 
@@ -45,14 +46,14 @@ brouillon: false
 
 ### [SURVEILLER] BAR-TH-143 : nouveaux taux de contrôle
 
-L'arrêté du 27 décembre 2025 (JO du 30 décembre 2025) prévoit de nouveaux taux de contrôle pour la fiche BAR-TH-143 (système solaire combiné), applicables aux opérations engagées **à partir du 1er mars 2026**. Le même texte interdit le cumul de BAR-TH-143 avec BAR-TH-171, BAR-TH-172 et BAR-TH-113.
+L'arrêté du 27 décembre 2025 (JO nº 305 du 30 décembre 2025) soumet la fiche BAR-TH-143 (système solaire combiné) à des taux de contrôle de **15 % sur le lieu des opérations** et **30 % par contact**, pour les opérations engagées **à partir du 1er mars 2026**. Depuis le 1er janvier 2026, la fiche bénéficie aussi d'un coefficient 2 en résidence principale quand le système remplace une chaudière individuelle au charbon, au fioul ou au gaz. La nouvelle version de la fiche, annexée au même arrêté, précise qu'elle **n'est pas cumulable** avec BAR-TH-171, BAR-TH-172 et BAR-TH-113.
 
 ## Calendrier
 
 | Date | Échéance |
 |---|---|
 | 1er mars 2026 | Nouveaux taux de contrôle BAR-TH-143 |
-| 1er avril 2026 | Exigences d'installation, de mise en service et d'entretien |
+| 1er avril 2026 | Installation et mise en service à l'achèvement, maintien en fonctionnement attesté |
 | 1er mai 2026 | Nouvelle règle d'indépendance des organismes d'inspection |
 
 ## Sources
@@ -60,4 +61,6 @@ L'arrêté du 27 décembre 2025 (JO du 30 décembre 2025) prévoit de nouveaux t
 - [Arrêté du 26 mars 2026 (AIDA-Ineris, texte publié au JO)](https://aida.ineris.fr/node/45595)
 - [Gossement Avocats : arrêté du 26 mars 2026 relatif à l'indépendance des organismes d'inspection](https://www.gossement-avocats.com/blog/certificats-deconomies-denergie-cee-publication-de-larrete-du-26-mars-2026-relatif-a-lindependance-des-organismes-dinspection/)
 - [ATEE : synthèse des fiches et bonifications au 1er janvier 2026 (arrêté du 27 décembre 2025)](https://www.atee.fr/system/files/2026-02/GT%20ATEE_Fevrier%202026.pdf)
+- [Arrêté du 27 décembre 2025 (AIDA-Ineris, texte publié au JO)](https://aida.ineris.fr/reglementation/arrete-271225-modifiant-fiches-doperations-standardisees-bar-th-143-bar-th-137-bat)
+- [Fiche BAR-TH-143 version A79-6, applicable au 1er janvier 2026 (ministère de la Transition écologique)](https://www.ecologie.gouv.fr/sites/default/files/documents/BAR-TH-143%20vA79-6%20%C3%A0%20compter%20du%2001-01-2026_1.pdf)
 - [Hellio : les changements au 1er janvier 2026 (arrêté du 27 décembre 2025)](https://www.hellio.com/actualites/reglementation/p6-mpr-dpe-les-changements-au-1er-janvier-2026-hellio)
