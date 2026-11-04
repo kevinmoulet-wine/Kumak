@@ -441,3 +441,8 @@ header.nav{flex-wrap:nowrap}
 .cta-sec .cta-box{margin-top:0;padding:32px}
 .home-cta h2{font-size:clamp(26px,3.2vw,34px)}
 .home-cta form.signup{max-width:520px}
+
+/* Footer centré */
+footer{flex-direction:column;align-items:center;justify-content:center;text-align:center}
+footer p{margin:0}
+footer nav{justify-content:center;gap:10px 16px}
