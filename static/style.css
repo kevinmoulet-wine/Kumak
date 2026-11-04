@@ -375,3 +375,13 @@ header.nav{flex-wrap:nowrap}
 .home-grid .ech,.home-grid .impact-list{margin-bottom:12px}
 .it-families{margin:8px 0 32px}
 .it-families .feat p{margin:6px 0 0}
+
+/* Cahiers « Impact sur vos outils » */
+.it-card{display:grid;gap:4px;margin:40px 0;padding:18px 20px;border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:6px;background:var(--surface);color:var(--ink);text-decoration:none}
+.it-card:hover{border-color:var(--accent)}
+.it-card strong{font-family:var(--display);font-stretch:75%;font-weight:800;font-size:24px;line-height:1.1}
+.it-card>span:not(.eyebrow){color:var(--muted);font-size:15px}
+.it-card em{font-style:normal;font-weight:600;color:var(--accent);margin-top:4px}
+.badge.b-outils{color:var(--ink);border-color:var(--ink)}
+.cahier-src{margin:0 0 24px;padding:12px 16px;background:var(--soft);border-radius:6px;font-size:15px}
+.cahier h2{font-size:26px;margin-top:36px}

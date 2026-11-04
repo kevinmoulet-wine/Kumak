@@ -74,15 +74,19 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
       }).join("");
       return `<section class="profiles" aria-label="Concrètement, pour vous"><h2>Concrètement, pour vous</h2><div class="profile-grid">${cards}</div></section>`;
     });
-    // Section « Impact sur vos outils » : repliée par défaut, réservée aux obligés et délégataires
-    html = html.replace(/<h2>Impact sur vos outils<\/h2>([\s\S]*?)(?=<h2|$)/, (_, inner) =>
-      `<details class="it-impact" id="outils-si"><summary><span class="eyebrow">Obligés et délégataires</span><strong>Impact sur vos outils</strong><span class="it-hint">Données, règles, documents : ce qu'il faut adapter</span></summary><div class="it-body">${inner}</div></details>`);
+    // Section « Impact sur vos outils » : extraite vers sa propre page /impact-outils/<slug>/ ; l'édition garde une carte de renvoi
+    let cahier = null;
+    html = html.replace(/<h2>Impact sur vos outils<\/h2>([\s\S]*?)(?=<h2|$)/, (_, inner) => {
+      const sujets = [...inner.matchAll(/<h3>(.*?)<\/h3>/g)].map((m) => m[1].replace(/<[^>]+>/g, ""));
+      cahier = { url: `/impact-outils/${slug}/`, sujets, html: linkFiches(inner.replace(/<h3>/g, "<h2>").replace(/<\/h3>/g, "</h2>")) };
+      return `<a class="it-card" id="outils-si" href="${cahier.url}"><span class="eyebrow">Impact sur vos outils</span><strong>${sujets[0] || "Ce qu'il faut adapter"}</strong>${sujets.length > 1 ? `<span>${sujets.slice(1).join(" · ")}</span>` : ""}<em>Lire le cahier : champs, règles, cas de test →</em></a>`;
+    });
     html = linkFiches(html);
     // Garde-fou : aucune section ni vignette du Markdown ne doit disparaître au rendu
     const nSec = (body.match(/^### \[(ACTION|SURVEILLER|À LIRE)\]/gm) || []).length, nSecHtml = (html.match(/<h3 id="t\d+">/g) || []).length;
     const nCard = (body.match(/^- \*\*Vous /gm) || []).length, nCardHtml = (html.match(/<div class="profile">/g) || []).length;
     if (nSec !== nSecHtml || nCard !== nCardHtml) throw new Error(`${f} : rendu incomplet (sections ${nSecHtml}/${nSec}, vignettes ${nCardHtml}/${nCard}). Publication bloquée.`);
-    return { ...data, date: String(data.date), slug, html, body, items, todo };
+    return { ...data, date: String(data.date), slug, html, body, items, todo, cahier };
   })
   .filter((e) => DRAFTS || !e.brouillon);
 
@@ -94,7 +98,7 @@ const retros = loadSeries("content/retro-2026", ["numero", "date", "periode", "t
   .sort((a, b) => a.numero - b.numero);
 
 // ---------- gabarits ----------
-const toc = (items) => items.length < 2 ? "" : `<nav class="toc" aria-label="Dans ce numéro"><div class="eyebrow">Dans ce numéro</div><ol>${items.map((it, i) => `<li><a href="#t${i + 1}">${badge(it.k)}<span>${it.t}</span></a></li>`).join("")}</ol></nav>`;
+const toc = (items, cahier) => items.length + (cahier ? 1 : 0) < 2 ? "" : `<nav class="toc" aria-label="Dans ce numéro"><div class="eyebrow">Dans ce numéro</div><ol>${items.map((it, i) => `<li><a href="#t${i + 1}">${badge(it.k)}<span>${it.t}</span></a></li>`).join("")}${cahier ? `<li><a href="#outils-si"><span class="badge b-outils">OUTILS</span><span>Impact sur vos outils : ${cahier.sujets[0] || ""}</span></a></li>` : ""}</ol></nav>`;
 
 const ladder = `<div class="ladder" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>`;
 
@@ -202,7 +206,7 @@ for (const e of editions) {
   <p class="meta"><a href="/veille/">Veille</a> · Nº ${e.numero} · ${dateFr(e.date)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</p>
   <h1>${esc(e.titre)}</h1>
   <p class="lede">${esc(e.accroche)}</p>
-  ${toc(e.items)}<div class="prose">${e.html}</div>
+  ${toc(e.items, e.cahier)}<div class="prose">${e.html}</div>
   <p class="disclaimer">KUMAK est une veille d'information. Elle ne constitue pas un conseil juridique : vérifiez toujours le texte officiel, et consultez un avocat pour une situation particulière.</p>
   <div class="cta-box" id="inscription">
     <h2>Recevez la prochaine édition.</h2>
@@ -250,7 +254,7 @@ for (const [i, r] of retros.entries()) {
   <h1>${esc(r.titre)}</h1>
   <p class="lede">${esc(r.accroche)}</p>
   <p class="retro-note">Numéro de la rétrospective 2026, mis en ligne le ${dateFr(r.date)}. Il reprend l'actualité de la période couverte ; certaines règles ont pu évoluer depuis.</p>
-  ${toc(r.items)}<div class="prose">${r.html}</div>
+  ${toc(r.items, r.cahier)}<div class="prose">${r.html}</div>
   <nav class="retro-nav" aria-label="Numéros de la rétrospective">
     ${prev ? `<a href="/retro-2026/${prev.slug}/">← ${esc(prev.periode)}</a>` : "<span></span>"}
     ${next ? `<a href="/retro-2026/${next.slug}/">${esc(next.periode)} →</a>` : `<a href="/veille/">Toute la veille →</a>`}
@@ -332,8 +336,8 @@ const cleanMd = (l) => l.replace(/^\s*[-*]\s+/, "").replace(/^\|\s*|\s*\|\s*$/g,
 
 const fiches = {};
 const sources = [
-  ...editions.filter((e) => !e.brouillon).map((e) => ({ url: `/editions/${e.slug}/`, label: `Édition nº ${e.numero} · ${dateFr(e.date)}`, titre: e.titre, tri: e.date + "-z", body: e.body })),
-  ...retros.filter((r) => !r.brouillon).map((r) => ({ url: `/retro-2026/${r.slug}/`, label: `Rétrospective · ${r.periode}`, titre: r.titre, tri: `2026-${String(r.numero).padStart(2, "0")}`, body: r.body })),
+  ...editions.filter((e) => !e.brouillon).map((e) => ({ url: `/editions/${e.slug}/`, label: `Édition nº ${e.numero} · ${dateFr(e.date)}`, titre: e.titre, tri: e.date + "-z", body: e.body, cahier: e.cahier, slug: e.slug })),
+  ...retros.filter((r) => !r.brouillon).map((r) => ({ url: `/retro-2026/${r.slug}/`, label: `Rétrospective · ${r.periode}`, titre: r.titre, tri: `2026-${String(r.numero).padStart(2, "0")}`, body: r.body, cahier: r.cahier, slug: r.slug })),
 ];
 for (const src of sources) {
   let h2 = "", impact = null, inCode = false;
@@ -519,9 +523,31 @@ const vInstall = vignettes.filter((v) => PROFIL_INSTALL.test(v.who)).slice(0, 6)
 const vOblige = vignettes.filter((v) => PROFIL_OBLIGE.test(v.who)).slice(0, 6);
 
 // Numéros avec une rubrique « Impact sur vos outils »
-const impacts = sources.filter((src) => /## Impact sur vos outils/.test(src.body)).map((src) => ({ ...src,
-  sujets: [...src.body.split("## Impact sur vos outils")[1].split(/\n## /)[0].matchAll(/^### (.+)$/gm)].map((x) => cleanMd(x[1])) }))
+const impacts = sources.filter((src) => src.cahier).map((src) => ({ ...src, sujets: src.cahier.sujets, cahierUrl: src.cahier.url }))
   .sort((a, b) => b.tri.localeCompare(a.tri));
+const impactItem = (i) => `<li><a href="${i.cahierUrl}"><span class="meta">${esc(i.label)}</span><strong>${esc(i.sujets[0] || i.titre)}</strong>${i.sujets.length > 1 ? `<span>${i.sujets.slice(1).map(esc).join(" · ")}</span>` : ""}</a></li>`;
+
+for (const i of impacts) {
+  write(`impact-outils/${i.slug}/index.html`, page({
+    title: `${i.sujets[0] || i.titre} · Impact sur vos outils`,
+    description: `Ce qu'il faut adapter dans votre outil de gestion CEE : ${i.sujets.join(" ; ")}. Champs, règles, cas de test.`,
+    path: i.cahierUrl,
+    type: "article",
+    body: `<main class="article narrow">
+  <p class="meta"><a href="/impact-outils/">Impact sur vos outils</a> · ${esc(i.label)}</p>
+  <div class="eyebrow">Cahier de modifications</div>
+  <h1>${esc(i.sujets[0] || i.titre)}</h1>
+  ${i.sujets.length > 1 ? `<p class="lede">Ce cahier couvre aussi : ${i.sujets.slice(1).map(esc).join(" ; ")}.</p>` : ""}
+  <p class="cahier-src">Texte décodé dans <a href="${i.url}">${esc(i.label)} : ${esc(i.titre)}</a>.</p>
+  <div class="prose cahier">${i.sujets.length === 1 ? i.cahier.html.replace(/^\s*<h2>.*?<\/h2>/, "") : i.cahier.html}</div>
+  <p class="disclaimer">Ce cahier traduit un texte réglementaire en règles de gestion. Il ne remplace ni le texte officiel ni l'analyse de vos équipes : vérifiez chaque règle sur la source citée dans le numéro avant de la mettre en œuvre.</p>
+  <div class="cta-box" id="inscription">
+    <h2>Le prochain cahier, dès sa parution.</h2>
+    ${signupForm("email-cahier", "Votre adresse e-mail")}
+  </div>
+</main>`,
+  }));
+}
 
 const tool = (href, titre, txt, cta) => `<a class="tool" href="${href}"><strong>${titre}</strong><span>${txt}</span><em>${cta} →</em></a>`;
 
@@ -564,7 +590,7 @@ write("impact-outils/index.html", page({
     <div class="feat"><span class="tag">Progiciel CEE du marché</span><p>Les questions à poser à votre éditeur et les cas de test à lui faire dérouler.</p></div>
   </div>
   ${impacts.length ? `<h2 class="list-title">Les textes traduits</h2>
-  <ul class="impact-list">${impacts.map((i) => `<li><a href="${i.url}#outils-si"><span class="meta">${esc(i.label)}</span><strong>${esc(i.sujets[0] || i.titre)}</strong>${i.sujets.length > 1 ? `<span>${i.sujets.slice(1).map(esc).join(" · ")}</span>` : ""}</a></li>`).join("")}</ul>` : ""}
+  <ul class="impact-list">${impacts.map(impactItem).join("")}</ul>` : ""}
   <div class="cta-box" id="inscription">
     <h2>Le prochain cahier, dès sa parution.</h2>
     <p>Chaque lundi, les textes de la semaine classés par impact, et leur traduction pour vos outils.</p>
@@ -603,7 +629,7 @@ write("index.html", page({
     <div>
       <div class="eyebrow">Pour vos équipes SI</div>
       <h2>Impact sur vos outils</h2>
-      <ul class="impact-list">${impacts.slice(0, 3).map((i) => `<li><a href="${i.url}#outils-si"><span class="meta">${esc(i.label)}</span><strong>${esc(i.sujets[0] || i.titre)}</strong></a></li>`).join("")}</ul>
+      <ul class="impact-list">${impacts.slice(0, 3).map(impactItem).join("")}</ul>
       <p class="space-more"><a href="/impact-outils/">Tous les cahiers de modifications →</a></p>
     </div>
   </div>
@@ -781,7 +807,7 @@ write("feed.xml", `<?xml version="1.0" encoding="utf-8"?>
 ${editions.filter((e) => !e.brouillon).map((e) => `<item><title>${esc(`Nº ${e.numero} · ${e.titre}`)}</title><link>${cfg.url}/editions/${e.slug}/</link><guid>${cfg.url}/editions/${e.slug}/</guid><pubDate>${rfc822(e.date)}</pubDate><description>${esc(e.accroche)}</description></item>`).join("\n")}
 </channel></rss>`);
 
-const urls = ["/", "/veille/", "/impact-outils/", "/fiches/", "/calendrier/", ...codes.map((c) => `/fiches/${ficheSlug(c)}/`), "/mentions-legales/", "/confidentialite/",
+const urls = ["/", "/veille/", "/impact-outils/", ...impacts.map((i) => i.cahierUrl), "/fiches/", "/calendrier/", ...codes.map((c) => `/fiches/${ficheSlug(c)}/`), "/mentions-legales/", "/confidentialite/",
   ...editions.filter((e) => !e.brouillon).map((e) => `/editions/${e.slug}/`),
   ...(retros.some((r) => !r.brouillon) ? ["/retro-2026/"] : []),
   ...retros.filter((r) => !r.brouillon).map((r) => `/retro-2026/${r.slug}/`)];
