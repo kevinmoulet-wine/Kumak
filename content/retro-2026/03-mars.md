@@ -15,18 +15,18 @@ verifie: 2026-11-04
 
 ## Concrètement, pour vous
 
-- **Vous êtes délégataire ou demandeur de CEE**
+- **Si vous êtes délégataire ou demandeur de CEE**
   - Ce qui change : à partir du 1er mai, l'organisme qui contrôle vos chantiers ne peut pas être contrôlé par la même personne que vous ou vos installateurs.
-  - Exemple : un groupe qui possède à la fois une société de travaux et un organisme d'inspection ne peut plus faire contrôler les chantiers de sa filiale par cet organisme.
-  - À faire : vérifiez l'actionnariat de vos organismes d'inspection avant le 1er mai.
-- **Vous êtes un organisme d'inspection**
+  - Par exemple : un groupe qui possède à la fois une société de travaux et un organisme d'inspection ne peut plus faire contrôler les chantiers de sa filiale par cet organisme.
+  - À regarder chez vous : l'actionnariat de vos organismes d'inspection, avant le 1er mai.
+- **Si vous êtes un organisme d'inspection**
   - Ce qui change : l'interdiction vise désormais aussi le contrôle commun par une même personne.
-  - Exemple : si votre actionnaire contrôle aussi un installateur, vous ne pouvez plus contrôler ses chantiers.
-  - À faire : faites la liste des sociétés liées à votre actionnariat.
-- **Vous installez du solaire combiné**
+  - Par exemple : si votre actionnaire contrôle aussi un installateur, vous ne pouvez plus contrôler ses chantiers.
+  - À regarder chez vous : la liste des sociétés liées à votre actionnariat.
+- **Si vous installez du solaire combiné**
   - Ce qui change : depuis le 1er mars, la fiche BAR-TH-143 est soumise à des contrôles sur site (15 %) et par contact (30 %) ; sa nouvelle version n'est pas cumulable avec BAR-TH-171, BAR-TH-172 et BAR-TH-113.
-  - Exemple : un système solaire combiné posé avec une PAC air/eau ne peut pas cumuler BAR-TH-143 et BAR-TH-171.
-  - À faire : choisissez une seule fiche par opération, et prévoyez les contrôles dans vos délais.
+  - Par exemple : un système solaire combiné posé avec une PAC air/eau ne peut pas cumuler BAR-TH-143 et BAR-TH-171.
+  - À regarder chez vous : une seule fiche par opération, et la place des contrôles dans vos délais.
 
 ### [ACTION] Organismes d'inspection : nouvelle règle d'indépendance au 1er mai
 

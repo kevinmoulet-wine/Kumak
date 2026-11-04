@@ -16,18 +16,18 @@ verifie: 2026-11-04
 
 ## Concrètement, pour vous
 
-- **Vous installez de la géothermie ou des PAC collectives**
+- **Si vous installez de la géothermie ou des PAC collectives**
   - Ce qui change : à partir du 1er mai, au moins la moitié des opérations sont contrôlées sur site, puis toutes en 2028.
-  - Exemple : sur 10 opérations de géothermie (BAR-TH-178) en 2026, au moins 5 seront contrôlées sur place ; en 2028, les 10.
-  - À faire : prévoyez ces visites dans vos plannings et vos prix.
-- **Vous êtes installateur, tous gestes confondus**
+  - Par exemple : sur 10 opérations de géothermie (BAR-TH-178) en 2026, au moins 5 seront contrôlées sur place ; en 2028, les 10.
+  - À regarder chez vous : la place de ces visites dans vos plannings et vos prix.
+- **Si vous êtes installateur, tous gestes confondus**
   - Ce qui change : depuis le 1er avril, l'équipement doit être installé et mis en service à la date d'achèvement, et son maintien en fonctionnement est attesté.
-  - Exemple : pour une PAC, l'attestation de réalisation doit mentionner la mise en service et l'engagement de maintien en fonctionnement.
-  - À faire : mettez à jour vos attestations de réalisation.
-- **Vous êtes délégataire**
+  - Par exemple : pour une PAC, l'attestation de réalisation doit mentionner la mise en service et l'engagement de maintien en fonctionnement.
+  - À regarder chez vous : vos attestations de réalisation : sont-elles à jour ?
+- **Si vous êtes délégataire**
   - Ce qui change : la part d'opérations contrôlées sur site sur ces six fiches augmente chaque année.
-  - Exemple : en 2028, chaque opération de PAC collective devra recevoir une visite de contrôle.
-  - À faire : intégrez ce coût dans vos prix d'achat des CEE.
+  - Par exemple : en 2028, chaque opération de PAC collective devra recevoir une visite de contrôle.
+  - À regarder chez vous : l'effet de ce coût sur vos prix d'achat des CEE.
 
 ### [ACTION] Géothermie et PAC collectives : contrôles à 50 %, puis 100 %
 

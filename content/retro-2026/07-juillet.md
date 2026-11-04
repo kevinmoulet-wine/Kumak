@@ -17,22 +17,22 @@ verifie: 2026-11-04
 
 ## Concrètement, pour vous
 
-- **Vous êtes délégataire ou demandeur de CEE**
+- **Si vous êtes délégataire ou demandeur de CEE**
   - Ce qui change : un lot peut contenir jusqu'à 14 % d'opérations non satisfaisantes en 2026, puis 12 % en 2027 et 10 % en 2028.
-  - Exemple : sur 50 opérations contrôlées, 6 non satisfaisantes donnent 12 % : c'est accepté en 2026 et 2027, mais pas en 2028.
-  - À faire : visez dès maintenant moins de 10 % pour ne pas être pris de court.
-- **Vous installez des pompes à chaleur**
+  - Par exemple : sur 50 opérations contrôlées, 6 non satisfaisantes donnent 12 % : c'est accepté en 2026 et 2027, mais pas en 2028.
+  - À regarder chez vous : votre taux de non-conformité actuel, comparé aux 10 % applicables à partir de 2028.
+- **Si vous installez des pompes à chaleur**
   - Ce qui change : la liste des modèles agréés est publiée, avec 1 567 modèles de 27 marques.
-  - Exemple : avant un devis BAR-TH-171 avec bonification, vous pouvez vérifier le modèle sur bonus-pac.ademe.fr.
-  - À faire : gardez une capture de la liste à la date du devis.
-- **Vous montez des dossiers**
+  - Par exemple : avant un devis BAR-TH-171 avec bonification, vous pouvez vérifier le modèle sur bonus-pac.ademe.fr.
+  - À regarder chez vous : une capture de la liste à la date du devis, pour en garder la trace.
+- **Si vous montez des dossiers**
   - Ce qui change : depuis le 1er juillet, chaque opération doit indiquer le SIRET, son coût et les aides publiques reçues.
-  - Exemple : une rénovation financée aussi par MaPrimeRénov' doit mentionner cette aide dans le dossier CEE.
-  - À faire : ajoutez ces champs à vos formulaires et outils.
-- **Vous distribuez du fioul ou des carburants**
+  - Par exemple : une rénovation financée aussi par MaPrimeRénov' doit mentionner cette aide dans le dossier CEE.
+  - À regarder chez vous : vos formulaires et outils : ces champs y figurent-ils ?
+- **Si vous distribuez du fioul ou des carburants**
   - Ce qui change : le Conseil d'État valide le décret P6, seuil de 500 m³ compris.
-  - Exemple : les recours sont rejetés : le seuil de 500 m³ reste la règle.
-  - À faire : traitez l'obligation P6 comme définitive.
+  - Par exemple : les recours sont rejetés : le seuil de 500 m³ reste la règle.
+  - À regarder chez vous : vos prévisions : le Conseil d'État a rejeté tous les recours contre l'obligation P6.
 
 ### [ACTION] Contrôles : nouveaux seuils pour les dossiers déposés depuis le 30 juillet
 
@@ -73,7 +73,7 @@ Le Conseil d'État écarte aussi la qualification d'aide d'État. Le cadre de la
 
 **Contenu.** L'annexe I agrée définitivement **plus de 1 500 modèles de 27 marques** ; l'annexe II accorde à environ 200 modèles un agrément transitoire valable jusqu'au 15 juillet 2027 (décompte de la presse spécialisée à partir des annexes publiées au JO). La liste est consultable sur la plateforme de l'ADEME (bonus-pac.ademe.fr) et mise à jour par arrêté.
 
-**À faire.** Avant de signer un devis BAR-TH-171 ou BAR-TH-172 bonifié, vérifier que le modèle figure sur la liste.
+**En pratique.** Avant de signer un devis BAR-TH-171 ou BAR-TH-172 bonifié, vérifier que le modèle figure sur la liste.
 
 ### [SURVEILLER] 1er juillet : nouvelles données dans les dossiers
 

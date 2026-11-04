@@ -16,14 +16,14 @@ verifie: 2026-11-04
 
 ## Concrètement, pour vous
 
-- **Vous êtes chauffagiste**
+- **Si vous êtes chauffagiste**
   - Ce qui change : une chaudière déjà financée par des CEE avant 2021 peut être remplacée par une PAC, avec de nouveaux CEE, depuis le 7 septembre.
-  - Exemple : une chaudière gaz posée en 2018 avec des CEE (fiche BAR-TH-106) peut être remplacée par une PAC avec une nouvelle prime.
-  - À faire : retrouvez la date et la fiche de l'opération d'origine pour le dossier.
-- **Vous gérez un garage ou une exploitation agricole**
+  - Par exemple : une chaudière gaz posée en 2018 avec des CEE (fiche BAR-TH-106) peut être remplacée par une PAC avec une nouvelle prime.
+  - À regarder chez vous : la date et la fiche de l'opération d'origine, à retrouver pour le dossier.
+- **Si vous gérez un garage ou une exploitation agricole**
   - Ce qui change : les fiches TRA-SE-104 (station de gonflage des pneus) et AGRI-EQ-110 (séchage solaire) sont supprimées le 24 septembre.
-  - Exemple : une station de gonflage commandée en octobre ne donne plus droit à des CEE.
-  - À faire : faites recenser avant le 3 octobre les opérations déjà engagées.
+  - Par exemple : une station de gonflage commandée en octobre ne donne plus droit à des CEE.
+  - À regarder chez vous : le recensement des opérations déjà engagées, avant le 3 octobre.
 
 ### [ACTION] Remplacer un équipement à combustible déjà financé
 
@@ -36,7 +36,7 @@ verifie: 2026-11-04
 - La première opération CEE doit avoir été **engagée avant le 1er janvier 2021**.
 - Elle doit relever d'une des 16 fiches listées : BAR-TH-06, BAR-TH-07, BAR-TH-07-SE, BAR-TH-08, BAR-TH-09, BAR-TH-09-SE, BAR-TH-51, BAR-TH-106, BAR-TH-107, BAR-TH-107-SE, BAT-TH-01, BAT-TH-02, BAT-TH-01-GT, BAT-TH-02-GT, BAT-TH-49 et BAT-TH-102.
 
-**À faire.** Dans le dossier, identifier l'opération CEE d'origine, sa date d'engagement et la fiche utilisée.
+**En pratique.** Dans le dossier, identifier l'opération CEE d'origine, sa date d'engagement et la fiche utilisée.
 
 **Qui est concerné.** Chauffagistes, bailleurs, gestionnaires tertiaires, délégataires.
 

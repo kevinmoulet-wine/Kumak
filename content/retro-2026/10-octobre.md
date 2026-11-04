@@ -16,22 +16,22 @@ verifie: 2026-11-04
 
 ## Concrètement, pour vous
 
-- **Vous achetez des CEE**
+- **Si vous achetez des CEE**
   - Ce qui change : pour les CEE délivrés et cédés à partir du 1er novembre, un formulaire signé doit accompagner chaque contrat.
-  - Exemple : vous achetez un lot délivré le 5 novembre : le formulaire doit être joint au contrat au plus tard à l'ordre de transfert.
-  - À faire : mettez en place la procédure et le modèle de formulaire avant le 1er novembre.
-- **Vous vendez des CEE**
+  - Par exemple : vous achetez un lot délivré le 5 novembre : le formulaire doit être joint au contrat au plus tard à l'ordre de transfert.
+  - À regarder chez vous : votre procédure de choix du vendeur et votre modèle de formulaire, exigés pour les CEE délivrés et cédés à partir du 1er novembre.
+- **Si vous vendez des CEE**
   - Ce qui change : vos acheteurs doivent vérifier votre solidité et vos pratiques.
-  - Exemple : attendez-vous à fournir votre attestation d'assurance, vos attestations fiscales et sociales et votre démarche qualité.
-  - À faire : préparez un dossier type à envoyer à chaque acheteur.
-- **Vous êtes délégataire ou demandeur de CEE**
+  - Par exemple : attendez-vous à fournir votre attestation d'assurance, vos attestations fiscales et sociales et votre démarche qualité.
+  - À regarder chez vous : un dossier type, prêt à envoyer à chaque acheteur.
+- **Si vous êtes délégataire ou demandeur de CEE**
   - Ce qui change : 27 fiches sont supprimées depuis le 29 octobre, dont les lubrifiants, les formations à l'écoconduite et les économiseurs sur chaudières vapeur.
-  - Exemple : une formation à la conduite économe (TRA-SE-101) engagée le 20 octobre n'est valorisable que si elle figure dans la liste envoyée au ministère avant le 17 novembre.
-  - À faire : recensez toutes vos opérations engagées sur ces fiches avec le tableau de la DGEC, sans attendre la date limite.
-- **Vous êtes une collectivité**
+  - Par exemple : une formation à la conduite économe (TRA-SE-101) engagée le 20 octobre n'est valorisable que si elle figure dans la liste envoyée au ministère avant le 17 novembre.
+  - À regarder chez vous : le texte vous demande de recenser vos opérations engagées sur ces fiches, avec le tableau de la DGEC, avant le 17 novembre.
+- **Si vous êtes une collectivité**
   - Ce qui change : le programme ACTEE+ est prolongé jusqu'au 31 décembre 2027 ; vos acheteurs n'ont pas à évaluer votre risque.
-  - Exemple : une commune qui vend ses CEE n'a pas à fournir le dossier de diligence demandé aux vendeurs privés.
-  - À faire : profitez du délai d'ACTEE+ pour vos projets de rénovation de bâtiments publics.
+  - Par exemple : une commune qui vend ses CEE n'a pas à fournir le dossier de diligence demandé aux vendeurs privés.
+  - À regarder chez vous : vos projets de rénovation de bâtiments publics qui pourraient entrer dans ACTEE+ d'ici le 31 décembre 2027.
 
 ### [ACTION] Cessions de CEE : la diligence sur le vendeur devient obligatoire
 
@@ -67,7 +67,7 @@ L'acheteur n'a pas à évaluer ce risque quand le vendeur est l'Anah, une collec
 | Tertiaire (2) | BAT-EN-111, BAT-SE-104 |
 | Agriculture (2) | AGRI-EQ-105, AGRI-EQ-106 |
 
-**À faire.** Les opérations déjà engagées restent valorisables si le demandeur transmet au ministre chargé de l'énergie, **sous vingt jours calendaires après la publication**, la liste de ces opérations avec le modèle « Tableau de recensement des engagements » de la DGEC. Vingt jours à compter du 28 octobre mènent au **17 novembre 2026** ; le texte ne fixe pas de date explicite, n'attendez pas le dernier jour.
+**En pratique.** Les opérations déjà engagées restent valorisables si le demandeur transmet au ministre chargé de l'énergie, **sous vingt jours calendaires après la publication**, la liste de ces opérations avec le modèle « Tableau de recensement des engagements » de la DGEC. Vingt jours à compter du 28 octobre mènent au **17 novembre 2026** ; le texte ne fixe pas de date explicite, n'attendez pas le dernier jour.
 
 **Qui est concerné.** Demandeurs et délégataires qui portent des opérations sur ces fiches, surtout dans le transport et l'industrie ; leurs équipes SI, qui doivent bloquer ces fiches pour les engagements postérieurs au 28 octobre.
 

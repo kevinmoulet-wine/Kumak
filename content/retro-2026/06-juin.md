@@ -16,18 +16,18 @@ verifie: 2026-11-04
 
 ## Concrètement, pour vous
 
-- **Vous êtes mandataire ou intermédiaire avec un compte Emmy**
+- **Si vous êtes mandataire ou intermédiaire avec un compte Emmy**
   - Ce qui change : il faut justifier d'au moins 100 000 € de capital et d'un établissement en France.
-  - Exemple : une SAS au capital de 10 000 € doit le signaler sous un mois, puis justifier 100 000 € de capital au plus tard le 1er avril 2027.
-  - À faire : préparez vos attestations (procédures collectives, condamnations) de moins de trois mois.
-- **Vous achetez des CEE**
+  - Par exemple : une SAS au capital de 10 000 € doit le signaler sous un mois, puis justifier 100 000 € de capital au plus tard le 1er avril 2027.
+  - À regarder chez vous : vos attestations (procédures collectives, condamnations) : elles doivent dater de moins de trois mois.
+- **Si vous achetez des CEE**
   - Ce qui change : vos vendeurs sans capital ni établissement suffisants risquent la suspension de leur compte.
-  - Exemple : un vendeur dont le compte est suspendu ne peut plus vous transférer de certificats.
-  - À faire : demandez à vos vendeurs s'ils ont envoyé leurs pièces au teneur du registre.
-- **Vous exploitez des serres**
+  - Par exemple : un vendeur dont le compte est suspendu ne peut plus vous transférer de certificats.
+  - À regarder chez vous : si vos vendeurs ont bien envoyé leurs pièces au teneur du registre.
+- **Si vous exploitez des serres**
   - Ce qui change : les fiches AGRI-EQ-108 et AGRI-EQ-112 sont supprimées le 24 juin.
-  - Exemple : une double paroi gonflable sur serre maraîchère (AGRI-EQ-112) commandée en juillet ne donne plus droit à des CEE.
-  - À faire : faites recenser par votre partenaire CEE les opérations déjà engagées.
+  - Par exemple : une double paroi gonflable sur serre maraîchère (AGRI-EQ-112) commandée en juillet ne donne plus droit à des CEE.
+  - À regarder chez vous : le recensement, par votre partenaire CEE, des opérations déjà engagées.
 
 ### [ACTION] Registre national : nouvelles conditions d'ouverture et de maintien des comptes
 

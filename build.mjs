@@ -134,12 +134,12 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
     const items = [];
     html = html.replace(/<h3>\[(ACTION|SURVEILLER|À LIRE)\]\s*(.*?)<\/h3>/g, (_, k, t) => { items.push({ k, t }); const id = `t${items.length}`; return `<h3 id="${id}">${badge(k)} <span>${t}</span></h3>`; });
     // Rubrique « Concrètement, pour vous » : une carte par profil
-    // Markdown attendu : - **Vous êtes…** puis sous-liste « Ce qui change : … », « Exemple : … », « À faire : … »
+    // Markdown attendu : - **Si vous êtes…** puis sous-liste « Ce qui change : … », « Par exemple : … », « À regarder chez vous : … »
     html = html.replace(/<h2>Concrètement, pour vous<\/h2>\s*([\s\S]*?)(?=<h2|<h3|$)/, (_, lis) => {
       const cards = lis.split(/<li>(?=\s*<strong>)/).slice(1).map((li) => {
         const who = (li.match(/<strong>(.*?)<\/strong>/) || [, ""])[1];
         const rows = [...li.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, r]) => {
-          const m = r.trim().match(/^([^:<]{2,20})\s*:\s*([\s\S]*)$/);
+          const m = r.trim().match(/^([^:<]{2,30})\s*:\s*([\s\S]*)$/);
           return m ? `<p><span class="lbl">${m[1]}</span>${m[2].replace(/^./, (c) => c.toUpperCase())}</p>` : `<p>${r}</p>`;
         }).join("");
         return `<div class="profile"><h3>${who}</h3>${rows}</div>`;
@@ -156,7 +156,7 @@ const loadSeries = (dir, required) => (existsSync(dir) ? readdirSync(dir) : [])
     html = linkFiches(html);
     // Garde-fou : aucune section ni vignette du Markdown ne doit disparaître au rendu
     const nSec = (body.match(/^### \[(ACTION|SURVEILLER|À LIRE)\]/gm) || []).length, nSecHtml = (html.match(/<h3 id="t\d+">/g) || []).length;
-    const nCard = (body.match(/^- \*\*Vous /gm) || []).length, nCardHtml = (html.match(/<div class="profile">/g) || []).length;
+    const nCard = (((body.match(/## Concrètement, pour vous\n([\s\S]*?)(?=\n## |\n### |$)/) || [, ""])[1]).match(/^- \*\*/gm) || []).length, nCardHtml = (html.match(/<div class="profile">/g) || []).length;
     if (nSec !== nSecHtml || nCard !== nCardHtml) throw new Error(`${f} : rendu incomplet (sections ${nSecHtml}/${nSec}, vignettes ${nCardHtml}/${nCard}). Publication bloquée.`);
     return { ...data, date: String(data.date), slug, html, body, items, todo, cahier };
   })
@@ -313,7 +313,7 @@ for (const e of editions) {
 const veilleBody = `<main class="article narrow">
   <div class="eyebrow">Veille</div>
   <h1>Toute la veille CEE</h1>
-  <p class="lede">Les textes CEE décodés : ce qui change, pour qui, et ce qu'il faut faire.</p>
+  <p class="lede">Les textes CEE décodés : ce qui change, pour qui, et ce qu'il faut regarder chez vous.</p>
   <h2 class="list-title">Éditions hebdo</h2>
   ${editions.length
     ? `<ul class="archive">${editions.map((e) => `<li><a href="/editions/${e.slug}/"><span class="num">Nº ${e.numero}<br>${dateFr(e.date)}</span><span><strong>${esc(e.titre)}${e.brouillon ? '<span class="draft-flag">BROUILLON</span>' : ""}</strong><span class="acc">${esc(e.accroche)}</span></span></a></li>`).join("")}</ul>`
@@ -591,7 +591,7 @@ for (const src of sources) {
   for (const line of m[1].split("\n")) {
     const w = line.match(/^- \*\*(.+?)\*\*/);
     if (w) { cur = { who: w[1], rows: [], src }; vignettes.push(cur); continue; }
-    const r = line.match(/^\s+- ([^:]{2,20}?)\s*:\s*(.*)$/);
+    const r = line.match(/^\s+- ([^:]{2,30}?)\s*:\s*(.*)$/);
     if (cur && r) cur.rows.push([r[1], r[2]]);
   }
 }
@@ -748,7 +748,7 @@ const secRecevez = (quatre) => `<section>
   <h2>La réglementation, traduite en décisions.</h2>
   <div class="${quatre ? "grid4" : "grid3"}">
     <div class="feat"><span class="tag">Chaque lundi</span><h3>Les textes classés par impact</h3><p>Action requise, à surveiller, à lire : chaque texte de la semaine, ce qu'il change et pour qui, avec ses sources officielles.</p></div>
-    <div class="feat"><span class="tag">Par métier</span><h3>Concrètement, pour vous</h3><p>Obligé, délégataire, acheteur ou vendeur de CEE : ce qui change pour vous, un exemple chiffré et ce qu'il faut faire.</p></div>
+    <div class="feat"><span class="tag">Par métier</span><h3>Concrètement, pour vous</h3><p>Obligé, délégataire, acheteur ou vendeur de CEE : ce qui change pour vous, un exemple chiffré et ce qu'il faut regarder chez vous.</p></div>
     <div class="feat"><span class="tag">SI et conformité</span><h3>L'impact sur vos outils</h3><p>Les champs, règles et contrôles à adapter dans votre outil de gestion CEE, avec des cas de test prêts à l'emploi.</p></div>
     ${quatre ? `<div class="feat"><span class="tag">Dates</span><h3>Les échéances, dans votre agenda</h3><p>Chaque date qui engage un dossier, extraite des textes, sur une page et dans un abonnement agenda.</p></div>` : ""}
   </div>

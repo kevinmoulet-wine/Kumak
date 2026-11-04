@@ -16,18 +16,18 @@ verifie: 2026-11-04
 
 ## Concrètement, pour vous
 
-- **Vous installez du solaire ou des chauffe-eau thermodynamiques**
+- **Si vous installez du solaire ou des chauffe-eau thermodynamiques**
   - Ce qui change : du 1er septembre au 31 décembre, les CEE sont multipliés par 4 à 7.
-  - Exemple : un chauffe-eau thermodynamique (BAR-TH-148) chez un ménage modeste rapporte 7 fois les CEE de base ; chez un autre ménage, 4 fois.
-  - À faire : faites signer les devis avant le 31 décembre.
-- **Vous rénovez une maison en profondeur**
+  - Par exemple : un chauffe-eau thermodynamique (BAR-TH-148) chez un ménage modeste rapporte 7 fois les CEE de base ; chez un autre ménage, 4 fois.
+  - À regarder chez vous : la date de signature des devis : avant le 31 décembre.
+- **Si vous rénovez une maison en profondeur**
   - Ce qui change : la rénovation d'ampleur (BAR-TH-174) ne vise plus que les logements classés E, F ou G.
-  - Exemple : une maison classée D n'est plus éligible à cette fiche à partir du 1er septembre.
-  - À faire : vérifiez la classe du DPE avant de monter le projet.
-- **Vous êtes bailleur social**
+  - Par exemple : une maison classée D n'est plus éligible à cette fiche à partir du 1er septembre.
+  - À regarder chez vous : la classe du DPE, avant de monter le projet.
+- **Si vous êtes bailleur social**
   - Ce qui change : le Coup de pouce rénovation d'ampleur en maison individuelle est recentré sur le parc social.
-  - Exemple : la rénovation d'une maison du parc social bénéficie d'un coefficient 2 pour un ménage modeste.
-  - À faire : vérifiez les conditions de la charte Coup de pouce associée.
+  - Par exemple : la rénovation d'une maison du parc social bénéficie d'un coefficient 2 pour un ménage modeste.
+  - À regarder chez vous : les conditions de la charte Coup de pouce associée.
 
 ### [ACTION] Solaire et chauffe-eau thermodynamique : nouvelles bonifications
 

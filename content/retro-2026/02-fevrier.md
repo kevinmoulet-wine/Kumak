@@ -17,18 +17,18 @@ verifie: 2026-11-04
 
 ## Concrètement, pour vous
 
-- **Vous installez de l'éclairage LED**
+- **Si vous installez de l'éclairage LED**
   - Ce qui change : les fiches BAR-EQ-110, BAT-EQ-127 et IND-BA-116 sont supprimées le 25 février.
-  - Exemple : un chantier de luminaires LED dans des bureaux (BAT-EQ-127) engagé en janvier n'est valorisable que s'il a été recensé avant le 6 mars.
-  - À faire : ne proposez plus de prime CEE sur ces gestes.
-- **Vous faites du désembouage**
+  - Par exemple : un chantier de luminaires LED dans des bureaux (BAT-EQ-127) engagé en janvier n'est valorisable que s'il a été recensé avant le 6 mars.
+  - À regarder chez vous : vos offres : ces gestes n'ouvrent plus droit à une prime CEE.
+- **Si vous faites du désembouage**
   - Ce qui change : la fiche BAR-SE-109 (réseau de chauffage collectif) est supprimée le 9 février.
-  - Exemple : le désembouage du réseau d'une copropriété signé en février ne donne plus droit à des CEE, sauf s'il était engagé et recensé avant le 18 février.
-  - À faire : retirez la prime CEE de vos offres de désembouage collectif.
-- **Vous êtes bailleur social ou collectivité**
+  - Par exemple : le désembouage du réseau d'une copropriété signé en février ne donne plus droit à des CEE, sauf s'il était engagé et recensé avant le 18 février.
+  - À regarder chez vous : vos offres de désembouage collectif : la prime CEE n'y a plus sa place.
+- **Si vous êtes bailleur social ou collectivité**
   - Ce qui change : depuis le 1er février, vous obtenez les Coups de pouce sans signer de charte quand vous agissez sur votre propre patrimoine.
-  - Exemple : un bailleur social qui remplace les chaudières de ses propres immeubles n'a plus de charte Coup de pouce à signer.
-  - À faire : envoyez quand même les informations de la charte à la fréquence prévue.
+  - Par exemple : un bailleur social qui remplace les chaudières de ses propres immeubles n'a plus de charte Coup de pouce à signer.
+  - À regarder chez vous : l'envoi des informations de la charte, qui reste dû à la fréquence prévue.
 
 ### [ACTION] Suppression de BAR-SE-109 : recensement avant le 18 février
 
@@ -36,7 +36,7 @@ verifie: 2026-11-04
 
 **Ce qui change.** La fiche BAR-SE-109, « Désembouage d'un réseau hydraulique de chauffage collectif en France métropolitaine », est retirée le lendemain de la publication. Elle ne s'applique plus qu'aux opérations figurant dans une liste envoyée au ministre chargé de l'énergie.
 
-**À faire.** Envoyer la liste des opérations engagées, avec le modèle « Tableau de recensement des engagements BAR-SE-109 » de la DGEC, **sous dix jours calendaires** à compter de la publication.
+**En pratique.** Envoyer la liste des opérations engagées, avec le modèle « Tableau de recensement des engagements BAR-SE-109 » de la DGEC, **sous dix jours calendaires** à compter de la publication.
 
 ### [ACTION] Fin des fiches LED : recensement avant le 6 mars
 
@@ -50,7 +50,7 @@ verifie: 2026-11-04
 | BAT-EQ-127 | Luminaire à modules LED |
 | IND-BA-116 | Luminaires à modules LED |
 
-**À faire.** Recenser les opérations avec les modèles de la DGEC **sous dix jours calendaires**, soit avant le 6 mars 2026. Le délai est de 21 jours, soit le 17 mars, quand le bénéficiaire est l'État, une collectivité, un groupement ou un de leurs établissements publics.
+**En pratique.** Recenser les opérations avec les modèles de la DGEC **sous dix jours calendaires**, soit avant le 6 mars 2026. Le délai est de 21 jours, soit le 17 mars, quand le bénéficiaire est l'État, une collectivité, un groupement ou un de leurs établissements publics.
 
 **Qui est concerné.** Installateurs d'éclairage, gestionnaires tertiaires et industriels, délégataires.
 

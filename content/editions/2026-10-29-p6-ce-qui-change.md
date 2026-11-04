@@ -11,26 +11,26 @@ verifie: 2026-11-04
 
 - **1 050 TWhc d'obligation par an** jusqu'en 2030, dont **280 TWhc pour la précarité**.
 - **Les CEE délivrés depuis le 1er janvier 2026 expirent au bout de 12 ans** : ils sont annulés automatiquement du compte de leur détenteur.
-- **Délégataires : la barre monte.** Il faut un volume minimal plus élevé et un système qualité certifié. Avant d'engager une opération P6 avec un partenaire, vérifiez que son statut est validé par le PNCEE.
+- **Si vous êtes délégataire, la barre monte.** Le texte exige un volume minimal plus élevé et un système qualité certifié. Si vous engagez une opération P6 avec un partenaire, regardez d'abord si son statut est validé par le PNCEE.
 
 ## Concrètement, pour vous
 
-- **Vous êtes installateur ou artisan RGE**
+- **Si vous êtes installateur ou artisan RGE**
   - Ce qui change : le financeur de la prime doit avoir son statut validé pour la P6.
-  - Exemple : vous remplacez une chaudière gaz par une PAC air/eau (fiche BAR-TH-171). Si le financeur n'est pas validé, la prime promise au client peut ne jamais être versée.
-  - À faire : avant le devis, demandez au financeur la preuve que son statut P6 est validé par le PNCEE.
-- **Vous êtes délégataire ou mandataire**
+  - Par exemple : vous remplacez une chaudière gaz par une PAC air/eau (fiche BAR-TH-171). Si le financeur n'est pas validé, la prime promise au client peut ne jamais être versée.
+  - À regarder chez vous : avant le devis, la preuve que le statut P6 de votre financeur est validé par le PNCEE.
+- **Si vous êtes délégataire ou mandataire**
   - Ce qui change : il faut au moins 300 GWh cumac d'obligations déléguées et un système de management de la qualité certifié.
-  - Exemple : un délégataire qui gère 200 GWh cumac ne remplit plus la condition de volume.
-  - À faire : faites valider votre statut P6 par le PNCEE avant d'engager des opérations.
-- **Vous distribuez du fioul ou des carburants**
+  - Par exemple : un délégataire qui gère 200 GWh cumac ne remplit plus la condition de volume.
+  - À regarder chez vous : la validation de votre statut P6 par le PNCEE, avant d'engager des opérations.
+- **Si vous distribuez du fioul ou des carburants**
   - Ce qui change : le seuil pour devenir obligé passe de 1 000 m³ à 500 m³ pour le fioul domestique.
-  - Exemple : vous vendez 800 m³ de fioul par an. Vous n'étiez pas obligé en P5 ; vous l'êtes en P6.
-  - À faire : prévoyez d'acheter ou de produire des CEE pour couvrir votre obligation.
-- **Vous êtes un obligé**
+  - Par exemple : vous vendez 800 m³ de fioul par an. Vous n'étiez pas obligé en P5 ; vous l'êtes en P6.
+  - À regarder chez vous : la façon dont vous couvrirez votre obligation : achat ou production de CEE.
+- **Si vous êtes un obligé**
   - Ce qui change : les CEE délivrés depuis le 1er janvier 2026 sont annulés au bout de 12 ans.
-  - Exemple : un CEE délivré le 15 mars 2026 sera annulé automatiquement le 15 mars 2038.
-  - À faire : suivez la date de délivrance de chaque lot dans votre gestion de stock.
+  - Par exemple : un CEE délivré le 15 mars 2026 sera annulé automatiquement le 15 mars 2038.
+  - À regarder chez vous : la date de délivrance de chaque lot dans votre gestion de stock.
 
 ## Le texte de référence
 
@@ -42,7 +42,7 @@ verifie: 2026-11-04
 
 **Qui est concerné.** Les délégataires et mandataires, mais aussi les installateurs et bureaux d'études qui travaillent avec eux.
 
-**À faire.** D'après la DGEC, une opération P6 ne peut être engagée qu'une fois le statut de délégataire validé par le PNCEE. Demandez cette validation à votre partenaire **avant** la date d'engagement de vos opérations.
+**En pratique.** D'après la DGEC, une opération P6 ne peut être engagée qu'une fois le statut de délégataire validé par le PNCEE. Demandez cette validation à votre partenaire **avant** la date d'engagement de vos opérations.
 
 ### [SURVEILLER] Une date de péremption pour les certificats
 

@@ -16,18 +16,18 @@ verifie: 2026-11-04
 
 ## Concrètement, pour vous
 
-- **Vous installez des pompes à chaleur**
+- **Si vous installez des pompes à chaleur**
   - Ce qui change : à partir du 1er septembre, la bonification des fiches BAR-TH-171 et BAR-TH-172 exige un modèle agréé.
-  - Exemple : devis signé le 2 septembre pour une PAC air/eau qui remplace une chaudière gaz dans une résidence principale : le coefficient 5 n'est accordé que si le modèle est agréé ce jour-là.
-  - À faire : vérifiez la liste avant chaque devis et notez le numéro d'agrément sur la preuve de réalisation.
-- **Vous fabriquez ou distribuez des PAC**
+  - Par exemple : devis signé le 2 septembre pour une PAC air/eau qui remplace une chaudière gaz dans une résidence principale : le coefficient 5 n'est accordé que si le modèle est agréé ce jour-là.
+  - À regarder chez vous : la liste des modèles agréés avant chaque devis, et le numéro d'agrément sur la preuve de réalisation.
+- **Si vous fabriquez ou distribuez des PAC**
   - Ce qui change : l'agrément suppose une certification et un assemblage du circuit frigorifique dans l'Espace économique européen.
-  - Exemple : un modèle entièrement assemblé hors d'Europe ne peut obtenir qu'un agrément transitoire, avec un plan d'investissement.
-  - À faire : déposez vos dossiers auprès de l'ADEME avant le 31 mai.
-- **Vous avez un compte au registre Emmy**
+  - Par exemple : un modèle entièrement assemblé hors d'Europe ne peut obtenir qu'un agrément transitoire, avec un plan d'investissement.
+  - À regarder chez vous : la date limite : dossiers à déposer auprès de l'ADEME avant le 31 mai.
+- **Si vous avez un compte au registre Emmy**
   - Ce qui change : des frais s'appliquent à partir du 1er juin.
-  - Exemple : l'acheteur d'un lot de 100 GWh cumac paie 410 € de frais de transfert (4,10 € par million de kWh cumac).
-  - À faire : prévoyez ces frais dans vos prix de cession.
+  - Par exemple : l'acheteur d'un lot de 100 GWh cumac paie 410 € de frais de transfert (4,10 € par million de kWh cumac).
+  - À regarder chez vous : l'effet de ces frais sur vos prix de cession.
 
 ### [ACTION] PAC individuelles : un agrément pour garder la bonification
 
