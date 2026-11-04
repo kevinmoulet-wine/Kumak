@@ -711,25 +711,95 @@ write("impact-outils/index.html", page({
 }));
 
 // ---------- accueil (obligés, délégataires, mandataires) ----------
-write("index.html", page({
-  path: "/",
-  body: `<main>
-<div class="hero" id="inscription">
-  <div>
-    <div class="eyebrow">Veille CEE · obligés, délégataires, mandataires</div>
-    <h1>Chaque texte CEE, <em>décodé pour ceux qui financent.</em></h1>
-    <p class="lede">Arrêtés, décrets, fiches, contrôles : chaque lundi, ce qui change pour vos dossiers, vos contrats, votre stock de certificats et vos outils de gestion. Avec la source officielle.</p>
-    ${signupForm("email-hero")}
-    <div class="facts">
-      <div class="fact"><b>1 050</b><span>TWhc d'obligation par an</span></div>
-      <div class="fact"><b>280</b><span>TWhc pour la précarité</span></div>
-      <div class="fact"><b>5 min</b><span>de lecture le lundi</span></div>
-    </div>
-  </div>
-  ${sample}
-</div>
+// ---------- accueil : corps de page (HOME_VARIANT = "" | "A" | "B") ----------
+const HV = process.env.HOME_VARIANT || "B";
+const nNumeros = editions.filter((e) => !e.brouillon).length + retros.filter((r) => !r.brouillon).length;
+const nextEch = futur[0] || null;
+const lastImpact = impacts[0] || null;
+const mtLast = lastImpact ? cahierMeta(lastImpact) : null;
+const nAction = latest ? latest.items.filter((it) => it.k === "ACTION").length : 0;
 
-<section>
+// Variante A : un seul panneau de preuve dans le hero
+const nowPanel = `<aside class="now" aria-label="En ce moment">
+  <div class="now-head"><strong>En ce moment</strong><span>${nNumeros} numéros · toute la P6 depuis janvier 2026</span></div>
+  ${latest ? `<a class="now-row" href="/editions/${latest.slug}/"><span class="now-k">Dernier numéro</span><strong>${esc(latest.titre)}</strong><span class="now-m">Nº ${latest.numero} · ${dateFr(latest.date)}${nAction ? ` · ${plur(nAction, "action requise", "actions requises")}` : ""}</span></a>` : ""}
+  ${nextEch ? `<a class="now-row" href="/calendrier/"><span class="now-k">Prochaine échéance</span><strong>${esc(nextEch.label)}</strong><span class="now-m">${dateFr(nextEch.iso)}</span></a>` : ""}
+  ${lastImpact ? `<a class="now-row" href="${lastImpact.cahierUrl}"><span class="now-k">Dernier cahier pour vos outils</span><strong>${esc(mtLast.titre)}</strong><span class="now-m">${mtLast.iso ? `${mtLast.iso <= TODAY ? "En vigueur depuis le" : "À partir du"} ${dateFr(mtLast.iso)}` : ""}${mtLast.counts ? ` · ${mtLast.counts}` : ""}</span></a>` : ""}
+  <a class="now-foot" href="/veille/">Toute la veille →</a>
+</aside>`;
+
+// Variante B : la carte du dernier numéro, étiquetée, avec le signal de profondeur
+const sampleB = latest
+  ? `<div>
+  <aside class="edition" aria-label="Dernier numéro">
+  <div class="ed-head"><strong>Dernier numéro</strong><span>Nº ${latest.numero} · ${dateFr(latest.date)}</span></div>
+  ${latest.items.slice(0, 4).map((it) => `<div class="item">${badge(it.k)}<h3>${it.t}</h3></div>`).join("\n  ")}
+  <a class="ed-foot" href="/editions/${latest.slug}/">Lire : ${esc(latest.titre)} →</a>
+</aside>
+  <p class="ed-more">${nNumeros} numéros · toute la P6 depuis janvier 2026 · <a href="/veille/">Toute la veille →</a></p>
+</div>`
+  : sample;
+
+const echMini = (e) => `<li><time datetime="${e.iso}">${dateFr(e.iso)}</time><a href="/calendrier/">${esc(e.label)}</a></li>`;
+const impactMini = (i) => { const mt = cahierMeta(i); return `<li><time>${mt.iso ? dateFr(mt.iso) : ""}</time><a href="${i.cahierUrl}">${esc(mt.titre)}</a></li>`; };
+
+const secRecevez = (quatre) => `<section>
+  <div class="eyebrow">Ce que vous recevez</div>
+  <h2>La réglementation, traduite en décisions.</h2>
+  <div class="${quatre ? "grid4" : "grid3"}">
+    <div class="feat"><span class="tag">Chaque lundi</span><h3>Les textes classés par impact</h3><p>Action requise, à surveiller, à lire : chaque texte de la semaine, ce qu'il change et pour qui, avec ses sources officielles.</p></div>
+    <div class="feat"><span class="tag">Par métier</span><h3>Concrètement, pour vous</h3><p>Obligé, délégataire, acheteur ou vendeur de CEE : ce qui change pour vous, un exemple chiffré et ce qu'il faut faire.</p></div>
+    <div class="feat"><span class="tag">SI et conformité</span><h3>L'impact sur vos outils</h3><p>Les champs, règles et contrôles à adapter dans votre outil de gestion CEE, avec des cas de test prêts à l'emploi.</p></div>
+    ${quatre ? `<div class="feat"><span class="tag">Dates</span><h3>Les échéances, dans votre agenda</h3><p>Chaque date qui engage un dossier, extraite des textes, sur une page et dans un abonnement agenda.</p></div>` : ""}
+  </div>
+</section>`;
+
+const secMethode = `<section>
+  <div class="eyebrow">Méthode</div>
+  <h2>Vérifié avant d'être publié.</h2>
+  <div class="grid3">
+    <div class="feat"><span class="tag">Sources</span><h3>Le texte officiel, toujours cité</h3><p>Journal officiel, Légifrance, ministère, PNCEE, Conseil d'État : chaque fait renvoie au texte qui le fonde, pour que vous puissiez vérifier.</p></div>
+    <div class="feat"><span class="tag">Relecture</span><h3>Des faits vérifiés un par un</h3><p>Chaque numéro porte la date à laquelle ses dates, chiffres et références ont été contrôlés sur les textes. Ce qui n'est pas confirmé n'est pas publié.</p></div>
+    <div class="feat"><span class="tag">Correction</span><h3>Une erreur ? Corrigée sous 48 heures</h3><p>Sous chaque numéro, un lien pour nous signaler une erreur ou une imprécision. Nous corrigeons et nous l'indiquons dans le numéro.</p></div>
+  </div>
+</section>`;
+
+const secPourQui = `<section>
+  <div class="eyebrow">Pour qui</div>
+  <h2>Pensé pour ceux qui portent l'obligation.</h2>
+  <ul class="who">
+    <li><strong>Obligés et fournisseurs d'énergie</strong><span>Piloter le coût de l'obligation et le stock de certificats</span></li>
+    <li><strong>Délégataires et mandataires</strong><span>Sécuriser les dépôts et le statut au PNCEE</span></li>
+    <li><strong>Acheteurs et vendeurs de CEE</strong><span>Appliquer la diligence sur les cessions</span></li>
+    <li><strong>Conformité et contrôle</strong><span>Anticiper les contrôles et les sanctions</span></li>
+    <li><strong>Équipes SI et éditeurs</strong><span>Tenir les règles métier à jour dans les outils</span></li>
+    <li><strong>Directions et partenaires</strong><span>Suivre la P6 sans lire le Journal officiel</span></li>
+  </ul>
+</section>`;
+
+const secFaq = `<section>
+  <div class="eyebrow">Questions fréquentes</div>
+  <h2>Avant de vous inscrire.</h2>
+  <div class="faq">
+  <details><summary>C'est gratuit ?</summary><p>Oui. L'édition du lundi et toute la veille sont gratuites, sans engagement. Vous pouvez vous désinscrire en un clic.</p></details>
+  <details><summary>Qui rédige KUMAK ?</summary><p>Un professionnel du secteur des CEE. Chaque analyse cite ses sources officielles (Journal officiel, Légifrance, ministère), que vous pouvez vérifier.</p></details>
+  <details><summary>Qu'est-ce que l'« impact sur vos outils » ?</summary><p>Pour les textes qui changent une règle de gestion, KUMAK la traduit en champs, valeurs, contrôles et cas de test, que votre outil soit développé en interne, paramétré dans un outil généraliste ou acheté à un éditeur.</p></details>
+  <details><summary>Et si vous vous trompez ?</summary><p>Chaque numéro indique la date à laquelle ses faits ont été vérifiés sur les textes officiels, et chaque fait renvoie à sa source. Une erreur reste possible : si vous en repérez une, <a href="mailto:${cfg.contactEmail}?subject=${encodeURIComponent("Signalement d'une erreur")}">écrivez-nous</a>. Nous corrigeons sous 48 heures et nous indiquons la correction dans le numéro concerné.</p></details>
+  <details><summary>Est-ce un conseil juridique ?</summary><p>Non. KUMAK est une veille d'information. Pour un litige ou un contrôle en cours, adressez-vous à un avocat spécialisé.</p></details>
+  <details><summary>Que faites-vous de mon adresse e-mail ?</summary><p>Elle sert uniquement à vous envoyer KUMAK. Elle n'est ni vendue ni partagée. Vous pouvez vous désinscrire en un clic depuis chaque e-mail. Le détail figure sur la page <a href="/confidentialite/">Confidentialité</a>.</p></details>
+  <details><summary>Je ne reçois pas l'e-mail de confirmation.</summary><p>Vérifiez vos indésirables, puis écrivez à <a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a>.</p></details>
+  </div>
+</section>`;
+
+const secCta = `<section class="cta-sec">
+  <div class="cta-box home-cta">
+    <h2>Le prochain numéro, lundi.</h2>
+    <p>Les textes de la semaine classés par impact, ce qu'ils changent pour vous, et leur traduction pour vos outils.</p>
+    ${signupForm("email-bas", "Votre adresse e-mail")}
+  </div>
+</section>`;
+
+const secGrid = `<section>
   <div class="home-grid">
     <div>
       <div class="eyebrow">À ne pas manquer</div>
@@ -744,46 +814,47 @@ write("index.html", page({
       <p class="space-more"><a href="/impact-outils/">Tous les cahiers de modifications →</a></p>
     </div>
   </div>
-</section>
+</section>`;
 
-<section>
-  <div class="eyebrow">Ce que vous recevez</div>
-  <h2>La réglementation, traduite en décisions.</h2>
-  <div class="grid3">
-    <div class="feat"><span class="tag">Chaque lundi</span><h3>Les textes classés par impact</h3><p>Action requise, à surveiller, à lire : chaque texte de la semaine, ce qu'il change et pour qui, avec ses sources officielles.</p></div>
-    <div class="feat"><span class="tag">Par métier</span><h3>Concrètement, pour vous</h3><p>Obligé, délégataire, acheteur ou vendeur de CEE : ce qui change pour vous, un exemple chiffré et ce qu'il faut faire.</p></div>
-    <div class="feat"><span class="tag">SI et conformité</span><h3>L'impact sur vos outils</h3><p>Les champs, règles et contrôles à adapter dans votre outil de gestion CEE, avec des cas de test prêts à l'emploi.</p></div>
+const secNow = `<section>
+  <div class="eyebrow">En ce moment</div>
+  <h2 class="h2-sm">Dates à tenir, règles à transposer.</h2>
+  <div class="home-grid">
+    <div>
+      <h3 class="mini-title">Prochaines échéances</h3>
+      ${futur.length ? `<ul class="mini">${futur.slice(0, 3).map(echMini).join("")}</ul>` : "<p>Aucune échéance à venir pour l'instant.</p>"}
+      <p class="space-more"><a href="/calendrier/">Toutes les échéances et l'abonnement agenda →</a></p>
+    </div>
+    <div>
+      <h3 class="mini-title">Derniers cahiers pour vos outils</h3>
+      <ul class="mini">${impacts.slice(0, 3).map(impactMini).join("")}</ul>
+      <p class="space-more"><a href="/impact-outils/">Tous les cahiers de modifications →</a></p>
+    </div>
   </div>
-</section>
+</section>`;
 
-<section>
-  <div class="eyebrow">Pour qui</div>
-  <h2>Pensé pour ceux qui portent l'obligation.</h2>
-  <ul class="who">
-    <li><strong>Obligés et fournisseurs d'énergie</strong><span>Piloter le coût de l'obligation et le stock de certificats</span></li>
-    <li><strong>Délégataires et mandataires</strong><span>Sécuriser les dépôts et le statut au PNCEE</span></li>
-    <li><strong>Acheteurs et vendeurs de CEE</strong><span>Appliquer la diligence sur les cessions</span></li>
-    <li><strong>Conformité et contrôle</strong><span>Anticiper les contrôles et les sanctions</span></li>
-    <li><strong>Équipes SI et éditeurs</strong><span>Tenir les règles métier à jour dans les outils</span></li>
-    <li><strong>Directions et partenaires</strong><span>Suivre la P6 sans lire le Journal officiel</span></li>
-  </ul>
-</section>
-
-<section>
-  <div class="eyebrow">Questions fréquentes</div>
-  <h2>Avant de vous inscrire.</h2>
-  <div class="faq">
-  <details><summary>C'est gratuit ?</summary><p>Oui. L'édition du lundi et toute la veille sont gratuites, sans engagement. Vous pouvez vous désinscrire en un clic.</p></details>
-  <details><summary>Qui rédige KUMAK ?</summary><p>Un professionnel du secteur des CEE. Chaque analyse cite ses sources officielles (Journal officiel, Légifrance, ministère), que vous pouvez vérifier.</p></details>
-  <details><summary>Qu'est-ce que l'« impact sur vos outils » ?</summary><p>Pour les textes qui changent une règle de gestion, KUMAK la traduit en champs, valeurs, contrôles et cas de test, que votre outil soit développé en interne, paramétré dans un outil généraliste ou acheté à un éditeur.</p></details>
-  <details><summary>Et si vous vous trompez ?</summary><p>Chaque numéro indique la date à laquelle ses faits ont été vérifiés sur les textes officiels, et chaque fait renvoie à sa source. Une erreur reste possible : si vous en repérez une, <a href="mailto:${cfg.contactEmail}?subject=${encodeURIComponent("Signalement d'une erreur")}">écrivez-nous</a>. Nous corrigeons sous 48 heures et nous indiquons la correction dans le numéro concerné.</p></details>
-  <details><summary>Est-ce un conseil juridique ?</summary><p>Non. KUMAK est une veille d'information. Pour un litige ou un contrôle en cours, adressez-vous à un avocat spécialisé.</p></details>
-  <details><summary>Que faites-vous de mon adresse e-mail ?</summary><p>Elle sert uniquement à vous envoyer KUMAK. Elle n'est ni vendue ni partagée. Vous pouvez vous désinscrire en un clic depuis chaque e-mail. Le détail figure sur la page <a href="/confidentialite/">Confidentialité</a>.</p></details>
-  <details><summary>Je ne reçois pas l'e-mail de confirmation.</summary><p>Vérifiez vos indésirables, puis écrivez à <a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a>.</p></details>
+const heroHtml = (right, cls = "") => `<div class="hero ${cls}" id="inscription">
+  <div>
+    <div class="eyebrow">Veille CEE · obligés, délégataires, mandataires</div>
+    <h1>Chaque texte CEE, <em>décodé pour ceux qui financent.</em></h1>
+    <p class="lede">Arrêtés, décrets, fiches, contrôles : chaque lundi, ce qui change pour vos dossiers, vos contrats, votre stock de certificats et vos outils de gestion. Avec la source officielle.</p>
+    ${signupForm("email-hero")}
+    <div class="facts">
+      <div class="fact"><b>1 050</b><span>TWhc d'obligation par an</span></div>
+      <div class="fact"><b>280</b><span>TWhc pour la précarité</span></div>
+      <div class="fact"><b>5 min</b><span>de lecture le lundi</span></div>
+    </div>
   </div>
-</section>
-</main>`,
-}));
+  ${right}
+</div>`;
+
+const homeBody = HV === "A"
+  ? `<main>\n${heroHtml(nowPanel, "hero-a")}\n${secRecevez(true)}\n${secMethode}\n${secPourQui}\n${secFaq}\n${secCta}\n</main>`
+  : HV === "B"
+    ? `<main>\n${heroHtml(sampleB)}\n${secRecevez(false)}\n${secNow}\n${secPourQui}\n${secFaq}\n${secCta}\n</main>`
+    : `<main>\n${heroHtml(sample)}\n${secGrid}\n${secRecevez(false)}\n${secPourQui}\n${secFaq}\n</main>`;
+
+write("index.html", page({ path: "/", body: homeBody }));
 
 // ---------- pages simples ----------
 const legal = (path, title, md) => write(`${path}/index.html`, page({
