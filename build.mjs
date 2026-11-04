@@ -192,6 +192,8 @@ const toc = (items, cahier) => items.length + (cahier ? 1 : 0) < 2 ? "" : `<nav 
 
 const ladder = `<div class="ladder" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>`;
 
+const errata = (label) => `<p class="errata">Une erreur, une imprécision ? <a href="mailto:${cfg.contactEmail}?subject=${encodeURIComponent("Signalement : " + label)}">Écrivez-nous</a>. Nous vérifions, nous corrigeons sous 48 heures et nous indiquons la correction dans le numéro.</p>`;
+
 function signupForm(id, label = "Recevoir l'édition gratuite du lundi") {
   return `<form class="signup" data-signup data-action="${esc(cfg.brevoFormAction)}" novalidate>
   <label for="${id}" class="eyebrow">${label}</label>
@@ -297,6 +299,7 @@ for (const e of editions) {
   <h1>${esc(e.titre)}</h1>
   <p class="lede">${esc(e.accroche)}</p>
   ${toc(e.items, e.cahier)}<div class="prose">${e.html}</div>
+  ${errata(`Édition nº ${e.numero} – ${e.titre}`)}
   <p class="disclaimer">KUMAK est une veille d'information. Elle ne constitue pas un conseil juridique : vérifiez toujours le texte officiel, et consultez un avocat pour une situation particulière.</p>
   <div class="cta-box" id="inscription">
     <h2>Recevez la prochaine édition.</h2>
@@ -349,6 +352,7 @@ for (const [i, r] of retros.entries()) {
     ${prev ? `<a href="/retro-2026/${prev.slug}/">← ${esc(prev.periode)}</a>` : "<span></span>"}
     ${next ? `<a href="/retro-2026/${next.slug}/">${esc(next.periode)} →</a>` : `<a href="/veille/">Toute la veille →</a>`}
   </nav>
+  ${errata(`Rétrospective ${r.periode} – ${r.titre}`)}
   <p class="disclaimer">KUMAK est une veille d'information. Elle ne constitue pas un conseil juridique : vérifiez toujours le texte officiel, et consultez un avocat pour une situation particulière.</p>
   <div class="cta-box" id="inscription">
     <h2>La suite, chaque lundi.</h2>
@@ -640,6 +644,7 @@ for (const i of impacts) {
   ${i.sujets.length > 1 ? `<p class="lede">Ce cahier couvre aussi : ${i.sujets.slice(1).map(esc).join(" ; ")}.</p>` : ""}
   <p class="cahier-src">Texte décodé dans <a href="${i.url}">${esc(i.label)} : ${esc(i.titre)}</a>.</p>
   <div class="prose cahier">${i.sujets.length === 1 ? i.cahier.html.replace(/^\s*<h2>.*?<\/h2>/, "") : i.cahier.html}</div>
+  ${errata(`Cahier – ${i.sujets[0] || i.titre}`)}
   <p class="disclaimer">Ce cahier traduit un texte réglementaire en règles de gestion. Il ne remplace ni le texte officiel ni l'analyse de vos équipes : vérifiez chaque règle sur la source citée dans le numéro avant de la mettre en œuvre.</p>
   <div class="cta-box" id="inscription">
     <h2>Le prochain cahier, dès sa parution.</h2>
@@ -771,6 +776,7 @@ write("index.html", page({
   <details><summary>C'est gratuit ?</summary><p>Oui. L'édition du lundi et toute la veille sont gratuites, sans engagement. Vous pouvez vous désinscrire en un clic.</p></details>
   <details><summary>Qui rédige KUMAK ?</summary><p>Un professionnel du secteur des CEE. Chaque analyse cite ses sources officielles (Journal officiel, Légifrance, ministère), que vous pouvez vérifier.</p></details>
   <details><summary>Qu'est-ce que l'« impact sur vos outils » ?</summary><p>Pour les textes qui changent une règle de gestion, KUMAK la traduit en champs, valeurs, contrôles et cas de test, que votre outil soit développé en interne, paramétré dans un outil généraliste ou acheté à un éditeur.</p></details>
+  <details><summary>Et si vous vous trompez ?</summary><p>Chaque numéro indique la date à laquelle ses faits ont été vérifiés sur les textes officiels, et chaque fait renvoie à sa source. Une erreur reste possible : si vous en repérez une, <a href="mailto:${cfg.contactEmail}?subject=${encodeURIComponent("Signalement d'une erreur")}">écrivez-nous</a>. Nous corrigeons sous 48 heures et nous indiquons la correction dans le numéro concerné.</p></details>
   <details><summary>Est-ce un conseil juridique ?</summary><p>Non. KUMAK est une veille d'information. Pour un litige ou un contrôle en cours, adressez-vous à un avocat spécialisé.</p></details>
   <details><summary>Que faites-vous de mon adresse e-mail ?</summary><p>Elle sert uniquement à vous envoyer KUMAK. Elle n'est ni vendue ni partagée. Vous pouvez vous désinscrire en un clic depuis chaque e-mail. Le détail figure sur la page <a href="/confidentialite/">Confidentialité</a>.</p></details>
   <details><summary>Je ne reçois pas l'e-mail de confirmation.</summary><p>Vérifiez vos indésirables, puis écrivez à <a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a>.</p></details>
