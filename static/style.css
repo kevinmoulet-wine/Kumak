@@ -446,3 +446,6 @@ header.nav{flex-wrap:nowrap}
 footer{flex-direction:column;align-items:center;justify-content:center;text-align:center}
 footer p{margin:0}
 footer nav{justify-content:center;gap:10px 16px}
+.fiche-refs .fr-text{margin:6px 0 8px;color:var(--ink)}
+.fiche-refs .fr-more{font-weight:600;font-size:14px;text-decoration:none}
+.fiche-refs .meta a{color:var(--muted)}

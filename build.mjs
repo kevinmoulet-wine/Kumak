@@ -418,24 +418,36 @@ const sources = [
   ...retros.filter((r) => !r.brouillon).map((r) => ({ url: `/retro-2026/${r.slug}/`, label: `Rétrospective · ${r.periode}`, titre: r.titre, tri: `2026-${String(r.numero).padStart(2, "0")}`, body: r.body, cahier: r.cahier, slug: r.slug })),
 ];
 for (const src of sources) {
-  let h2 = "", impact = null, inCode = false;
+  let h2 = "", sec = null, nSec = 0, inCode = false;
   const found = {};
   for (const line of src.body.split("\n")) {
     if (line.startsWith("```")) { inCode = !inCode; continue; }
     const h = line.match(/^(#{2,3})\s+(.*)$/);
-    if (h) { if (h[1] === "##") h2 = h[2]; const m = h[2].match(/^\[(ACTION|SURVEILLER|À LIRE)\]/); impact = h[1] === "###" ? (m ? m[1] : null) : null; }
-    if (inCode || /^(Sources|Impact sur vos outils)$/i.test(h2) || /^\|[\s|:-]+\|$/.test(line)) continue;
+    if (h) {
+      if (h[1] === "##") { h2 = h[2]; sec = null; }
+      else { const m = h[2].match(/^\[(ACTION|SURVEILLER|À LIRE)\]\s*(.*)$/); sec = m ? { impact: m[1], titre: cleanMd(m[2]), anchor: `t${++nSec}` } : null; }
+    }
+    if (inCode || /^(Sources|Impact sur vos outils|Calendrier)$/i.test(h2) || /^\|[\s|:-]+\|$/.test(line)) continue;
     const codes = [...new Set(line.match(FICHE_RE) || [])];
     if (!codes.length) continue;
-    const txt = cleanMd(line);
-    if (txt.length < 12) continue;
+    const txt0 = cleanMd(line).replace(/^(Par exemple|Exemple|En pratique|Ce qui change|Ce que ça change|Qui est concerné|Quand|À regarder chez vous)\s*[.:]\s*/i, "");
+    const phrases = txt0.split(/(?<=[.;!?])\s+(?=[A-ZÀ-Ü«(])/);
     for (const c of codes) {
-      const f = (found[c] ||= { impact: null, snippets: [] });
-      if (impact && !f.impact) f.impact = impact;
-      if (!f.snippets.includes(txt) && f.snippets.length < 3) f.snippets.push(txt);
+      const txt = (phrases.filter((ph) => ph.includes(c)).slice(0, 2).join(" ") || txt0).replace(/^./, (ch) => ch.toUpperCase());
+      const f = (found[c] ||= { secs: {}, bref: [] });
+      if (sec) {
+        const e = (f.secs[sec.anchor] ||= { ...sec, texte: "" });
+        if (!h && txt.length > e.texte.length) e.texte = txt;
+      } else if (txt.length >= 12 && f.bref.length < 2 && !f.bref.includes(txt)) f.bref.push(txt);
     }
   }
-  for (const [c, f] of Object.entries(found)) (fiches[c] ||= []).push({ ...src, ...f });
+  for (const [c, f] of Object.entries(found)) {
+    const secs = Object.values(f.secs);
+    const items = secs.length
+      ? secs.map((e) => ({ impact: e.impact, titre: e.titre, url: `${src.url}#${e.anchor}`, texte: e.texte }))
+      : [{ impact: null, titre: src.titre, url: src.url, texte: f.bref.join(" ") }];
+    (fiches[c] ||= []).push({ ...src, items });
+  }
 }
 const codes = Object.keys(fiches).sort();
 const ficheTitle = (c) => FICHE_NOMS[c] ? `${FICHE_NOMS[c].replace(/ \(supprimée.*\)$/, "")} (${c})` : c;
@@ -451,12 +463,13 @@ for (const c of codes) {
   <p class="meta"><a href="/fiches/">Fiches</a> · ${esc(themeOf(c).nom)}</p>
   <div class="eyebrow fiche-code">Fiche ${c} · ${SECTEURS[c.split("-")[0]]}</div>
   <h1>${esc(FICHE_NOMS[c] || c)}</h1>
-  <h2 class="list-title">Ce que KUMAK en a dit (${refs.length})</h2>
-  <ul class="fiche-refs">${refs.map((r) => `<li>
-    <p class="meta">${r.impact ? badge(r.impact) + " " : ""}${esc(r.label)}</p>
-    <a class="fr-title" href="${r.url}">${esc(r.titre)}</a>
-    <ul>${r.snippets.map((t) => `<li>${linkFiches(marked.parseInline(esc(t)))}</li>`).join("")}</ul>
-  </li>`).join("")}</ul>
+  <h2 class="list-title">Dans la veille KUMAK</h2>
+  <ul class="fiche-refs">${refs.flatMap((r) => r.items.map((it) => `<li>
+    <p class="meta">${it.impact ? badge(it.impact) + " " : ""}<a href="${r.url}">${esc(r.label)}</a></p>
+    <a class="fr-title" href="${it.url}">${linkFiches(esc(it.titre)).replace(/<a class="fiche-link"[^>]*>(.*?)<\/a>/g, "$1")}</a>
+    ${it.texte ? `<p class="fr-text">${linkFiches(marked.parseInline(esc(it.texte.length > 420 ? it.texte.slice(0, 420).replace(/\s+\S*$/, "") + "…" : it.texte)))}</p>` : ""}
+    <a class="fr-more" href="${it.url}">Lire le passage →</a>
+  </li>`)).join("").replace(new RegExp(`<a class="fiche-link" href="/fiches/${ficheSlug(c)}/">(.*?)</a>`, "g"), "$1")}</ul>
   <p class="disclaimer">Cette page rassemble les passages de KUMAK qui citent la fiche ${c}. Ce n'est pas l'historique officiel complet : le texte de la fiche en vigueur figure dans le <a href="${CATALOGUE}" target="_blank" rel="noopener">catalogue des opérations standardisées du ministère</a>.</p>
   <div class="cta-box" id="inscription">
     <h2>Soyez prévenu au prochain changement.</h2>
@@ -469,7 +482,7 @@ for (const c of codes) {
 const themesUsed = [...THEMES, { id: "autre", nom: "Autres", kw: "", codes: [] }].map((t) => ({ ...t, list: codes.filter((c) => themeOf(c).id === t.id) })).filter((t) => t.list.length);
 const hayClean = (t) => " " + norm(t).replace(/[^a-z0-9]+/g, " ").trim() + " ";
 const ficheHay = (c) => hayClean([c, c.replace(/-/g, ""), FICHE_NOMS[c] || "", themeOf(c).nom, themeOf(c).kw].join(" "));
-const ficheHay2 = (c) => hayClean(fiches[c].flatMap((r) => r.snippets).join(" "));
+const ficheHay2 = (c) => hayClean(fiches[c].flatMap((r) => r.items.flatMap((it) => [it.titre, it.texte])).join(" "));
 write("fiches/index.html", page({
   title: "Les fiches CEE, une par une",
   description: "Pompe à chaleur, chaudière, chauffe-eau, isolation, LED : retrouvez les fiches CEE par équipement et tout ce qui a changé en 2026.",
